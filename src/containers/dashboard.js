@@ -5,7 +5,7 @@ const Dashboard = ({ activeRoleId }) => {
 
     switch (activeRoleId) {
         case '0': return (
-            <h2> User </h2>
+            <h2> About Society App </h2>
         );
         case '1': return (
             <h2> Employee </h2>

@@ -13,7 +13,7 @@ import DeclinedReqs from './components/declined.js';
 
 import CreateRequest from './components/create.js';
 
-import SideMenuBar from "./components/side-menubar.js";
+import SideMenuBar from "./containers/side-menubar.js";
 import Error from './components/error.js';
 
 import "antd/dist/antd.css";
@@ -39,8 +39,11 @@ class App extends React.Component {
             <Content style={{background: "#fff", padding: 24, margin: "16px 0px 0px 0px", minHeight: 280}}>
                 <Switch>
                   <Route path="/" component={Dashboard} exact />
-                  <Route path="/transactions" component={Transactions} />
-                  <Route path="/profile" component={Profile} />
+                  <Route path="/all" component={TotalReqs} />
+                  <Route path="/declined" component={DeclinedReqs} />
+                  <Route path="/approved" component={ApprovedReqs} />
+                  <Route path="/new-request" component={CreateRequest} />
+                  <Route path="/pending" component={PendingReqs} />
                   <Route component={Error} />
                 </Switch>
             </Content>

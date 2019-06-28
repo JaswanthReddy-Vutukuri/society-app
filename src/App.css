@@ -1,33 +1,44 @@
+@import '~antd/dist/antd.css';
+
 .App {
   text-align: center;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 28px 16px 0;
+  float: left;
+}
+.requests-bar {
+  margin: 1.5em 0em;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.ant-layout-sider {
+  height: calc(100vh - 64px);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
-.App-link {
-  color: #61dafb;
+.ant-layout-content {
+  max-height: calc(100vh - 115px);
+  overflow: auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.user-btn {
+  float: right;
+}
+
+.ant-menu-inline > .ant-menu-item {
+  height: 60px;
+  line-height: 60px;
+}
+
+.ant-table {
+  line-height: 1.0;
+}
+
+.main-menu {
+  height: "100%";
+  border-right: 0;
 }

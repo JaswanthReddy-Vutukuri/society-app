@@ -24,6 +24,7 @@ const Menubar = ({ activeRoleId, onRoleChange }) => {
         <Menu.Item key="2">
             <span> Incharge </span>
         </Menu.Item>
+        <Menu.Divider />
         <Menu.Item key="3">
             <span> Representative </span>
         </Menu.Item>

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
 
+import RequestCounts from '../components/cards';
 import {
   Icon
 } from 'antd';
@@ -39,7 +40,7 @@ const Dashboard = ({ activeRoleId }) => {
             </div>
         );
         case '1': return (
-            <h2> Employee </h2>
+            <RequestCounts />
         );
         case '2': return (
             <h2> Incharge </h2>

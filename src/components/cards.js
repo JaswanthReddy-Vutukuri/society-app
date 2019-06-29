@@ -1,28 +1,28 @@
 import React from 'react';
-import { Card, Col, Row } from 'antd';
+import { Card, Col, Row, Icon } from 'antd';
 
 const RequestCounts = () => {
     return (
     <div>
     <Row gutter={16}>
       <Col span={6}>
-        <Card title="Total Requests">
-            Total Requests
+        <Card title="TOTAL REQUESTS" style={{background:'#0000ff5c',borderRadius:'10px', textAlign:'center', padding:'10px'}}>
+            <span style={{color:'white', fontSize:'2.5em'}}>1999<Icon type="swap" style={{marginLeft:'15px'}}/></span>
         </Card>
       </Col>
       <Col span={6}>
-        <Card title="Approved Requests">
-            Approved Requests
+        <Card title="APPROVED REQUESTS" style={{background:'#318a315e',borderRadius:'10px', textAlign:'center', padding:'10px'}}>
+        <span style={{color:'white', fontSize:'2.5em'}}>999<Icon type="check" style={{marginLeft:'15px'}}/></span>
         </Card>
       </Col>
       <Col span={6}>
-        <Card title="Pending Requests">
-            Pending Requests
+        <Card title="PENDING REQUESTS" style={{background:'#f3ab249e',borderRadius:'10px', textAlign:'center', padding:'10px'}}>
+        <span style={{color:'white', fontSize:'2.5em'}}>500<Icon type="warning" style={{marginLeft:'15px'}}/></span>
         </Card>
       </Col>
       <Col span={6}>
-        <Card title="Declined Requests">
-            Declined Requests
+        <Card title="DECLINED REQUESTS" style={{background:'#ff9999',borderRadius:'10px', textAlign:'center', padding:'10px'}}>
+        <span style={{color:'white', fontSize:'2.5em'}}>500<Icon type="dislike" style={{marginLeft:'15px'}}/></span>
         </Card>
       </Col>
     </Row>

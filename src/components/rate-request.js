@@ -73,8 +73,8 @@ class ReqApprove extends React.Component {
         <Divider />
         <Form.Item wrapperCol={{ span: 8, offset: 16 }}>
           <Button type="primary" htmlType="submit">
-            SUBMIT REQUEST
-                </Button>
+            SUBMIT
+          </Button>
         </Form.Item>
       </Form>
     );

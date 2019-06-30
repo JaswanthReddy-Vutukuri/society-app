@@ -1,52 +1,65 @@
 
 import React from 'react';
 import {
-    Form,
-    Select,
-    Input,
-    InputNumber,
-    Switch,
-    Radio,
-    Slider,
-    Button,
-    Upload,
-    Icon,
-    Rate,
-    Checkbox,
-    Row,
-    Col,
-    Divider,
-  } from 'antd';
-  
-  const { Option } = Select;
-  const { TextArea } = Input;
+  Form,
+  Input,
+  Rate,
+  Divider
+} from 'antd';
 
-  class ReqDeclineForm extends React.Component {
-    handleSubmit = e => {
-      e.preventDefault();
-      this.props.form.validateFields((err, values) => {
-        if (!err) {
-          console.log('Received values of form: ', values);
-        }
-      });
-    };
-  
-    normFile = e => {
-      console.log('Upload event:', e);
-      if (Array.isArray(e)) {
-        return e;
+const { TextArea } = Input;
+
+class ReqDeclineForm extends React.Component {
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
       }
-      return e && e.fileList;
+    });
+  };
+
+  normFile = e => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  };
+
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    const formItemLayout = {
+      labelCol: { span: 8 },
+      wrapperCol: { span: 14 },
     };
-  
-    render() {
-      const { getFieldDecorator } = this.props.form;
-      const formItemLayout = {
-        labelCol: { span: 8 },
-        wrapperCol: { span: 14 },
-      };
-      return (
-        <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+    return (
+      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+        <Form.Item label="Rating 1">
+          {getFieldDecorator('rate1', {
+            initialValue: 3.5,
+          })(<Rate />)}
+        </Form.Item>
+        <Form.Item label="Rating 2">
+          {getFieldDecorator('rate2', {
+            initialValue: 3.5,
+          })(<Rate />)}
+        </Form.Item>
+        <Form.Item label="Rating 3">
+          {getFieldDecorator('rate3', {
+            initialValue: 3.5,
+          })(<Rate />)}
+        </Form.Item>
+        <Form.Item label="Rating 4">
+          {getFieldDecorator('rate4', {
+            initialValue: 3.5,
+          })(<Rate />)}
+        </Form.Item>
+        <Form.Item label="Rating 5">
+          {getFieldDecorator('rate5', {
+            initialValue: 3.5,
+          })(<Rate />)}
+        </Form.Item>
         <Form.Item
           label={
             <span>
@@ -58,11 +71,11 @@ import {
             rules: [{ required: true, message: 'Please input your Feedback!', whitespace: true }],
           })(<TextArea rows={4} />)}
         </Form.Item>
-        </Form>
-      );
-    }
+      </Form>
+    );
   }
-  
-  const ReqDecline = Form.create({ name: 'validate_other' })(ReqDeclineForm);
-  
+}
+
+const ReqDecline = Form.create({ name: 'validate_other' })(ReqDeclineForm);
+
 export default ReqDecline;

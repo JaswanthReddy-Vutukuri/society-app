@@ -144,15 +144,16 @@ class DataTable extends React.Component {
       <React.Fragment>
         <Table columns={this.columns} dataSource={data} scroll={{ x: 1500, y: 300 }} />
         <Modal
-          title="Request Ticket : REQ-009"
+          title="Request Ticket : REQ 009"
           visible={this.state.showRequestInfo}
+          footer={null}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
           <RequestInfoDetails />
         </Modal>
         <Modal
-          title="Request Ticket : REQ-009"
+          title="Request Ticket : REQ 009"
           visible={this.state.showRequestApprove}
           footer={null}
           onOk={this.handleOk}
@@ -161,7 +162,7 @@ class DataTable extends React.Component {
           <ReqApprove />
         </Modal>
         <Modal
-          title="Request Ticket : REQ-009"
+          title="Request Ticket : REQ 009"
           visible={this.state.showRequestDecline}
           onOk={this.handleOk}
           onCancel={this.handleCancel}

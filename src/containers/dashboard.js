@@ -17,7 +17,7 @@ const Dashboard = ({ activeRoleId }) => {
                 <h2 style={{color:'#435188'}}> About For The Society App </h2>
                 <h3 style={{color:'#435188'}}>Behind this</h3>
                 <p>
-                    This is the application came from the thoughts of <span style={{color:'#435188',fontSize:'16px', fontWeight:'bold'}}>Sri. Magunta Sreenivasulu Reddy</span>, Present Lok Sabha Member of India.
+                    This is the application came from the thoughts of <span style={{color:'#435188',fontSize:'16px', fontWeight:500}}>Sri. Magunta Sreenivasulu Reddy</span>, Present Lok Sabha Member of India.
                 </p>
                 <p>
                     He represents the Ongole constituency of Andhra Pradesh and is a member of the Yuvajana Sramika Rythu Congress Party(YSRCP).
@@ -37,7 +37,7 @@ const Dashboard = ({ activeRoleId }) => {
                     Regarding the issue, a ticket will be provided on successful submission of request which can be used to track the status.
                 </p>
                 <h2 style={{textAlign:'center',color:'#435188',marginTop:'30px'}}>
-                    For Providing The Best Governance with <Icon type="heart" style={{color:'#0ca04c'}}/>
+                    For providing the best governance with <Icon type="heart"/>
                 </h2>
             </div>
         );

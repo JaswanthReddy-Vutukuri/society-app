@@ -1,7 +1,7 @@
 import React from 'react';
-import { Table, Modal, Divider } from 'antd';
+import { Table, Modal, Divider, Button } from 'antd';
 import RequestInfoDetails from './request-info';
-import ReqApprove from './rate-request';
+import ReqApprove from './request-approve';
 import ReqDecline from './request-decline';
 
 let data = [{ "key": 0, "ID": 86, "LastName": "manoj", "FirstName": "sai ", "District": 18, "Mandal": 791, "Village": 5307, "Gender": "Male", "age": "23", "MobileNumber": "9738009468", "Gmail": "manoj.sai1994@gmail.com", "Address": "sdf", "SelectIssuecategory": "Water", "PersonalBenifit": "Personal", "Estimatedbudget": "32423", "Description": "dfsgfg", "isActive": 1, "Createdby": "sai ", "CreatedDate": "2019-06-14T09:53:18.703", "ModifiedDate": "1900-01-01T00:00:00", "EmployeeStatus": "Approve", "Emp_Rating": 2.500000000000000e+001, "Constituency": 222 },
@@ -37,6 +37,7 @@ class DataTable extends React.Component {
       columns:[]
     }
   }
+  disabledStatus = (this.props.disabled == 'true');
   columns = [
     {
       title: 'Ticket No.',
@@ -94,14 +95,14 @@ class DataTable extends React.Component {
       title: 'Action',
       key: 'action',
       fixed: 'right',
-      width: 250,
-      render: (text,record) => (
+      width: 300,
+      render: () => (
         <span>
-          <span style={{ color: 'blue', cursor: 'pointer', textTransform: 'capitalize' }} onClick={()=>{ this.showReqInfoModal()}}> View </span>
+          <Button type="link" style={{ color: 'blue'}} onClick={()=>{ this.showReqInfoModal()}}> View </Button>
           <Divider type="vertical" />
-          <span style={{ color: 'green', cursor: 'pointer', textTransform: 'capitalize' }} onClick={()=>{ this.showReqApproveModal()}}> Approve </span>
+          <Button type="link" style={{ color: 'green'}} disabled={this.disabledStatus} onClick={()=>{ this.showReqApproveModal()}}> Approve </Button>
           <Divider type="vertical" />
-          <span style={{ color: 'brown', cursor: 'pointer', textTransform: 'capitalize' }} onClick={()=>{ this.showReqDeclineModal()}}> Decline </span>
+          <Button type="link" style={{ color: 'brown'}} disabled={this.disabledStatus} onClick={()=>{ this.showReqDeclineModal()}}> Decline </Button>
         </span>
       )
     }

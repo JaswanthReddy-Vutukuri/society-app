@@ -48,10 +48,16 @@ const Dashboard = ({ activeRoleId }) => {
             </div>
         );
         case '2': return (
-            <h2> Incharge </h2>
+            <div>
+                <RequestCounts />
+                <Clock />
+            </div>
         );
         case '3': return (
-            <h2> Representative </h2>
+            <div>
+                <RequestCounts />
+                <Clock />
+            </div>
         );
         default: return (
             <h2> User </h2>

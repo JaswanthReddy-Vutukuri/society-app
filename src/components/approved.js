@@ -22,7 +22,7 @@ class ApprovedReqs extends React.Component {
             </ButtonGroup>
           </Form>
         </div>
-        <DataTable disabled='true'/>
+        <DataTable approve={false} />
       </div>
     );
   }

@@ -12,6 +12,9 @@ class TotalReqs extends React.Component {
         <ReqsSearchForm />
         <div style={{ textAlign: 'right', margin: '10px 0px' }}>
           <Form layout="inline">
+            <Form.Item label="Count">
+              <span className="ant-form-text">20</span>
+            </Form.Item>
             <Form.Item label="Search">
               {(<Input />)}
             </Form.Item>
@@ -22,7 +25,7 @@ class TotalReqs extends React.Component {
             </ButtonGroup>
           </Form>
         </div>
-        <DataTable disabled='false'/>
+        <DataTable approve={true} decline={true} />
       </div>
     );
   }

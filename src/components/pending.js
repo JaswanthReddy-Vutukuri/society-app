@@ -22,7 +22,7 @@ class PendingReqs extends React.Component {
             </ButtonGroup>
           </Form>
         </div>
-        <DataTable disabled='false'/>
+        <DataTable  approve={true} decline={true}/>
       </div>
     );
   }

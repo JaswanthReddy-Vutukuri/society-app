@@ -37,7 +37,7 @@ class DataTable extends React.Component {
       columns:[]
     }
   }
-  disabledStatus = (this.props.disabled == 'true');
+  // approveStatus = (this.props.approve == 'true');
   columns = [
     {
       title: 'Ticket No.',
@@ -95,14 +95,12 @@ class DataTable extends React.Component {
       title: 'Action',
       key: 'action',
       fixed: 'right',
-      width: 300,
       render: () => (
         <span>
           <Button type="link" style={{ color: 'blue'}} onClick={()=>{ this.showReqInfoModal()}}> View </Button>
           <Divider type="vertical" />
-          <Button type="link" style={{ color: 'green'}} disabled={this.disabledStatus} onClick={()=>{ this.showReqApproveModal()}}> Approve </Button>
-          <Divider type="vertical" />
-          <Button type="link" style={{ color: 'brown'}} disabled={this.disabledStatus} onClick={()=>{ this.showReqDeclineModal()}}> Decline </Button>
+          { this.props.approve ? <Button type="link" style={{ color: 'green'}} onClick={()=>{ this.showReqApproveModal()}}> Approve </Button> : null }
+          { this.props.decline ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'brown'}} onClick={()=>{ this.showReqDeclineModal()}}> Decline </Button> </React.Fragment>: null }
         </span>
       )
     }

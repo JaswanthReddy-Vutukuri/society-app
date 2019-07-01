@@ -12,6 +12,7 @@ import PendingReqs from './components/pending.js';
 import DeclinedReqs from './components/declined.js';
 
 import CreateRequest from './components/create.js';
+import TrackRequest from './components/track.js';
 
 import SideMenuBar from "./containers/side-menubar.js";
 import Error from './components/error.js';
@@ -42,8 +43,9 @@ class App extends React.Component {
                   <Route path="/all" component={TotalReqs} />
                   <Route path="/declined" component={DeclinedReqs} />
                   <Route path="/approved" component={ApprovedReqs} />
-                  <Route path="/new-request" component={CreateRequest} />
                   <Route path="/pending" component={PendingReqs} />
+                  <Route path="/new-request" component={CreateRequest} />
+                  <Route path="/track-request" component={TrackRequest} />
                   <Route component={Error} />
                 </Switch>
             </Content>

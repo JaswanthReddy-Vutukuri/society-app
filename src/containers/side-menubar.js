@@ -26,6 +26,14 @@ const SideMenuBar = ({ activeRoleId }) => {
                             </span>
                         </NavLink>
                     </Menu.Item>
+                    <Menu.Item key="2">
+                        <NavLink to="/track-request">
+                            <span>
+                                <Icon type="form" />
+                                Track Request
+                            </span>
+                        </NavLink>
+                    </Menu.Item>
                 </Menu>
             </Sider>
         )

@@ -45,7 +45,7 @@ class DataTable extends React.Component {
       dataIndex: 'ID',
       key: 'ID',
       render: (ID) => (
-        <span>{'REQ-' + ID}</span>
+        <span>{'REQ00' + ID}</span>
       ),
       fixed: 'left',
     },
@@ -98,8 +98,7 @@ class DataTable extends React.Component {
       render: () => (
         <span>
           <Button type="link" style={{ color: 'blue'}} onClick={()=>{ this.showReqInfoModal()}}> View </Button>
-          <Divider type="vertical" />
-          { this.props.approve ? <Button type="link" style={{ color: 'green'}} onClick={()=>{ this.showReqApproveModal()}}> Approve </Button> : null }
+          { this.props.approve ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'green'}} onClick={()=>{ this.showReqApproveModal()}}> Approve </Button> </React.Fragment>: null }
           { this.props.decline ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'brown'}} onClick={()=>{ this.showReqDeclineModal()}}> Decline </Button> </React.Fragment>: null }
         </span>
       )

@@ -12,9 +12,7 @@ export const authenticationService = {
     get currentUserValue () { return currentUserSubject.value }
 };
 
-export const config = JSON.stringify({
-    apiUrl: 'http://localhost:4000'
-})
+const apiUrl = 'http://localhost:4000';
 
 function login(username, password) {
     const requestOptions = {
@@ -23,7 +21,7 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+    return fetch(`${apiUrl}/users/authenticate`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes

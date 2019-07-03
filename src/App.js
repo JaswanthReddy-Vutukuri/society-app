@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { history, Role } from './helpers';
+import { history } from './helpers';
 
 import Dashboard from './containers/dashboard.js';
 import Menubar from './containers/menubar.js';
@@ -42,7 +42,7 @@ class App extends React.Component {
   componentDidMount() {
     authenticationService.currentUser.subscribe(x => this.setState({
       currentUser: x,
-      isAdmin: x && x.role === Role.Admin
+      isAdmin: x && x.role === 'Admin'
     }));
   }
 

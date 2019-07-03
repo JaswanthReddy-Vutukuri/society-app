@@ -37,7 +37,6 @@ class DataTable extends React.Component {
       columns:[]
     }
   }
-  // approveStatus = (this.props.approve == 'true');
   columns = [
     {
       title: 'Ticket No.',

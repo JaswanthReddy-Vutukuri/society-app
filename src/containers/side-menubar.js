@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 
 const { Sider } = Layout;
 
-const SideMenuBar = ({ activeRoleId }) => {
-    if (activeRoleId == '0') {
+const SideMenuBar = ({ currentUser }) => {
+    console.log("currentUser:",currentUser)
+    if (currentUser.role == 'User') {
         return (
             <Sider width={200} style={{ background: "#fff" }}>
                 <Menu mode="inline" defaultSelectedKeys={["0"]} className="main-menu">
@@ -91,7 +92,7 @@ const SideMenuBar = ({ activeRoleId }) => {
 
 const mapStateToProps = state => {
     return {
-        activeRoleId: state.activeRoleId
+        currentUser: state.currentUser
     };
 };
 

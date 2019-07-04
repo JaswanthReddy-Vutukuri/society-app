@@ -1,16 +1,23 @@
-import { GET_ACTIVE_ROLE, SET_ACTIVE_ROLE } from './types';
+import { GET_CURRENT_USER, SET_CURRENT_USER, LOG_OUT } from './types';
 
-export const getActiveRole = () => {
-    let activeRoleId = '0'
+export const getCurrentUser = () => {
+    let currentUser = null;
     return {
-        type: GET_ACTIVE_ROLE,
-        activeRoleId
+        type: GET_CURRENT_USER,
+        currentUser
     }
 }
 
-export const setActiveRole = (activeRoleId) => {
+export const setCurrentUser = (currentUser) => {
     return {
-        type: SET_ACTIVE_ROLE,
-        activeRoleId
+        type: SET_CURRENT_USER,
+        currentUser
+    }
+}
+
+export const logOut = () => {
+    return {
+        type: LOG_OUT,
+        currentUser: null
     }
 }

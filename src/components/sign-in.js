@@ -1,13 +1,15 @@
 import React from "react";
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { authenticationService } from '../services';
+import { setCurrentUser } from '../actions';
+import { connect } from 'react-redux';
 
 class SignInForm extends React.Component {
   constructor(props) {
     super(props);
 
     // redirect to home if already logged in
-    if (authenticationService.currentUserValue) { 
+    if (this.props.currentUser) { 
         this.props.history.push('/');
     }
   }
@@ -20,6 +22,7 @@ class SignInForm extends React.Component {
         authenticationService.login(values.username, values.password)
           .then(
             user => {
+              this.props.setCurrentUser(user);
               const { from } = this.props.location.state || { from: { pathname: "/" } };
               this.props.history.push(from);
             },
@@ -75,4 +78,19 @@ class SignInForm extends React.Component {
 
 const SignIn = Form.create({ name: 'normal_login' })(SignInForm);
 
-export default SignIn;
+const mapStateToProps = state => {
+  return {};
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setCurrentUser: currentUser => {
+      dispatch(setCurrentUser(currentUser));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignIn);

@@ -1,42 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Layout, Menu, Dropdown, Icon } from "antd";
-import { setActiveRole } from '../actions';
+import { logOut } from '../actions';
 
 const { Header } = Layout;
 
-const Menubar = ({ activeRoleId, onRoleChange }) => {
+const Menubar = ({ currentUser }) => {
 
     const handleMenuClick = (e) => {
-        onRoleChange(e.key);
+      if (e.key === '0') {
+        logOut();
+      }
     };
 
     const menu = (
         <Menu onClick={handleMenuClick}>
         <Menu.Item key="0">
-            <span> User </span>
-        </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="1">
-            <span> Employee </span>
-        </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="2">
-            <span> Incharge </span>
-        </Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="3">
-            <span> Representative </span>
+            <span> Log Out </span>
         </Menu.Item>
         </Menu>
     );
 
-    const roleMap = {
-        '0': 'User',
-        '1': 'Employee',
-        '2': 'Incharge',
-        '3': 'Representative',
-    }
     return (
         <Header className="header">
         <div className="logo" />
@@ -45,7 +29,7 @@ const Menubar = ({ activeRoleId, onRoleChange }) => {
           overlay={menu}
           icon={<Icon type="user" />}
         >
-          {roleMap[activeRoleId]}
+          {currentUser.firstName}
         </Dropdown.Button>
         <Menu theme="dark" mode="horizontal" style={{ lineHeight: "64px" }} />
       </Header>
@@ -54,14 +38,14 @@ const Menubar = ({ activeRoleId, onRoleChange }) => {
 
 const mapStateToProps = state => {
   return {
-    activeRoleId: state.activeRoleId
+    currentUser: state.currentUser
   };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onRoleChange: activeRoleId => {
-            dispatch(setActiveRole(activeRoleId));
+        logOut: () => {
+            dispatch(logOut());
         }
     };
 };

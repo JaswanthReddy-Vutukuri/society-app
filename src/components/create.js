@@ -10,16 +10,12 @@ import {
   Icon,
   Select,
   Divider,
-  Row,
-  Col,
   Checkbox,
   Button,
-  AutoComplete,
 } from 'antd';
 
 const { TextArea } = Input;
 const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
 
 class CreateRequest extends React.Component {
   state = {

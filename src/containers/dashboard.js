@@ -9,10 +9,10 @@ import {
   Icon
 } from 'antd';
 
-const Dashboard = ({ activeRoleId }) => {
+const Dashboard = ({ currentUser }) => {
 
-    switch (activeRoleId) {
-        case '0': return (
+    switch (currentUser.role) {
+        case 'User': return (
             <div>
                 <h2 style={{color:'#435188'}}> About For The Society App </h2>
                 <h3 style={{color:'#435188'}}>Behind this</h3>
@@ -23,7 +23,7 @@ const Dashboard = ({ activeRoleId }) => {
                     He represents the Ongole constituency of Andhra Pradesh and is a member of the Yuvajana Sramika Rythu Congress Party(YSRCP).
                 </p>
                 <p>
-                    <img src={require('../../src/magunta.jpg')}/>
+                    <img src={require('../../src/magunta.jpg')} alt="magunta srinivasulu reddy"/>
                 </p>
                 <h3 style={{color:'#435188'}}>Motivation</h3>
                 <p>
@@ -41,19 +41,19 @@ const Dashboard = ({ activeRoleId }) => {
                 </h2>
             </div>
         );
-        case '1': return (
+        case 'Employee': return (
             <div>
                 <RequestCounts />
                 <Clock />
             </div>
         );
-        case '2': return (
+        case 'Incharge': return (
             <div>
                 <RequestCounts />
                 <Clock />
             </div>
         );
-        case '3': return (
+        case 'Representative': return (
             <div>
                 <RequestCounts />
                 <Clock />
@@ -67,7 +67,7 @@ const Dashboard = ({ activeRoleId }) => {
 
 const mapStateToProps = state => {
     return {
-        activeRoleId: state.activeRoleId
+        currentUser: state.currentUser
     };
 };
 

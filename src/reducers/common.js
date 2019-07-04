@@ -1,11 +1,13 @@
-import { GET_ACTIVE_ROLE, SET_ACTIVE_ROLE } from '../actions/types';
+import { GET_CURRENT_USER, SET_CURRENT_USER, LOG_OUT } from '../actions/types';
 
-export default function roleGetterReducer(state = [], action) {
+export default function userGetterReducer(state = [], action) {
   switch (action.type) {
-    case GET_ACTIVE_ROLE:
-      return action.activeRoleId;
-    case SET_ACTIVE_ROLE:
-      return action.activeRoleId;
+    case GET_CURRENT_USER:
+      return action.currentUser;
+    case SET_CURRENT_USER:
+      return action.currentUser;
+    case LOG_OUT:
+      return action.currentUser;
     default:
       return state;
   }

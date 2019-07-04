@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import activeRoleId from './common';
+import currentUser from './common';
 
 export default combineReducers({
-    activeRoleId: activeRoleId
+    currentUser
 });

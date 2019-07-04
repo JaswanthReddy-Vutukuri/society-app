@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Layout, Menu, Dropdown, Icon } from "antd";
-import { logOut } from '../actions';
+import { authenticationService } from '../services';
+import { history } from '../helpers';
 
 const { Header } = Layout;
 
@@ -9,7 +10,8 @@ const Menubar = ({ currentUser }) => {
 
     const handleMenuClick = (e) => {
       if (e.key === '0') {
-        logOut();
+        authenticationService.logout();
+        history.push('/login');
       }
     };
 
@@ -43,11 +45,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        logOut: () => {
-            dispatch(logOut());
-        }
-    };
+    return {};
 };
 
 export default connect(

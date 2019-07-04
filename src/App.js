@@ -15,7 +15,7 @@ import TrackRequest from './components/track.js';
 import PrivateRoute from './components/private-route';
 import SignIn from './components/sign-in';
 import Error from './components/error.js';
-import { getCurrentUser, logOut } from './actions';
+import { getCurrentUser } from './actions';
 
 import { Layout } from "antd";
 import "antd/dist/antd.css";
@@ -31,11 +31,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.getCurrentUser();
-  }
-
-  logout() {
-    this.props.logOut();
-    history.push('/login');
   }
 
   render() {
@@ -77,9 +72,6 @@ const mapDispatchToProps = dispatch => {
   return {
     getCurrentUser: () => {
       dispatch(getCurrentUser());
-    },
-    logOut: () => {
-      dispatch(logOut());
     }
   };
 };

@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 const { Sider } = Layout;
 
 const SideMenuBar = ({ currentUser }) => {
-    console.log("currentUser:",currentUser)
     if (currentUser.role == 'User') {
         return (
             <Sider width={200} style={{ background: "#fff" }}>

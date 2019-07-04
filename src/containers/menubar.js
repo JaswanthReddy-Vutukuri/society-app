@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Layout, Menu, Dropdown, Icon } from "antd";
 import { authenticationService } from '../services';
 import { history } from '../helpers';
+import { logOut } from '../actions';
 
 const { Header } = Layout;
 
@@ -12,6 +13,7 @@ const Menubar = ({ currentUser }) => {
       if (e.key === '0') {
         authenticationService.logout();
         history.push('/login');
+        logOut();
       }
     };
 
@@ -45,7 +47,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return {};
+    return {
+      logOut: () => {
+        dispatch(logOut());
+      }
+    };
 };
 
 export default connect(

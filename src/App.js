@@ -35,7 +35,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router  history={history}>
+      <Router history={history}>
       <Layout>
       {this.props.currentUser && <Menubar />}
         <Layout>

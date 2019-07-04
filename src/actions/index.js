@@ -15,3 +15,10 @@ export const setCurrentUser = (currentUser) => {
         currentUser
     }
 }
+
+export const logOut = () => {
+    return {
+        type: LOG_OUT,
+        currentUser: null
+    }
+}

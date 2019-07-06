@@ -13,7 +13,7 @@ import DeclinedReqs from './components/declined.js';
 import CreateRequest from './components/create.js';
 import TrackRequest from './components/track.js';
 import PrivateRoute from './components/private-route';
-import SignIn from './components/sign-in';
+import SignIn from './components/signin';
 import Error from './components/error.js';
 import { getCurrentUser } from './actions';
 

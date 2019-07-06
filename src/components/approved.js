@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Input, Form } from 'antd';
 import DataTable from './table';
 import ReqsSearchForm from './search';
-const ButtonGroup = Button.Group;
+const  ButtonGroup = Button.Group;
 
 class ApprovedReqs extends React.Component {
   render() {

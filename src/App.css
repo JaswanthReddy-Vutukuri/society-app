@@ -54,6 +54,9 @@
 .login-form-forgot {
   float: right;
 }
+.login-form-remember {
+  float: left;
+}
 .login-form-button {
   width: 100%;
 }

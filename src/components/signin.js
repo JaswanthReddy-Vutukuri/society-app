@@ -37,7 +37,12 @@ class SignInForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
+      <React.Fragment>
+      <div style={{textAlign:"center"}}>
+        <img src={require('../../src/logo.svg')} alt="logo" style={{width:'30%'}}/>
+      </div>
+      <div style={{textAlign:"center"}}>
+      <Form onSubmit={this.handleSubmit} className="login-form" style={{display:'inline-block'}}>
         <Form.Item>
           {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }],
@@ -45,6 +50,7 @@ class SignInForm extends React.Component {
             <Input
               prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
               placeholder="Username"
+              autocomplete="off"
             />,
           )}
         </Form.Item>
@@ -63,7 +69,7 @@ class SignInForm extends React.Component {
           {getFieldDecorator('remember', {
             valuePropName: 'checked',
             initialValue: true,
-          })(<Checkbox>Remember me</Checkbox>)}
+          })(<Checkbox className="login-form-remember">Remember me</Checkbox>)}
           <a className="login-form-forgot" href="">
             Forgot password
           </a>
@@ -72,6 +78,8 @@ class SignInForm extends React.Component {
           </Button>
         </Form.Item>
       </Form>
+      </div>
+      </React.Fragment>
     );
   }
 }

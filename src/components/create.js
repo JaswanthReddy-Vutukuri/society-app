@@ -1,5 +1,6 @@
 import React from 'react';
 import 'antd/dist/antd.css';
+import { connect } from 'react-redux';
 
 import {
   Form,
@@ -18,6 +19,15 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 class CreateRequest extends React.Component {
+  
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    console.log(this.props.districts)
+  }
+
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
@@ -269,4 +279,17 @@ class CreateRequest extends React.Component {
 
 const NewReqFormWrapper = Form.create({ name: 'validate_other' })(CreateRequest);
 
-export default NewReqFormWrapper;
+const mapStateToProps = state => {
+  return {
+    districts: state.districts
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewReqFormWrapper);

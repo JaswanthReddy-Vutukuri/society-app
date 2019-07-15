@@ -38,8 +38,6 @@ export const getDistricts = () => {
 };
   
 export const getDistrictSuccess = (districts) => {
-    // const districts = commonService.getDistricts;
-    console.log("GET Districts:",districts)
     return {
         type: GET_DISTRICTS,
         districts

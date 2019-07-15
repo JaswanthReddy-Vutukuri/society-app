@@ -2,11 +2,11 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-// import { authenticationService } from '../services';
+import { authenticationService } from '../services';
 
-const PrivateRoute = ({ component: Component, roles, currentUser, ...rest }) => (
+const PrivateRoute = ({ component: Component, roles, ...rest }) => (
     <Route {...rest} render={props => {
-        // const currentUser = authenticationService.currentUserValue;
+        const currentUser = authenticationService.currentUserValue;
         if (!currentUser) {
             // not logged in so redirect to login page with the return url
             return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />

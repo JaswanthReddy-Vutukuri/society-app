@@ -50,7 +50,7 @@ class SignInForm extends React.Component {
             <Input
               prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
               placeholder="Username"
-              autocomplete="off"
+              autoComplete="off"
             />,
           )}
         </Form.Item>

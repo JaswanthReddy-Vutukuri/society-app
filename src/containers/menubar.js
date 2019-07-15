@@ -7,37 +7,42 @@ import { logOut } from '../actions';
 
 const { Header } = Layout;
 
-const Menubar = ({ currentUser }) => {
+class Menubar extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
 
     const handleMenuClick = (e) => {
       if (e.key === '0') {
         authenticationService.logout();
         history.push('/login');
-        logOut();
+        this.props.logOut();
       }
     };
 
     const menu = (
-        <Menu onClick={handleMenuClick}>
+      <Menu onClick={handleMenuClick}>
         <Menu.Item key="0">
-            <span> Log Out </span>
+          <span> Log Out </span>
         </Menu.Item>
-        </Menu>
+      </Menu>
     );
 
     return (
-        <Header className="header">
+      <Header className="header">
         <div className="logo" />
         <Dropdown.Button
           className="user-btn"
           overlay={menu}
           icon={<Icon type="user" />}
         >
-          {currentUser.firstName}
+          {this.props.currentUser.firstName}
         </Dropdown.Button>
         <Menu theme="dark" mode="horizontal" style={{ lineHeight: "64px" }} />
       </Header>
     )
+  }
 }
 
 const mapStateToProps = state => {
@@ -47,11 +52,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-      logOut: () => {
-        dispatch(logOut());
-      }
-    };
+  return {
+    logOut: () => {
+      dispatch(logOut());
+    }
+  };
 };
 
 export default connect(

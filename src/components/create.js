@@ -24,10 +24,6 @@ class CreateRequest extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    console.log(this.props.districts)
-  }
-
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
@@ -77,7 +73,6 @@ class CreateRequest extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { autoCompleteResult } = this.state;
-
     const formItemLayout = {
       labelCol: {
         lg: { span: 4 },
@@ -120,8 +115,9 @@ class CreateRequest extends React.Component {
             rules: [{ required: true, message: 'Please select district!' }],
           })(
             <Select placeholder="Please select a district">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
+              {this.props.districts.map(district =>
+                <Option key={district.DistrictID} value={district.DistrictID}>{district.Name}</Option>
+              )}
             </Select>,
           )}
         </Form.Item>
@@ -130,8 +126,9 @@ class CreateRequest extends React.Component {
             rules: [{ required: true, message: 'Please select constituency!' }],
           })(
             <Select placeholder="Please select a constituency">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
+              {this.props.constituencies.map(constituency =>
+                <Option key={constituency.ConstituencyID} value={constituency.ConstituencyID}>{constituency.Name}</Option>
+              )}
             </Select>,
           )}
         </Form.Item>
@@ -281,7 +278,8 @@ const NewReqFormWrapper = Form.create({ name: 'validate_other' })(CreateRequest)
 
 const mapStateToProps = state => {
   return {
-    districts: state.districts
+    districts: state.districts,
+    constituencies: state.constituencies
   };
 };
 

@@ -1,4 +1,4 @@
-import { GET_CURRENT_USER, SET_CURRENT_USER, LOG_OUT, GET_DISTRICTS } from './types';
+import { GET_CURRENT_USER, SET_CURRENT_USER, LOG_OUT, GET_DISTRICTS, GET_CONSTITUENCIES } from './types';
 import { authenticationService } from '../services';
 import axios from 'axios';
 
@@ -28,8 +28,7 @@ export const getDistricts = () => {
     return (dispatch) => {
       return axios.get('http://api.magunta.in/api/MasterData/GetDistricts')
         .then(response => {
-            console.log(response)
-          dispatch(getDistrictSuccess(response.data))
+          dispatch(onDistricts(response.data))
         })
         .catch(error => {
           throw(error);
@@ -37,9 +36,28 @@ export const getDistricts = () => {
     };
 };
   
-export const getDistrictSuccess = (districts) => {
+export const onDistricts = (districts) => {
     return {
         type: GET_DISTRICTS,
         districts
+    }
+}
+
+export const getConstituencies = () => {
+    return (dispatch) => {
+      return axios.get('http://api.magunta.in/api/MasterData/GetConstituencies')
+        .then(response => {
+          dispatch(onConstituencies(response.data))
+        })
+        .catch(error => {
+          throw(error);
+        });
+    };
+};
+  
+export const onConstituencies = (constituencies) => {
+    return {
+        type: GET_CONSTITUENCIES,
+        constituencies
     }
 }

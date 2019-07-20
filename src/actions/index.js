@@ -1,4 +1,4 @@
-import { GET_CURRENT_USER, SET_CURRENT_USER, LOG_OUT, GET_DISTRICTS, GET_CONSTITUENCIES } from './types';
+import { GET_CURRENT_USER, SET_CURRENT_USER, LOG_OUT, GET_DISTRICTS, GET_CONSTITUENCIES, GET_MANDALS, GET_VILLAGES } from './types';
 import { authenticationService } from '../services';
 import axios from 'axios';
 
@@ -40,6 +40,44 @@ export const onDistricts = (districts) => {
     return {
         type: GET_DISTRICTS,
         districts
+    }
+}
+
+export const getMandals = (id) => {
+    return (dispatch) => {
+      return axios.get(`http://api.magunta.in/api/MasterData/GetMandals?districtID=${id}`)
+        .then(response => {
+          dispatch(onMandals(response.data))
+        })
+        .catch(error => {
+          throw(error);
+        });
+    };
+};
+  
+export const onMandals = (mandals) => {
+    return {
+        type: GET_MANDALS,
+        mandals
+    }
+}
+
+export const getVillages = (id) => {
+    return (dispatch) => {
+      return axios.get(`http://api.magunta.in/api/MasterData/GetVillages?mandalID=${id}`)
+        .then(response => {
+          dispatch(onVillages(response.data))
+        })
+        .catch(error => {
+          throw(error);
+        });
+    };
+};
+  
+export const onVillages = (villages) => {
+    return {
+        type: GET_VILLAGES,
+        villages
     }
 }
 

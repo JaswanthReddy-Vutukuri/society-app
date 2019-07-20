@@ -1,6 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
+import { getMandals, getVillages } from '../actions';
 
 import {
   Form,
@@ -26,7 +27,7 @@ class CreateRequest extends React.Component {
 
   state = {
     confirmDirty: false,
-    autoCompleteResult: [],
+    autoCompleteResult: []
   };
 
   handleSubmit = e => {
@@ -37,6 +38,16 @@ class CreateRequest extends React.Component {
       }
     });
   };
+
+  onDistrictChange = (districtId) => {
+    console.log(districtId)
+    this.props.getMandals(districtId);
+  }
+
+  onMandalChange = (mandalId) => {
+    console.log(mandalId)
+    this.props.getVillages(mandalId);
+  }
 
   handleConfirmBlur = e => {
     const { value } = e.target;
@@ -114,9 +125,12 @@ class CreateRequest extends React.Component {
           {getFieldDecorator('district', {
             rules: [{ required: true, message: 'Please select district!' }],
           })(
-            <Select placeholder="Please select a district">
+            <Select placeholder="Please select a district" onChange={this.onDistrictChange}>
               {this.props.districts.map(district =>
-                <Option key={district.DistrictID} value={district.DistrictID}>{district.Name}</Option>
+                <Option key={district.DistrictID} 
+                  value={district.DistrictID}>
+                  {district.Name}
+                </Option>
               )}
             </Select>,
           )}
@@ -136,9 +150,10 @@ class CreateRequest extends React.Component {
           {getFieldDecorator('mandal', {
             rules: [{ required: true, message: 'Please select mandal!' }],
           })(
-            <Select placeholder="Please select a mandal">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
+            <Select placeholder="Please select a mandal" onChange={this.onMandalChange}>
+              {this.props.mandals.map(mandal =>
+                <Option key={mandal.MandalID} value={mandal.MandalID}>{mandal.Name}</Option>
+              )}
             </Select>,
           )}
         </Form.Item>
@@ -147,8 +162,9 @@ class CreateRequest extends React.Component {
             rules: [{ required: true, message: 'Please select village!' }],
           })(
             <Select placeholder="Please select a village">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
+              {this.props.villages.map(village =>
+                <Option key={village.VillageID} value={village.VillageID}>{village.Name}</Option>
+              )}
             </Select>,
           )}
         </Form.Item>
@@ -279,12 +295,21 @@ const NewReqFormWrapper = Form.create({ name: 'validate_other' })(CreateRequest)
 const mapStateToProps = state => {
   return {
     districts: state.districts,
-    constituencies: state.constituencies
+    constituencies: state.constituencies,
+    mandals: state.mandals,
+    villages: state.villages
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    getMandals: (districtId) => {
+      dispatch(getMandals(districtId));
+    },
+    getVillages: (mandalId) => {
+      dispatch(getVillages(mandalId));
+    }
+  };
 };
 
 export default connect(

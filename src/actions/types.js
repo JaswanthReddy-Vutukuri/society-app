@@ -3,3 +3,5 @@ export const SET_CURRENT_USER = 'SET_CURRENT_USER';
 export const LOG_OUT = 'LOG_OUT';
 export const GET_DISTRICTS = 'GET_DISTRICTS';
 export const GET_CONSTITUENCIES = 'GET_CONSTITUENCIES';
+export const GET_MANDALS = 'GET_MANDALS';
+export const GET_VILLAGES = 'GET_VILLAGES';

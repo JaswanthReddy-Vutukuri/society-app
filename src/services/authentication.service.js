@@ -11,14 +11,14 @@ export const authenticationService = {
 };
 
 function login(username, password) {
-    const apiUrl = 'http://localhost:4000'
+    const apiUrl = 'http://api.magunta.in/api'
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
     };
 
-    return fetch(`${apiUrl}/users/authenticate`, requestOptions)
+    return fetch(`${apiUrl}/login/authenticate`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes

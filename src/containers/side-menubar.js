@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 const { Sider } = Layout;
 
 const SideMenuBar = ({ currentUser }) => {
-    if (currentUser.role == 'User') {
+    if (currentUser.Role == 'User') {
         return (
             <Sider width={200} style={{ background: "#fff" }}>
                 <Menu mode="inline" defaultSelectedKeys={["0"]} className="main-menu">

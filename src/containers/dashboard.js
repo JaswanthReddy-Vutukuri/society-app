@@ -8,7 +8,7 @@ import About from '../components/about';
 
 const Dashboard = ({ currentUser }) => {
 
-    switch (currentUser.role) {
+    switch (currentUser.Role) {
         case 'User': return (
             <About />
         );

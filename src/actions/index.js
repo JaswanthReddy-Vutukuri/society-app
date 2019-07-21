@@ -1,4 +1,4 @@
-import { GET_CURRENT_USER, SET_CURRENT_USER, LOG_OUT, GET_DISTRICTS, GET_CONSTITUENCIES, GET_MANDALS, GET_VILLAGES, CREATE_REQUEST } from './types';
+import { GET_CURRENT_USER, SET_CURRENT_USER, LOG_OUT, GET_DISTRICTS, GET_CONSTITUENCIES, GET_MANDALS, GET_VILLAGES, CREATE_REQUEST, GET_REQUESTS } from './types';
 import { authenticationService } from '../services';
 import axios from 'axios';
 
@@ -122,5 +122,43 @@ export const onRequestSuccess = (ticketnumber) => {
   return {
     type: CREATE_REQUEST,
     ticketnumber
+  }
+}
+
+export const getRequests = (reqParams) => {
+  console.log(reqParams)
+  const reqData = {
+    "UserID": JSON.parse(localStorage.getItem('currentUser')).UserID,
+    "Status": reqParams.reqStatus ? reqParams.reqStatus : null,
+    "Index": reqParams.index ? reqParams.index : null,
+    "Count": reqParams.count ? reqParams.count : null,
+    "SortType": reqParams.sortType ? reqParams.sortType : null,
+    "SortBy": reqParams.sortBy ? reqParams.sortBy : null,
+    "VillageID": reqParams.villageID ? reqParams.villageID : null,
+    "ConstituencyID": reqParams.ConstituencyID ? reqParams.ConstituencyID : null,
+    "MandalID": reqParams.MandalID ? reqParams.MandalID : null,
+    "DistrictID": reqParams.DistrictID ? reqParams.DistrictID : null
+  }
+  return (dispatch) => {
+    return axios('http://api.magunta.in/api/Requests/GetList', {
+      method: 'POST',
+      data: reqData,
+      headers: {
+        // 'Authorization': `bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      console.log(response);
+      dispatch(onRequests(response.data))
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+}
+
+export const onRequests = (requests) => {
+  return {
+    type: GET_REQUESTS,
+    requests
   }
 }

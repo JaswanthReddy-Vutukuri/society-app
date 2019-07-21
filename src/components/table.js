@@ -3,6 +3,8 @@ import { Table, Modal, Divider, Button } from 'antd';
 import RequestInfoDetails from './request-info';
 import ReqApprove from './request-approve';
 import ReqDecline from './request-decline';
+import { connect } from 'react-redux';
+import { getRequests } from '../actions';
 
 let data = [{ "key": 0, "ID": 86, "LastName": "manoj", "FirstName": "sai ", "District": 18, "Mandal": 791, "Village": 5307, "Gender": "Male", "age": "23", "MobileNumber": "9738009468", "Gmail": "manoj.sai1994@gmail.com", "Address": "sdf", "SelectIssuecategory": "Water", "PersonalBenifit": "Personal", "Estimatedbudget": "32423", "Description": "dfsgfg", "isActive": 1, "Createdby": "sai ", "CreatedDate": "2019-06-14T09:53:18.703", "ModifiedDate": "1900-01-01T00:00:00", "EmployeeStatus": "Approve", "Emp_Rating": 2.500000000000000e+001, "Constituency": 222 },
 { "key": 1, "ID": 87, "LastName": "babu", "FirstName": "venu", "District": 18, "Mandal": 779, "Village": 5165, "Gender": "Male", "age": "25", "MobileNumber": "9848556623", "Gmail": "venu@gmail.com", "Address": "ongole", "SelectIssuecategory": "Road", "PersonalBenifit": "people", "HowManyPepoleBenifited": "25", "Estimatedbudget": "6598", "Description": "This test", "isActive": 1, "Createdby": "venu", "CreatedDate": "2019-06-14T10:52:55.417", "ModifiedDate": "1900-01-01T00:00:00", "EmployeeStatus": "Decline", "Emp_Rating": 1.000000000000000e+001, "Constituency": 222 },
@@ -37,27 +39,23 @@ class DataTable extends React.Component {
       columns:[]
     }
   }
+
+  componentWillMount() {
+    this.props.getRequests({reqStatus:this.props.reqStatus});
+  }
+
   columns = [
     {
       title: 'Ticket No.',
-      width: 100,
-      dataIndex: 'ID',
-      key: 'ID',
-      render: (ID) => (
-        <span>{'REQ00' + ID}</span>
-      ),
+      width: 200,
+      dataIndex: 'TicketNumber',
+      key: 'TicketNumber',
       fixed: 'left',
     },
     {
-      title: 'Category',
-      width: 100,
-      dataIndex: 'SelectIssuecategory',
-      key: 'SelectIssuecategory',
-    },
-    {
       title: 'Benefits',
-      dataIndex: 'PersonalBenifit',
-      key: 'PersonalBenifit',
+      dataIndex: 'IssueCategory',
+      key: 'IssueCategory',
       width: 150,
     },
     {
@@ -74,21 +72,21 @@ class DataTable extends React.Component {
     },
     {
       title: 'Created By',
-      dataIndex: 'Createdby',
-      key: 'Createdby',
-      width: 150,
+      dataIndex: 'EmailAddress',
+      key: 'EmailAddress',
+      width: 200,
     },
     {
       title: 'Constituency',
       dataIndex: 'Constituency',
       key: 'Constituency',
-      width: 100,
+      width: 150,
     },
     {
       title: 'Created Date',
       dataIndex: 'CreatedDate',
       key: 'CreatedDate',
-      width: 200,
+      width: 150,
     },
     {
       title: 'Action',
@@ -139,7 +137,7 @@ class DataTable extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Table columns={this.columns} dataSource={data} scroll={{ x: 1500, y: 300 }} />
+        <Table columns={this.columns} dataSource={this.props.requests} scroll={{ x: 1500, y: 300 }} />
         <Modal
           title="Request Ticket : REQ 009"
           visible={this.state.showRequestInfo}
@@ -171,4 +169,21 @@ class DataTable extends React.Component {
   }
 };
 
-export default DataTable;
+const mapStateToProps = state => {
+  return {
+    requests: state.requests
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getRequests: (reqParams) => {
+      dispatch(getRequests(reqParams));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DataTable);

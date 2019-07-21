@@ -25,7 +25,7 @@ class ApprovedReqs extends React.Component {
             </ButtonGroup>
           </Form>
         </div>
-        <DataTable approve={false} />
+        <DataTable approve={false} reqStatus='Approved'/>
       </div>
     );
   }

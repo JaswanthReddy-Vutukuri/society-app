@@ -25,7 +25,7 @@ class TotalReqs extends React.Component {
             </ButtonGroup>
           </Form>
         </div>
-        <DataTable approve={true} decline={true} />
+        <DataTable approve={true} decline={true} reqStatus='Total'/>
       </div>
     );
   }

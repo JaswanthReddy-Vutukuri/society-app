@@ -25,7 +25,7 @@ class DeclinedReqs extends React.Component {
             </ButtonGroup>
           </Form>
         </div>
-        <DataTable  approve={true} decline={false}/>
+        <DataTable  approve={true} decline={false} reqStatus='Declined'/>
       </div>
     );
   }

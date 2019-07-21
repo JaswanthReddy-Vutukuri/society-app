@@ -26,41 +26,31 @@ class CreateRequest extends React.Component {
   }
 
   state = {
-    confirmDirty: false,
-    autoCompleteResult: []
+    confirmDirty: false
   };
 
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        values.MobileNumber = values.prefix+values.MobileNumber;
+        values.Status = 'New';
+        console.log('Received values of form: ', JSON.stringify(values));
       }
     });
   };
 
   onDistrictChange = (districtId) => {
-    console.log(districtId)
     this.props.getMandals(districtId);
   }
 
   onMandalChange = (mandalId) => {
-    console.log(mandalId)
     this.props.getVillages(mandalId);
   }
 
   handleConfirmBlur = e => {
     const { value } = e.target;
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-  };
-
-  compareToFirstPassword = (rule, value, callback) => {
-    const { form } = this.props;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
-    } else {
-      callback();
-    }
   };
 
   validateToNextPassword = (rule, value, callback) => {
@@ -71,19 +61,16 @@ class CreateRequest extends React.Component {
     callback();
   };
 
-  handleWebsiteChange = value => {
-    let autoCompleteResult;
-    if (!value) {
-      autoCompleteResult = [];
-    } else {
-      autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
+  normFile = e => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
     }
-    this.setState({ autoCompleteResult });
+    return e && e.fileList;
   };
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { autoCompleteResult } = this.state;
     const formItemLayout = {
       labelCol: {
         lg: { span: 4 },
@@ -104,7 +91,7 @@ class CreateRequest extends React.Component {
         },
         sm: {
           span: 16,
-          offset: 8,
+          offset: 4,
         },
       },
     };
@@ -122,7 +109,7 @@ class CreateRequest extends React.Component {
         <h2> Request Form</h2>
         <Divider />
         <Form.Item label="District" hasFeedback>
-          {getFieldDecorator('district', {
+          {getFieldDecorator('DistrictID', {
             rules: [{ required: true, message: 'Please select district!' }],
           })(
             <Select placeholder="Please select a district" onChange={this.onDistrictChange}>
@@ -136,7 +123,7 @@ class CreateRequest extends React.Component {
           )}
         </Form.Item>
         <Form.Item label="Constituency" hasFeedback>
-          {getFieldDecorator('constituency', {
+          {getFieldDecorator('ConstituencyID', {
             rules: [{ required: true, message: 'Please select constituency!' }],
           })(
             <Select placeholder="Please select a constituency">
@@ -147,7 +134,7 @@ class CreateRequest extends React.Component {
           )}
         </Form.Item>
         <Form.Item label="Mandal" hasFeedback>
-          {getFieldDecorator('mandal', {
+          {getFieldDecorator('MandalID', {
             rules: [{ required: true, message: 'Please select mandal!' }],
           })(
             <Select placeholder="Please select a mandal" onChange={this.onMandalChange}>
@@ -158,7 +145,7 @@ class CreateRequest extends React.Component {
           )}
         </Form.Item>
         <Form.Item label="Village" hasFeedback>
-          {getFieldDecorator('village', {
+          {getFieldDecorator('VillageID', {
             rules: [{ required: true, message: 'Please select village!' }],
           })(
             <Select placeholder="Please select a village">
@@ -175,7 +162,7 @@ class CreateRequest extends React.Component {
             </span>
           }
         >
-          {getFieldDecorator('firstname', {
+          {getFieldDecorator('FirstName', {
             rules: [{ required: true, message: 'Please input your firstname!', whitespace: true }],
           })(<Input />)}
         </Form.Item>
@@ -186,29 +173,29 @@ class CreateRequest extends React.Component {
             </span>
           }
         >
-          {getFieldDecorator('lastname', {
+          {getFieldDecorator('LastName', {
             rules: [{ required: true, message: 'Please input your lastname!', whitespace: true }],
           })(<Input />)}
         </Form.Item>
         <Form.Item label="Gender">
-          {getFieldDecorator('gender')(
+          {getFieldDecorator('Gender')(
             <Radio.Group>
-              <Radio value="a">Male</Radio>
-              <Radio value="b">Female</Radio>
+              <Radio value="Male">Male</Radio>
+              <Radio value="Female">Female</Radio>
             </Radio.Group>,
           )}
         </Form.Item>
         <Form.Item label="Age">
-                {getFieldDecorator('age', {rules: [{ required: true, message: 'Please provide Age!' }] })(<InputNumber />)}
+                {getFieldDecorator('Age', {rules: [{ required: true, message: 'Please provide Age!' }] })(<InputNumber />)}
                 <span className="ant-form-text"> Years </span>
         </Form.Item>
         <Form.Item label="Phone Number">
-          {getFieldDecorator('phone', {
+          {getFieldDecorator('MobileNumber', {
             rules: [{ required: true, message: 'Please input your phone number!' }],
           })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
         </Form.Item>
         <Form.Item label="E-mail">
-          {getFieldDecorator('email', {
+          {getFieldDecorator('EmailAddress', {
             rules: [
               {
                 type: 'email',
@@ -228,20 +215,22 @@ class CreateRequest extends React.Component {
             </span>
           }
         >
-          {getFieldDecorator('address', {
+          {getFieldDecorator('Address', {
             rules: [{ required: true, message: 'Please input your address!', whitespace: true }],
           })(<TextArea rows={4} />)}
         </Form.Item>
         <Form.Item label="Benefits">
-          {getFieldDecorator('benefits')(
+          {getFieldDecorator('IssueCategory', {
+            rules: [{ required: true, message: 'Please input beneficiaries!' }],
+          })(
             <Radio.Group>
-              <Radio value="a">Person</Radio>
-              <Radio value="b">People</Radio>
+              <Radio value="Person">Person</Radio>
+              <Radio value="People">People</Radio>
             </Radio.Group>,
           )}
         </Form.Item>
         <Form.Item label="Estimated Budget">
-                {getFieldDecorator('budget', {rules: [{ required: true, message: 'Please provide Budget!' }] })(<InputNumber />)}
+                {getFieldDecorator('Estimatedbudget', {rules: [{ required: true, message: 'Please provide Budget!' }] })(<InputNumber />)}
                 <span className="ant-form-text"> Rupees </span>
         </Form.Item>
         <Form.Item
@@ -251,13 +240,13 @@ class CreateRequest extends React.Component {
             </span>
           }
         >
-          {getFieldDecorator('description', {
+          {getFieldDecorator('Description', {
             rules: [{ required: true, message: 'Please input your description!', whitespace: true }],
           })(<TextArea rows={4} />)}
         </Form.Item>
         <Form.Item label="Upload Relevant Docs">
           <div className="dropbox">
-            {getFieldDecorator('documents', {
+            {getFieldDecorator('Documents', {
               valuePropName: 'fileList',
               getValueFromEvent: this.normFile,
             })(
@@ -272,11 +261,11 @@ class CreateRequest extends React.Component {
           </div>
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
-          {getFieldDecorator('agreement', {
+          {getFieldDecorator('Agreed', {
             valuePropName: 'checked',
           })(
             <Checkbox>
-              I have read the <a href="">agreement</a>
+              I confirm all the above information provided is true upto my knowledge
             </Checkbox>,
           )}
         </Form.Item>

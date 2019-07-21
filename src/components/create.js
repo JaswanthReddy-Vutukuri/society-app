@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
-import { getMandals, getVillages } from '../actions';
+import { getMandals, getVillages, createRequest } from '../actions';
 
 import {
   Form,
@@ -33,9 +33,10 @@ class CreateRequest extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        values.MobileNumber = values.prefix+values.MobileNumber;
+        values.MobileNumber = '+'+values.prefix+values.MobileNumber;
         values.Status = 'New';
         console.log('Received values of form: ', JSON.stringify(values));
+        this.props.createRequest(values);
       }
     });
   };
@@ -297,6 +298,9 @@ const mapDispatchToProps = dispatch => {
     },
     getVillages: (mandalId) => {
       dispatch(getVillages(mandalId));
+    },
+    createRequest: (reqData) => {
+      dispatch(createRequest(reqData));
     }
   };
 };

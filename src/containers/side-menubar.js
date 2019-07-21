@@ -6,9 +6,6 @@ import { connect } from 'react-redux';
 const { Sider } = Layout;
 
 class SideMenuBar extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
 
@@ -111,7 +108,6 @@ class SideMenuBar extends React.Component {
                 </Menu>
             </Sider>
         )
-        console.log(this.props.currentUser)
 
         switch (this.props.currentUser.Role) {
             case 'USER': return (<React.Fragment>{ siderOne }</React.Fragment>);

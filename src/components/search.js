@@ -1,21 +1,14 @@
 import React from 'react';
-import { Form, Icon, Input, Button, DatePicker, Select } from 'antd';
+import { Form, Button, DatePicker, Select } from 'antd';
 import { Collapse } from 'antd';
 import { connect } from 'react-redux';
 import { getMandals, getVillages } from '../actions';
 
 const { Panel } = Collapse;
-const { MonthPicker, RangePicker } = DatePicker;
+const { RangePicker } = DatePicker;
 const { Option } = Select;
 
-function hasErrors(fieldsError) {
-    return Object.keys(fieldsError).some(field => fieldsError[field]);
-}
-
 class SearchForm extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         // To disabled submit button at the beginning.

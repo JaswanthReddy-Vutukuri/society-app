@@ -3,8 +3,7 @@ import React from 'react';
 import {
   Form,
   Input,
-  Rate,
-  Divider
+  Rate
 } from 'antd';
 
 const { TextArea } = Input;

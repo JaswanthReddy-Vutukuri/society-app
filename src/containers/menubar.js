@@ -8,9 +8,6 @@ import { logOut } from '../actions';
 const { Header } = Layout;
 
 class Menubar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
 

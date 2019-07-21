@@ -70,9 +70,9 @@ class SignInForm extends React.Component {
             valuePropName: 'checked',
             initialValue: true,
           })(<Checkbox className="login-form-remember">Remember me</Checkbox>)}
-          <a className="login-form-forgot" href="">
+          <span className="login-form-forgot" >
             Forgot password
-          </a>
+          </span>
           <Button type="primary" htmlType="submit" className="login-form-button">
             Log in
           </Button>

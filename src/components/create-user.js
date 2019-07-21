@@ -14,10 +14,6 @@ import {
 const { Option } = Select;
 
 class CreateUser extends React.Component {
-  
-  constructor(props) {
-    super(props);
-  }
 
   state = {
     confirmDirty: false

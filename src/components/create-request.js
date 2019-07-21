@@ -22,10 +22,6 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 class CreateRequest extends React.Component {
-  
-  constructor(props) {
-    super(props);
-  }
 
   state = {
     confirmDirty: false

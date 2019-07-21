@@ -28,11 +28,9 @@ class CreateUser extends React.Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', JSON.stringify(values));
-        // this.props.createUser(values);
         userService.createUser(values)
         .then(
           user => {
-            console.log(user)
             message.success('User Created Successfully');
           },
           error => {
@@ -184,11 +182,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    createUser: (reqData) => {
-      // dispatch(createUser(reqData));
-    }
-  };
+  return {};
 };
 
 export default connect(

@@ -1,4 +1,4 @@
-import { GET_CURRENT_USER, SET_CURRENT_USER, LOG_OUT, GET_DISTRICTS, GET_CONSTITUENCIES, GET_MANDALS, GET_VILLAGES, CREATE_REQUEST, GET_REQUESTS } from './types';
+import { GET_CURRENT_USER, SET_CURRENT_USER, LOG_OUT, GET_DISTRICTS, GET_CONSTITUENCIES, GET_MANDALS, GET_VILLAGES, GET_REQUESTS } from './types';
 import { authenticationService } from '../services';
 import axios from 'axios';
 
@@ -100,33 +100,7 @@ export const onConstituencies = (constituencies) => {
   }
 }
 
-export const createRequest = (reqData) => {
-  return (dispatch) => {
-    return axios('http://api.magunta.in/api/Requests/Save', {
-      method: 'POST',
-      data: reqData,
-      headers: {
-        // 'Authorization': `bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    }).then(function (response) {
-      console.log(response);
-      dispatch(onRequestSuccess(response.data))
-    }).catch(function (error) {
-      console.log(error);
-    });
-  }
-}
-
-export const onRequestSuccess = (ticketnumber) => {
-  return {
-    type: CREATE_REQUEST,
-    ticketnumber
-  }
-}
-
 export const getRequests = (reqParams) => {
-  console.log(reqParams)
   const reqData = {
     "UserID": JSON.parse(localStorage.getItem('currentUser')).UserID,
     "Status": reqParams.reqStatus ? reqParams.reqStatus : null,
@@ -148,7 +122,6 @@ export const getRequests = (reqParams) => {
         'Content-Type': 'application/json'
       }
     }).then(function (response) {
-      console.log(response);
       dispatch(onRequests(response.data))
     }).catch(function (error) {
       console.log(error);

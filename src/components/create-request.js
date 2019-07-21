@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
-import { getMandals, getVillages, createRequest } from '../actions';
+import { getMandals, getVillages } from '../actions';
 import { requestService } from '../services';
 
 import {
@@ -37,8 +37,6 @@ class CreateRequest extends React.Component {
       if (!err) {
         values.MobileNumber = '+'+values.prefix+values.MobileNumber;
         values.Status = 'New';
-        console.log('Received values of form: ', JSON.stringify(values));
-        // this.props.createRequest(values);
         requestService.createRequest(values)
         .then(
           ticketNumber => {
@@ -310,9 +308,6 @@ const mapDispatchToProps = dispatch => {
     },
     getVillages: (mandalId) => {
       dispatch(getVillages(mandalId));
-    },
-    createRequest: (reqData) => {
-      dispatch(createRequest(reqData));
     }
   };
 };

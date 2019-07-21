@@ -11,6 +11,7 @@ class Menubar extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
 
     const handleMenuClick = (e) => {
@@ -37,7 +38,7 @@ class Menubar extends React.Component {
           overlay={menu}
           icon={<Icon type="user" />}
         >
-          {this.props.currentUser.Username}
+          <span style={{textTransform: 'capitalize'}}>{this.props.currentUser.Username}</span>
         </Dropdown.Button>
         <Menu theme="dark" mode="horizontal" style={{ lineHeight: "64px" }} />
       </Header>

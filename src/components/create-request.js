@@ -2,6 +2,7 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
 import { getMandals, getVillages, createRequest } from '../actions';
+import { requestService } from '../services';
 
 import {
   Form,
@@ -14,6 +15,7 @@ import {
   Divider,
   Checkbox,
   Button,
+  message
 } from 'antd';
 
 const { TextArea } = Input;
@@ -36,7 +38,17 @@ class CreateRequest extends React.Component {
         values.MobileNumber = '+'+values.prefix+values.MobileNumber;
         values.Status = 'New';
         console.log('Received values of form: ', JSON.stringify(values));
-        this.props.createRequest(values);
+        // this.props.createRequest(values);
+        requestService.createRequest(values)
+        .then(
+          ticketNumber => {
+            console.log("ticketNumber:",ticketNumber)
+            message.success(`Request raised Created Successfully. Your Ticket Number: ${ticketNumber}`);
+          },
+          error => {
+            console.log("ERROR:",error)
+          }
+        );
       }
     });
   };

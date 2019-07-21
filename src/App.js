@@ -10,11 +10,13 @@ import TotalReqs from './components/total.js';
 import ApprovedReqs from './components/approved.js';
 import PendingReqs from './components/pending.js';
 import DeclinedReqs from './components/declined.js';
-import CreateRequest from './components/create.js';
+import CreateRequest from './components/create-request.js';
 import TrackRequest from './components/track.js';
 import PrivateRoute from './components/private-route';
 import SignIn from './components/signin';
 import Error from './components/error.js';
+import CreateUser from './components/create-user.js';
+import ShowUsers from './components/show-users.js';
 import { getCurrentUser, getDistricts } from './actions';
 
 import { Layout } from "antd";
@@ -43,13 +45,15 @@ class App extends React.Component {
           <Layout style={{ padding: "0 24px 24px" }}>
             <Content style={{background: "#fff", padding: 24, margin: "16px 0px 0px 0px", minHeight: 280}}>
                 <Switch>
-                  <PrivateRoute exact path="/" roles={['Admin','User','Employee','Incharge','Representative']} component={Dashboard} />
-                  <PrivateRoute path="/all" roles={['Admin','Employee','Incharge','Representative']} component={TotalReqs} />
-                  <PrivateRoute path="/declined" roles={['Admin','Employee','Incharge','Representative']} component={DeclinedReqs} />
-                  <PrivateRoute path="/approved" roles={['Admin','Employee','Incharge','Representative']} component={ApprovedReqs} />
-                  <PrivateRoute path="/pending" roles={['Admin','Employee','Incharge','Representative']} component={PendingReqs} />
-                  <PrivateRoute path="/new-request" roles={['User']} component={CreateRequest} />
-                  <PrivateRoute path="/track-request" roles={['User']} component={TrackRequest} />
+                  <PrivateRoute exact path="/" roles={['USER','EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={Dashboard} />
+                  <PrivateRoute path="/all" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={TotalReqs} />
+                  <PrivateRoute path="/declined" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={DeclinedReqs} />
+                  <PrivateRoute path="/approved" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={ApprovedReqs} />
+                  <PrivateRoute path="/pending" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={PendingReqs} />
+                  <PrivateRoute path="/new-request" roles={['USER']} component={CreateRequest} />
+                  <PrivateRoute path="/track-request" roles={['USER']} component={TrackRequest} />
+                  <PrivateRoute path="/create-user" roles={['ADMIN']} component={CreateUser} />
+                  <PrivateRoute path="/show-users" roles={['ADMIN']} component={ShowUsers} />
                   <Route path="/login" component={SignIn} />
                   <Route component={Error} />
                 </Switch>

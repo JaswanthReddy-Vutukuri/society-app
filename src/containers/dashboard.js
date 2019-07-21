@@ -9,25 +9,30 @@ import About from '../components/about';
 const Dashboard = ({ currentUser }) => {
 
     switch (currentUser.Role) {
-        case 'User': return (
+        case 'USER': return (
             <About />
         );
-        case 'Employee': return (
+        case 'EMPLOYEE': return (
             <div>
                 <RequestCounts />
                 <Clock />
             </div>
         );
-        case 'Incharge': return (
+        case 'INCHARGE': return (
             <div>
                 <RequestCounts />
                 <Clock />
             </div>
         );
-        case 'Representative': return (
+        case 'REPRESENTATIVE': return (
             <div>
                 <RequestCounts />
                 <Clock />
+            </div>
+        );
+        case 'ADMIN': return (
+            <div>
+                <h2>Admin</h2>
             </div>
         );
         default: return (

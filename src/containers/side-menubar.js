@@ -5,9 +5,14 @@ import { connect } from 'react-redux';
 
 const { Sider } = Layout;
 
-const SideMenuBar = ({ currentUser }) => {
-    if (currentUser.Role == 'User') {
-        return (
+class SideMenuBar extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+
+        const siderOne = (
             <Sider width={200} style={{ background: "#fff" }}>
                 <Menu mode="inline" defaultSelectedKeys={["0"]} className="main-menu">
                     <Menu.Item key="0">
@@ -37,8 +42,7 @@ const SideMenuBar = ({ currentUser }) => {
                 </Menu>
             </Sider>
         )
-    } else {
-        return (
+        const siderTwo = (
             <Sider width={200} style={{ background: "#fff" }}>
                 <Menu mode="inline" defaultSelectedKeys={["0"]} className="main-menu">
                     <Menu.Item key="0">
@@ -83,10 +87,42 @@ const SideMenuBar = ({ currentUser }) => {
                     </Menu.Item>
                 </Menu>
             </Sider>
-        );
+        )
 
+        const siderThree = (
+            <Sider width={200} style={{ background: "#fff" }}>
+                <Menu mode="inline" defaultSelectedKeys={["0"]} className="main-menu">
+                    <Menu.Item key="0">
+                        <NavLink to="/create-user">
+                            <span>
+                                <Icon type="dashboard" />
+                                    Create User
+                                </span>
+                        </NavLink>
+                    </Menu.Item>
+                    <Menu.Item key="1">
+                        <NavLink to="/show-users">
+                            <span>
+                                <Icon type="unordered-list" />
+                                    Show Users
+                                </span>
+                        </NavLink>
+                    </Menu.Item>
+                </Menu>
+            </Sider>
+        )
+        console.log(this.props.currentUser)
+
+        switch (this.props.currentUser.Role) {
+            case 'USER': return (<React.Fragment>{ siderOne }</React.Fragment>);
+            case 'EMPLOYEE': return (<React.Fragment>{ siderTwo }</React.Fragment>);
+            case 'INCHARGE': return (<React.Fragment>{ siderTwo }</React.Fragment>);
+            case 'REPRESENTATIVE': return (<React.Fragment>{ siderTwo }</React.Fragment>);
+            case 'ADMIN': return (<React.Fragment>{ siderThree }</React.Fragment>);
+            default : return (<h1>I will be no where!</h1>);
+        }
     }
-};
+}
 
 
 const mapStateToProps = state => {

@@ -31,9 +31,7 @@ const Dashboard = ({ currentUser }) => {
             </div>
         );
         case 'ADMIN': return (
-            <div>
-                <h2>Admin</h2>
-            </div>
+            <h2> Admin </h2>
         );
         default: return (
             <h2> Default </h2>

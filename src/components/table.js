@@ -34,7 +34,7 @@ class DataTable extends React.Component {
       title: 'Benefits',
       dataIndex: 'IssueCategory',
       key: 'IssueCategory',
-      width: 150,
+      width: 120,
     },
     {
       title: 'Description',
@@ -59,12 +59,16 @@ class DataTable extends React.Component {
       dataIndex: 'Constituency',
       key: 'Constituency',
       width: 150,
+      render: Constituency => (
+      <span>{Constituency.Name}</span> )
     },
     {
       title: 'Created Date',
-      dataIndex: 'CreatedDate',
-      key: 'CreatedDate',
-      width: 150,
+      dataIndex: 'CreatedOn',
+      key: 'CreatedOn',
+      width: 200,
+      render: CreatedOn => (
+        <span>{(new Date(CreatedOn)).toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ")}</span> )
     },
     {
       title: 'Action',

@@ -90,14 +90,22 @@ class SideMenuBar extends React.Component {
             <Sider width={200} style={{ background: "#fff" }}>
                 <Menu mode="inline" defaultSelectedKeys={["0"]} className="main-menu">
                     <Menu.Item key="0">
-                        <NavLink to="/create-user">
+                        <NavLink to="/">
                             <span>
                                 <Icon type="dashboard" />
-                                    Create User
+                                    Dashboard
                                 </span>
                         </NavLink>
                     </Menu.Item>
                     <Menu.Item key="1">
+                        <NavLink to="/create-user">
+                            <span>
+                                <Icon type="edit" />
+                                    Create User
+                                </span>
+                        </NavLink>
+                    </Menu.Item>
+                    <Menu.Item key="2">
                         <NavLink to="/show-users">
                             <span>
                                 <Icon type="unordered-list" />

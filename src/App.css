@@ -51,12 +51,26 @@
 .login-form {
   max-width: 300px;
 }
+
 .login-form-forgot {
   float: right;
 }
+
 .login-form-remember {
   float: left;
 }
+
 .login-form-button {
   width: 100%;
+}
+
+.req-card {
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px;
+}
+
+.req-value {
+  color:white !important;
+  font-size: 2.5em !important;
 }

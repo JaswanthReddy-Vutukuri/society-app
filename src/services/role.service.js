@@ -1,6 +1,6 @@
 import { handleResponse } from '../helpers';
 
-export const rolesService = {
+export const roleService = {
     getRoles
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import { userService, rolesService } from '../services';
+import { userService, roleService } from '../services';
 import {
   Form,
   Input,
@@ -20,7 +20,7 @@ class CreateUser extends React.Component {
   };
 
   componentWillMount() {
-    rolesService.getRoles()
+    roleService.getRoles()
       .then(
         roles => {
           this.setState({roles:roles});

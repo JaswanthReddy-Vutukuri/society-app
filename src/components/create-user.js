@@ -102,7 +102,7 @@ class CreateUser extends React.Component {
         >
           {getFieldDecorator('FirstName', {
             rules: [{ required: true, message: 'Please input your firstname!', whitespace: true }],
-          })(<Input />)}
+          })(<Input placeholder="Please input firstname" />)}
         </Form.Item>
         <Form.Item
           label={
@@ -113,7 +113,7 @@ class CreateUser extends React.Component {
         >
           {getFieldDecorator('LastName', {
             rules: [{ required: true, message: 'Please input your lastname!', whitespace: true }],
-          })(<Input />)}
+          })(<Input placeholder="Please input lastname" />)}
         </Form.Item>
         <Form.Item label="Role" hasFeedback>
           {getFieldDecorator('RoleID', {
@@ -138,7 +138,7 @@ class CreateUser extends React.Component {
         >
           {getFieldDecorator('Username', {
             rules: [{ required: true, message: 'Please input username!', whitespace: true }],
-          })(<Input />)}
+          })(<Input placeholder="Please input username" />)}
         </Form.Item>
         <Form.Item
           label={
@@ -149,7 +149,7 @@ class CreateUser extends React.Component {
         >
           {getFieldDecorator('Password', {
             rules: [{ required: true, message: 'Please input password!', whitespace: true }],
-          })(<Input />)}
+          })(<Input placeholder="Please input password" />)}
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">

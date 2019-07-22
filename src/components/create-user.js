@@ -1,6 +1,6 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import { userService } from '../services';
+import { userService, rolesService } from '../services';
 import {
   Form,
   Input,
@@ -15,8 +15,21 @@ const { Option } = Select;
 class CreateUser extends React.Component {
 
   state = {
-    confirmDirty: false
+    confirmDirty: false,
+    roles : []
   };
+
+  componentWillMount() {
+    rolesService.getRoles()
+      .then(
+        roles => {
+          this.setState({roles:roles});
+        },
+        error => {
+          console.log("Error while fetching Roles:", error);
+        }
+      );
+  }
 
   handleSubmit = e => {
     e.preventDefault();
@@ -50,28 +63,6 @@ class CreateUser extends React.Component {
   };
 
   render() {
-    const roles = [
-      {
-        "RoleID": 1,
-        "RoleName": "ADMIN"
-      },
-      {
-        "RoleID": 2,
-        "RoleName": "EMPLOYEE"
-      },
-      {
-        "RoleID": 3,
-        "RoleName": "INCHARGE"
-      },
-      {
-        "RoleID": 4,
-        "RoleName": "REPRESENTATIVE"
-      },
-      {
-        "RoleID": 5,
-        "RoleName": "USER"
-      }
-    ]
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
@@ -129,7 +120,7 @@ class CreateUser extends React.Component {
             rules: [{ required: true, message: 'Please select role!' }],
           })(
             <Select placeholder="Please select a role">
-              {roles.map(role =>
+              {this.state.roles.map(role =>
                 <Option key={role.RoleID} 
                   value={role.RoleID}>
                   {role.RoleName}

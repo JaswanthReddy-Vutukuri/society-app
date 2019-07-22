@@ -41,7 +41,7 @@ class App extends React.Component {
           <Layout style={{ padding: "0 24px 24px" }}>
             <Content style={{background: "#fff", padding: 24, margin: "16px 0px 0px 0px", minHeight: 280}}>
                 <Switch>
-                  <PrivateRoute exact path="/" roles={['USER','EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={Dashboard} />
+                  <PrivateRoute exact path="/" roles={['USER','EMPLOYEE','INCHARGE','REPRESENTATIVE', 'ADMIN']} component={Dashboard} />
                   <PrivateRoute path="/all" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={TotalReqs} />
                   <PrivateRoute path="/declined" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={DeclinedReqs} />
                   <PrivateRoute path="/approved" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={ApprovedReqs} />

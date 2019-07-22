@@ -1,18 +1,23 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { Layout, Menu, Icon } from "antd";
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const { Sider } = Layout;
 
 class SideMenuBar extends React.Component {
 
-    render() {
+    static propTypes = {
+        location: PropTypes.object.isRequired
+    }
 
+    render() {
+        const { location } = this.props;
         const siderOne = (
             <Sider width={200} style={{ background: "#fff" }}>
-                <Menu mode="inline" defaultSelectedKeys={["0"]} className="main-menu">
-                    <Menu.Item key="0">
+                <Menu mode="inline" defaultSelectedKeys={['/']} selectedKeys={[location.pathname]} className="main-menu">
+                    <Menu.Item key="/">
                         <NavLink to="/">
                             <span>
                                 <Icon type="history" />
@@ -20,7 +25,7 @@ class SideMenuBar extends React.Component {
                             </span>
                         </NavLink>
                     </Menu.Item>
-                    <Menu.Item key="1">
+                    <Menu.Item key="/new-request">
                         <NavLink to="/new-request">
                             <span>
                                 <Icon type="form" />
@@ -28,7 +33,7 @@ class SideMenuBar extends React.Component {
                             </span>
                         </NavLink>
                     </Menu.Item>
-                    <Menu.Item key="2">
+                    <Menu.Item key="/track-request">
                         <NavLink to="/track-request">
                             <span>
                                 <Icon type="form" />
@@ -41,8 +46,8 @@ class SideMenuBar extends React.Component {
         )
         const siderTwo = (
             <Sider width={200} style={{ background: "#fff" }}>
-                <Menu mode="inline" defaultSelectedKeys={["0"]} className="main-menu">
-                    <Menu.Item key="0">
+                <Menu mode="inline" defaultSelectedKeys={['/']} selectedKeys={[location.pathname]} className="main-menu">
+                    <Menu.Item key="/">
                         <NavLink to="/">
                             <span>
                                 <Icon type="dashboard" />
@@ -50,7 +55,7 @@ class SideMenuBar extends React.Component {
                             </span>
                         </NavLink>
                     </Menu.Item>
-                    <Menu.Item key="1">
+                    <Menu.Item key="/all">
                         <NavLink to="/all">
                             <span>
                                 <Icon type="unordered-list" />
@@ -58,7 +63,7 @@ class SideMenuBar extends React.Component {
                             </span>
                         </NavLink>
                     </Menu.Item>
-                    <Menu.Item key="2">
+                    <Menu.Item key="/approved">
                         <NavLink to="/approved">
                             <span>
                                 <Icon type="check-circle" />
@@ -66,7 +71,7 @@ class SideMenuBar extends React.Component {
                             </span>
                         </NavLink>
                     </Menu.Item>
-                    <Menu.Item key="3">
+                    <Menu.Item key="/declined">
                         <NavLink to="/declined">
                             <span>
                                 <Icon type="dislike" />
@@ -74,7 +79,7 @@ class SideMenuBar extends React.Component {
                             </span>
                         </NavLink>
                     </Menu.Item>
-                    <Menu.Item key="4">
+                    <Menu.Item key="/pending">
                         <NavLink to="/pending">
                             <span>
                                 <Icon type="exclamation-circle" />
@@ -88,8 +93,8 @@ class SideMenuBar extends React.Component {
 
         const siderThree = (
             <Sider width={200} style={{ background: "#fff" }}>
-                <Menu mode="inline" defaultSelectedKeys={["0"]} className="main-menu">
-                    <Menu.Item key="0">
+                <Menu mode="inline" defaultSelectedKeys={['/']} selectedKeys={[location.pathname]} className="main-menu">
+                    <Menu.Item key="/">
                         <NavLink to="/">
                             <span>
                                 <Icon type="dashboard" />
@@ -97,7 +102,7 @@ class SideMenuBar extends React.Component {
                                 </span>
                         </NavLink>
                     </Menu.Item>
-                    <Menu.Item key="1">
+                    <Menu.Item key="/create-user">
                         <NavLink to="/create-user">
                             <span>
                                 <Icon type="edit" />
@@ -105,11 +110,11 @@ class SideMenuBar extends React.Component {
                                 </span>
                         </NavLink>
                     </Menu.Item>
-                    <Menu.Item key="2">
+                    <Menu.Item key="/show-users">
                         <NavLink to="/show-users">
                             <span>
                                 <Icon type="unordered-list" />
-                                    Show Users
+                                    Users List
                                 </span>
                         </NavLink>
                     </Menu.Item>
@@ -142,4 +147,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(SideMenuBar);
+)(withRouter(SideMenuBar));

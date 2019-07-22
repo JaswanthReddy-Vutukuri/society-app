@@ -1,7 +1,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
-import { getMandals, getVillages } from '../actions';
+import { getMandals, getVillages, getDistricts, getConstituencies } from '../actions';
 import { requestService } from '../services';
 
 import {
@@ -29,9 +29,14 @@ class CreateRequest extends React.Component {
     visible: false
   };
 
+  componentWillMount() {
+    this.props.getDistricts();
+    this.props.getConstituencies();
+  }
+
   showModal = () => {
     this.setState({
-      visible: true,
+      visible: true
     });
   };
 
@@ -44,7 +49,7 @@ class CreateRequest extends React.Component {
 
   handleCancel = () => {
     this.setState({
-      visible: false,
+      visible: false
     });
   };
 
@@ -338,6 +343,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    getConstituencies: () => {
+      dispatch(getConstituencies());
+    },
+    getDistricts: () => {
+      dispatch(getDistricts());
+    },
     getMandals: (districtId) => {
       dispatch(getMandals(districtId));
     },

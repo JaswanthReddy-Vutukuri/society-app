@@ -8,12 +8,8 @@ import './index.css';
 import App from './App';
 import rootReducer from './reducers';
 import * as serviceWorker from './serviceWorker';
-import { getDistricts, getConstituencies } from './actions/index';
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
-
-store.dispatch(getDistricts());
-store.dispatch(getConstituencies());
 
 ReactDOM.render(
     <Provider store={store}>

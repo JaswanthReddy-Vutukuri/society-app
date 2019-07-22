@@ -119,7 +119,12 @@ class DataTable extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Table columns={this.columns} dataSource={this.props.requests} scroll={{ x: 1500, y: 300 }} />
+        <Table 
+          columns={this.columns} 
+          dataSource={this.props.requests} 
+          scroll={{ x: 1500, y: 300 }} 
+          pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '15', '20', '30']}} 
+        />
         <Modal
           title="Request Ticket : REQ 009"
           visible={this.state.showRequestInfo}

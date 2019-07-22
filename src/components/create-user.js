@@ -1,7 +1,6 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { userService } from '../services';
-import { connect } from 'react-redux';
 import {
   Form,
   Input,
@@ -30,7 +29,7 @@ class CreateUser extends React.Component {
             message.success('User Created Successfully');
           },
           error => {
-            console.log("ERROR:",error)
+            console.log("Error while creating User:",error)
           }
         );
       }
@@ -173,15 +172,4 @@ class CreateUser extends React.Component {
 
 const CreateUserWrapper = Form.create({ name: 'validate_other' })(CreateUser);
 
-const mapStateToProps = state => {
-  return {};
-};
-
-const mapDispatchToProps = dispatch => {
-  return {};
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CreateUserWrapper);
+export default CreateUserWrapper;

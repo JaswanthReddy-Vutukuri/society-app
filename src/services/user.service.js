@@ -1,7 +1,8 @@
 import { handleResponse } from '../helpers';
 
 export const userService = {
-    createUser
+    createUser,
+    getUsers
 };
 
 function createUser(userData) {
@@ -16,5 +17,19 @@ function createUser(userData) {
         .then(handleResponse)
         .then(user => {
             return user;
+        });
+}
+
+
+function getUsers() {
+    const apiUrl = 'http://api.magunta.in/api'
+    const requestOptions = {
+        method: 'GET'
+    };
+
+    return fetch(`${apiUrl}/User/GetAll`, requestOptions)
+        .then(handleResponse)
+        .then(users => {
+            return users;
         });
 }

@@ -43,10 +43,10 @@ class App extends React.Component {
             <Content style={{background: "#fff", padding: 24, margin: "16px 0px 0px 0px", minHeight: 280}}>
                 <Switch>
                   <PrivateRoute exact path="/" roles={['USER','EMPLOYEE','INCHARGE','REPRESENTATIVE', 'ADMIN']} component={Dashboard} />
-                  <PrivateRoute path="/total" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={TotalReqs} />
-                  <PrivateRoute path="/declined" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={DeclinedReqs} />
+                  <PrivateRoute path="/total" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={ShowRequests} />
+                  <PrivateRoute path="/declined" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={ShowRequests} />
                   <PrivateRoute path="/approved" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={ShowRequests} />
-                  <PrivateRoute path="/pending" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={PendingReqs} />
+                  <PrivateRoute path="/pending" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={ShowRequests} />
                   <PrivateRoute path="/new-request" roles={['USER']} component={CreateRequest} />
                   <PrivateRoute path="/track-request" roles={['USER']} component={TrackRequest} />
                   <PrivateRoute path="/create-user" roles={['ADMIN']} component={CreateUser} />

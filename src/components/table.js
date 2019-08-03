@@ -4,7 +4,6 @@ import RequestInfoDetails from './request-info';
 import ReqApprove from './request-approve';
 import ReqDecline from './request-decline';
 import { connect } from 'react-redux';
-import { requestService } from '../services';
 
 class DataTable extends React.Component {
 
@@ -15,59 +14,39 @@ class DataTable extends React.Component {
       showRequestApprove: false,
       showRequestDecline: false,
       columns:[],
-      requests:[]
     }
-  }
-
-  componentWillMount() {
-    requestService.getRequests({reqStatus:this.props.reqStatus})
-    .then(
-      requests => {
-        this.setState({requests:requests});
-      },
-      error => {
-        console.log("Error while fetching requests:", error);
-      }
-    );
   }
 
   columns = [
     {
       title: 'Ticket No.',
-      width: 200,
       dataIndex: 'TicketNumber',
       key: 'TicketNumber',
-      fixed: 'left',
     },
     {
       title: 'Benefits',
       dataIndex: 'IssueCategory',
       key: 'IssueCategory',
-      width: 120,
     },
     {
       title: 'Description',
       dataIndex: 'Description',
       key: 'Description',
-      width: 150,
     },
     {
       title: 'Budget',
       dataIndex: 'Estimatedbudget',
       key: 'Estimatedbudget',
-      width: 150,
     },
     {
       title: 'Created By',
       dataIndex: 'EmailAddress',
       key: 'EmailAddress',
-      width: 200,
     },
     {
       title: 'Constituency',
       dataIndex: 'Constituency',
       key: 'Constituency',
-      width: 150,
       render: Constituency => (
       <span>{Constituency.Name}</span> )
     },
@@ -75,14 +54,12 @@ class DataTable extends React.Component {
       title: 'Created Date',
       dataIndex: 'CreatedOn',
       key: 'CreatedOn',
-      width: 200,
       render: CreatedOn => (
         <span>{(new Date(CreatedOn)).toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ")}</span> )
     },
     {
       title: 'Action',
       key: 'action',
-      fixed: 'right',
       render: () => (
         <span>
           <Button type="link" style={{ color: 'blue'}} onClick={()=>{ this.showReqInfoModal()}}> View </Button>
@@ -130,8 +107,7 @@ class DataTable extends React.Component {
       <React.Fragment>
         <Table 
           columns={this.columns} 
-          dataSource={this.state.requests} 
-          scroll={{ x: 1500, y: 300 }} 
+          dataSource={this.props.requests} 
           pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '15', '20', '30']}} 
         />
         <Modal

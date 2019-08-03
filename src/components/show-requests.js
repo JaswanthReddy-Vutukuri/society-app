@@ -4,18 +4,45 @@ import DataTable from './table';
 import ReqsSearchForm from './search';
 import {withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
+import { requestService } from '../services';
 
 class ShowRequests extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      requests:[]
+    }
+  }
+
+  componentWillMount() {
+    this.fetchRequests();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      this.fetchRequests();
+    }
+  }
+
+  fetchRequests() {
+    let status = (this.props.location.pathname.slice(1)).toUpperCase();
+
+    requestService.getRequests({reqStatus:status})
+    .then(
+      response => {
+        this.setState({requests:response.Results});
+      },
+      error => {
+        console.log("Error while fetching requests:", error);
+      }
+    );
   }
 
   render() {
-    const urlLocation = this.props.location;
     return (
         <React.Fragment>
-            <h2>Approved Requests</h2>
+            <h2 style={{textTransform:'capitalize'}}>{(this.props.location.pathname.slice(1))} Requests</h2>
             <ReqsSearchForm />
             <div style={{ textAlign: 'right', margin: '10px 0px' }}>
             <Form layout="inline">
@@ -32,7 +59,7 @@ class ShowRequests extends React.Component {
                 </ButtonGroup> */}
             </Form>
             </div>
-            <DataTable approve={false} reqStatus={(urlLocation.pathname.slice(1)).toUpperCase()}/>
+            <DataTable approve={false} requests={this.state.requests}/>
         </React.Fragment>
     );
   }
@@ -40,9 +67,7 @@ class ShowRequests extends React.Component {
 
 
 const mapStateToProps = state => {
-  return {
-      currentUser: state.currentUser
-  };
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {

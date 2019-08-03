@@ -11,6 +11,7 @@ const { Option } = Select;
 class SearchForm extends React.Component {
 
     state = {
+        confirmDirty: false,
         districts: [],
         constituencies: [],
         mandals: [],
@@ -46,7 +47,7 @@ class SearchForm extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
             }
@@ -77,46 +78,66 @@ class SearchForm extends React.Component {
             );
     }
 
+    handleConfirmBlur = e => {
+        const { value } = e.target;
+        this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+    };
+    
     render() {
+        const { getFieldDecorator } = this.props.form;
         return (
             <React.Fragment>
                 <Collapse defaultActiveKey={['1']}>
                     <Panel header="Advanced Filter" key="1">
                         <Form layout="inline" onSubmit={this.handleSubmit}>
                             <Form.Item label="District">
-                                <Select placeholder="Select District" onChange={this.onDistrictChange} style={{ width: '200px' }}>
-                                    {this.state.districts.map(district =>
-                                        <Option key={district.DistrictID}
-                                            value={district.DistrictID}>
-                                            {district.Name}
-                                        </Option>
-                                    )}
-                                </Select>
+                                {getFieldDecorator('DistrictID')(
+                                    <Select placeholder="Select District" onChange={this.onDistrictChange} style={{ width: '190px' }}>
+                                        {this.state.districts.map(district =>
+                                            <Option key={district.DistrictID}
+                                                value={district.DistrictID}>
+                                                {district.Name}
+                                            </Option>
+                                        )}
+                                    </Select>
+                                )}
                             </Form.Item>
                             <Form.Item label="Constituency">
-                                <Select placeholder="Select Constituency" style={{ width: '200px' }}>
-                                    {this.state.constituencies.map(constituency =>
-                                        <Option key={constituency.ConstituencyID} value={constituency.ConstituencyID}>{constituency.Name}</Option>
-                                    )}
-                                </Select>
+                                {getFieldDecorator('ConstituencyID')(
+                                    <Select placeholder="Select Constituency" style={{ width: '190px' }}>
+                                        {this.state.constituencies.map(constituency =>
+                                            <Option key={constituency.ConstituencyID} value={constituency.ConstituencyID}>{constituency.Name}</Option>
+                                        )}
+                                    </Select>
+                                )}
                             </Form.Item>
                             <Form.Item label="Mandal">
-                                <Select placeholder="Select Mandal" onChange={this.onMandalChange} style={{ width: '200px' }}>
-                                    {this.state.mandals.map(mandal =>
-                                        <Option key={mandal.MandalID} value={mandal.MandalID}>{mandal.Name}</Option>
-                                    )}
-                                </Select>
+                                {getFieldDecorator('MandalID')(
+                                    <Select placeholder="Select Mandal" onChange={this.onMandalChange} style={{ width: '190px' }}>
+                                        {this.state.mandals.map(mandal =>
+                                            <Option key={mandal.MandalID} value={mandal.MandalID}>{mandal.Name}</Option>
+                                        )}
+                                    </Select>
+                                )}
                             </Form.Item>
                             <Form.Item label="Village">
-                                <Select placeholder="Select Village" style={{ width: '200px' }}>
-                                    {this.state.villages.map(village =>
-                                        <Option key={village.VillageID} value={village.VillageID}>{village.Name}</Option>
-                                    )}
-                                </Select>
+                                {getFieldDecorator('VillageID')(
+
+                                    <Select placeholder="Select Village" style={{ width: '190px' }}>
+                                        {this.state.villages.map(village =>
+                                            <Option key={village.VillageID} value={village.VillageID}>{village.Name}</Option>
+                                        )}
+                                    </Select>
+                                )}
                             </Form.Item>
-                            <Form.Item label="DateRange">
-                                <RangePicker />
-                            </Form.Item>
+                            {/* <Form.Item label="DateRange">
+                                {getFieldDecorator('RoleID', {
+                                    rules: [{ required: true, message: 'Please select role!' }],
+                                })(
+
+                                    <RangePicker />
+                                )}
+                            </Form.Item> */}
                             <Form.Item>
                                 <Button type="primary" htmlType="submit">
                                     Search
@@ -130,7 +151,7 @@ class SearchForm extends React.Component {
     }
 }
 
-const ReqsSearchForm = Form.create({ name: 'horizontal_login' })(SearchForm);
+const ReqsSearchForm = Form.create({ name: 'validate_other' })(SearchForm);
 
 const mapStateToProps = state => {
     return {};

@@ -11,7 +11,9 @@ class ShowRequests extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      requests:[]
+      requests:[],
+      loading: false,
+      count: 0
     }
   }
 
@@ -27,14 +29,15 @@ class ShowRequests extends React.Component {
 
   fetchRequests() {
     let status = (this.props.location.pathname.slice(1)).toUpperCase();
-
+    this.setState({loading:true})
     requestService.getRequests({reqStatus:status})
     .then(
       response => {
-        this.setState({requests:response.Results});
+        this.setState({requests:response.Results,count:response.RecordCount,loading:false});
       },
       error => {
         console.log("Error while fetching requests:", error);
+        this.setState({loading:false})
       }
     );
   }
@@ -47,7 +50,7 @@ class ShowRequests extends React.Component {
             <div style={{ textAlign: 'right', margin: '10px 0px' }}>
             <Form layout="inline">
                 <Form.Item label="Count">
-                <span className="ant-form-text">20</span>
+                <span className="ant-form-text">{this.state.count}</span>
                 </Form.Item>
                 <Form.Item label="Search">
                 {(<Input />)}
@@ -59,7 +62,7 @@ class ShowRequests extends React.Component {
                 </ButtonGroup> */}
             </Form>
             </div>
-            <DataTable approve={false} requests={this.state.requests}/>
+            <DataTable approve={false} requests={this.state.requests} loading={this.state.loading}/>
         </React.Fragment>
     );
   }

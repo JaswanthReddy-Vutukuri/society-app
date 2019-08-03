@@ -5,7 +5,8 @@ export const commonService = {
     getDistricts,
     getMandals,
     getVillages,
-    getConstituencies
+    getConstituencies,
+    getRoles
 };
 
 function getDistricts() {
@@ -53,5 +54,17 @@ function getConstituencies() {
         .then(handleResponse)
         .then(constituencies => {
             return constituencies;
+        });
+}
+
+function getRoles() {
+    const requestOptions = {
+        method: 'GET'
+    };
+
+    return fetch(`${apiUrl}/MasterData/GetRoles`, requestOptions)
+        .then(handleResponse)
+        .then(roles => {
+            return roles;
         });
 }

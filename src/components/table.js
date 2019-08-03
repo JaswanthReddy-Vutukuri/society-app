@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Modal, Divider, Button } from 'antd';
+import { Table, Modal, Divider, Button, Spin } from 'antd';
 import RequestInfoDetails from './request-info';
 import ReqApprove from './request-approve';
 import ReqDecline from './request-decline';
@@ -21,34 +21,32 @@ class DataTable extends React.Component {
     {
       title: 'Ticket No.',
       dataIndex: 'TicketNumber',
-      key: 'TicketNumber',
+      key: 'TicketNumber'
     },
     {
       title: 'Benefits',
       dataIndex: 'IssueCategory',
-      key: 'IssueCategory',
+      key: 'IssueCategory'
     },
     {
       title: 'Description',
       dataIndex: 'Description',
-      key: 'Description',
+      key: 'Description'
     },
     {
       title: 'Budget',
       dataIndex: 'Estimatedbudget',
-      key: 'Estimatedbudget',
+      key: 'Estimatedbudget'
     },
     {
       title: 'Created By',
       dataIndex: 'EmailAddress',
-      key: 'EmailAddress',
+      key: 'EmailAddress'
     },
     {
       title: 'Constituency',
       dataIndex: 'Constituency',
-      key: 'Constituency',
-      render: Constituency => (
-      <span>{Constituency.Name}</span> )
+      key: 'Constituency'
     },
     {
       title: 'Created Date',
@@ -105,11 +103,13 @@ class DataTable extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Table 
-          columns={this.columns} 
-          dataSource={this.props.requests} 
-          pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '15', '20', '30']}} 
-        />
+        <Spin size="large" spinning={this.props.loading}>
+          <Table 
+            columns={this.columns} 
+            dataSource={this.props.requests} 
+            pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '15', '20', '30']}} 
+          />
+        </Spin>
         <Modal
           title="Request Ticket : REQ 009"
           visible={this.state.showRequestInfo}

@@ -142,7 +142,9 @@ class DataTable extends React.Component {
 };
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    requests: state.requests
+  };
 };
 
 const mapDispatchToProps = dispatch => {

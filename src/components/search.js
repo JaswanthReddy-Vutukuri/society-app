@@ -3,6 +3,9 @@ import { Form, Button, DatePicker, Select } from 'antd';
 import { Collapse } from 'antd';
 import { connect } from 'react-redux';
 import { commonService } from '../services';
+import { requestService } from '../services';
+import { setRequests } from '../actions';
+import { withRouter } from 'react-router-dom';
 
 const { Panel } = Collapse;
 const { RangePicker } = DatePicker;
@@ -50,9 +53,26 @@ class SearchForm extends React.Component {
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                values.reqStatus = (this.props.location.pathname.slice(1)).toUpperCase();
+                this.fetchRequests(values);
             }
         });
     };
+
+    fetchRequests(reqData) {
+        this.setState({ loading: true })
+        requestService.getRequests(reqData)
+            .then(
+                response => {
+                    this.props.setRequests(response.Results);
+                    this.setState({ loading: false });
+                },
+                error => {
+                    console.log("Error while fetching requests:", error);
+                    this.setState({ loading: false })
+                }
+            );
+    }
 
     onDistrictChange = (districtId) => {
         commonService.getMandals(districtId)
@@ -82,7 +102,7 @@ class SearchForm extends React.Component {
         const { value } = e.target;
         this.setState({ confirmDirty: this.state.confirmDirty || !!value });
     };
-    
+
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
@@ -139,7 +159,7 @@ class SearchForm extends React.Component {
                                 )}
                             </Form.Item> */}
                             <Form.Item>
-                                <Button type="primary" htmlType="submit">
+                                <Button type="primary" htmlType="submit" loading={this.state.loading} disabled={this.state.loading}>
                                     Search
                                 </Button>
                             </Form.Item>
@@ -158,10 +178,14 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return {};
+    return {
+        setRequests: requests => {
+            dispatch(setRequests(requests));
+        }
+    };
 };
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ReqsSearchForm);
+)(withRouter(ReqsSearchForm));

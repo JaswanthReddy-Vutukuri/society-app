@@ -2,13 +2,42 @@ import React from 'react';
 import { Form, Button, DatePicker, Select } from 'antd';
 import { Collapse } from 'antd';
 import { connect } from 'react-redux';
-import { getMandals, getVillages } from '../actions';
+import { commonService } from '../services';
 
 const { Panel } = Collapse;
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 class SearchForm extends React.Component {
+
+    state = {
+        districts: [],
+        constituencies: [],
+        mandals: [],
+        villages: []
+    };
+
+    componentWillMount() {
+        commonService.getDistricts()
+            .then(
+                districts => {
+                    this.setState({ districts: districts });
+                },
+                error => {
+                    console.log("Error while fetching Districts:", error);
+                }
+            );
+
+        commonService.getConstituencies()
+            .then(
+                constituencies => {
+                    this.setState({ constituencies: constituencies });
+                },
+                error => {
+                    console.log("Error while fetching Constituencies:", error);
+                }
+            );
+    }
 
     componentDidMount() {
         // To disabled submit button at the beginning.
@@ -25,13 +54,27 @@ class SearchForm extends React.Component {
     };
 
     onDistrictChange = (districtId) => {
-        console.log(districtId)
-        this.props.getMandals(districtId);
+        commonService.getMandals(districtId)
+            .then(
+                mandals => {
+                    this.setState({ mandals: mandals });
+                },
+                error => {
+                    console.log("Error while fetching Mandals:", error);
+                }
+            );
     }
 
     onMandalChange = (mandalId) => {
-        console.log(mandalId)
-        this.props.getVillages(mandalId);
+        commonService.getVillages(mandalId)
+            .then(
+                villages => {
+                    this.setState({ villages: villages });
+                },
+                error => {
+                    console.log("Error while fetching Villages:", error);
+                }
+            );
     }
 
     render() {
@@ -42,7 +85,7 @@ class SearchForm extends React.Component {
                         <Form layout="inline" onSubmit={this.handleSubmit}>
                             <Form.Item label="District">
                                 <Select placeholder="Select District" onChange={this.onDistrictChange} style={{ width: '200px' }}>
-                                    {this.props.districts.map(district =>
+                                    {this.state.districts.map(district =>
                                         <Option key={district.DistrictID}
                                             value={district.DistrictID}>
                                             {district.Name}
@@ -52,21 +95,21 @@ class SearchForm extends React.Component {
                             </Form.Item>
                             <Form.Item label="Constituency">
                                 <Select placeholder="Select Constituency" style={{ width: '200px' }}>
-                                    {this.props.constituencies.map(constituency =>
+                                    {this.state.constituencies.map(constituency =>
                                         <Option key={constituency.ConstituencyID} value={constituency.ConstituencyID}>{constituency.Name}</Option>
                                     )}
                                 </Select>
                             </Form.Item>
                             <Form.Item label="Mandal">
                                 <Select placeholder="Select Mandal" onChange={this.onMandalChange} style={{ width: '200px' }}>
-                                    {this.props.mandals.map(mandal =>
+                                    {this.state.mandals.map(mandal =>
                                         <Option key={mandal.MandalID} value={mandal.MandalID}>{mandal.Name}</Option>
                                     )}
                                 </Select>
                             </Form.Item>
                             <Form.Item label="Village">
                                 <Select placeholder="Select Village" style={{ width: '200px' }}>
-                                    {this.props.villages.map(village =>
+                                    {this.state.villages.map(village =>
                                         <Option key={village.VillageID} value={village.VillageID}>{village.Name}</Option>
                                     )}
                                 </Select>
@@ -90,23 +133,11 @@ class SearchForm extends React.Component {
 const ReqsSearchForm = Form.create({ name: 'horizontal_login' })(SearchForm);
 
 const mapStateToProps = state => {
-    return {
-        districts: state.districts,
-        constituencies: state.constituencies,
-        mandals: state.mandals,
-        villages: state.villages
-    };
+    return {};
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        getMandals: (districtId) => {
-            dispatch(getMandals(districtId));
-        },
-        getVillages: (mandalId) => {
-            dispatch(getVillages(mandalId));
-        }
-    };
+    return {};
 };
 
 export default connect(

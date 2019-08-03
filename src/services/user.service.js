@@ -1,4 +1,5 @@
 import { handleResponse } from '../helpers';
+import apiUrl from '../config';
 
 export const userService = {
     createUser,
@@ -6,7 +7,7 @@ export const userService = {
 };
 
 function createUser(userData) {
-    const apiUrl = 'http://api.magunta.in/api'
+    // const apiUrl = 'http://api.magunta.in/api'
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -22,7 +23,7 @@ function createUser(userData) {
 
 
 function getUsers() {
-    const apiUrl = 'http://api.magunta.in/api'
+    // const apiUrl = 'http://api.magunta.in/api'
     const requestOptions = {
         method: 'GET'
     };

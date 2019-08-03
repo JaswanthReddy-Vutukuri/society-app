@@ -18,11 +18,11 @@ class PendingReqs extends React.Component {
             <Form.Item label="Search">
               {(<Input />)}
             </Form.Item>
-            <ButtonGroup>
+            {/* <ButtonGroup>
               <Button>PDF</Button>
               <Button>CSV</Button>
               <Button>EXCEL</Button>
-            </ButtonGroup>
+            </ButtonGroup> */}
           </Form>
         </div>
         <DataTable  approve={true} decline={true} reqStatus='Pending'/>

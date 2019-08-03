@@ -1,8 +1,8 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
-import { getMandals, getVillages, getDistricts, getConstituencies } from '../actions';
-import { requestService } from '../services';
+import { requestService, commonService } from '../services';
+import apiUrl from '../config';
 
 import {
   Form,
@@ -15,7 +15,6 @@ import {
   Divider,
   Checkbox,
   Button,
-  message,
   Modal
 } from 'antd';
 
@@ -26,12 +25,33 @@ class CreateRequest extends React.Component {
 
   state = {
     confirmDirty: false,
-    visible: false
+    visible: false,
+    districts: [],
+    constituencies: [],
+    mandals: [],
+    villages: []
   };
 
   componentWillMount() {
-    this.props.getDistricts();
-    this.props.getConstituencies();
+    commonService.getDistricts()
+      .then(
+        districts => {
+          this.setState({districts:districts});
+        },
+        error => {
+          console.log("Error while fetching Districts:", error);
+        }
+      );
+    
+    commonService.getConstituencies()
+      .then(
+        constituencies => {
+          this.setState({constituencies:constituencies});
+        },
+        error => {
+          console.log("Error while fetching Constituencies:", error);
+        }
+      );
   }
 
   showModal = () => {
@@ -44,7 +64,8 @@ class CreateRequest extends React.Component {
     this.setState({
       visible: false
     });
-    window.location.reload();
+    // window.location.reload();
+    this.props.form.resetFields();
   };
 
   handleCancel = () => {
@@ -62,14 +83,12 @@ class CreateRequest extends React.Component {
         requestService.createRequest(values)
           .then(
             ticketNumber => {
-              // message.success(`Request raised Created Successfully. Your Ticket Number: ${ticketNumber}`, 10);
               this.setState({
                 ModalText: `Request raised successfully. Your Ticket Number: ${ticketNumber}`
               });
               this.showModal();
             },
             error => {
-              // message.warning('Sorry! Failed to raise the request. Try Again.')
               this.setState({
                 ModalText: 'Sorry! Failed to raise the request. Try Again.'
               });
@@ -81,11 +100,27 @@ class CreateRequest extends React.Component {
   };
 
   onDistrictChange = (districtId) => {
-    this.props.getMandals(districtId);
+    commonService.getMandals(districtId)
+    .then(
+      mandals => {
+        this.setState({mandals:mandals});
+      },
+      error => {
+        console.log("Error while fetching Mandals:", error);
+      }
+    );
   }
 
   onMandalChange = (mandalId) => {
-    this.props.getVillages(mandalId);
+    commonService.getVillages(mandalId)
+    .then(
+      villages => {
+        this.setState({villages:villages});
+      },
+      error => {
+        console.log("Error while fetching Villages:", error);
+      }
+    );
   }
 
   handleConfirmBlur = e => {
@@ -155,7 +190,7 @@ class CreateRequest extends React.Component {
               rules: [{ required: true, message: 'Please select district!' }],
             })(
               <Select placeholder="Please select a district" onChange={this.onDistrictChange}>
-                {this.props.districts.map(district =>
+                {this.state.districts.map(district =>
                   <Option key={district.DistrictID}
                     value={district.DistrictID}>
                     {district.Name}
@@ -169,7 +204,7 @@ class CreateRequest extends React.Component {
               rules: [{ required: true, message: 'Please select constituency!' }],
             })(
               <Select placeholder="Please select a constituency">
-                {this.props.constituencies.map(constituency =>
+                {this.state.constituencies.map(constituency =>
                   <Option key={constituency.ConstituencyID} value={constituency.ConstituencyID}>{constituency.Name}</Option>
                 )}
               </Select>,
@@ -180,7 +215,7 @@ class CreateRequest extends React.Component {
               rules: [{ required: true, message: 'Please select mandal!' }],
             })(
               <Select placeholder="Please select a mandal" onChange={this.onMandalChange}>
-                {this.props.mandals.map(mandal =>
+                {this.state.mandals.map(mandal =>
                   <Option key={mandal.MandalID} value={mandal.MandalID}>{mandal.Name}</Option>
                 )}
               </Select>,
@@ -191,7 +226,7 @@ class CreateRequest extends React.Component {
               rules: [{ required: true, message: 'Please select village!' }],
             })(
               <Select placeholder="Please select a village">
-                {this.props.villages.map(village =>
+                {this.state.villages.map(village =>
                   <Option key={village.VillageID} value={village.VillageID}>{village.Name}</Option>
                 )}
               </Select>,
@@ -292,7 +327,7 @@ class CreateRequest extends React.Component {
                 valuePropName: 'fileList',
                 getValueFromEvent: this.normFile,
               })(
-                <Upload.Dragger name="files" action="http://api.magunta.in/api/Requests/PostFormData">
+                <Upload.Dragger name="files" action={`${apiUrl}/Requests/PostFormData`}>
                   <p className="ant-upload-drag-icon">
                     <Icon type="inbox" />
                   </p>
@@ -312,9 +347,12 @@ class CreateRequest extends React.Component {
             )}
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
+            <Button type="secondary" onClick={e => { this.props.form.resetFields() }} style={{marginRight:'15px'}}>
+              CLEAR
+            </Button>
             <Button type="primary" htmlType="submit">
               SUBMIT
-          </Button>
+            </Button>
           </Form.Item>
         </Form>
         <Modal
@@ -333,29 +371,11 @@ class CreateRequest extends React.Component {
 const NewReqFormWrapper = Form.create({ name: 'validate_other' })(CreateRequest);
 
 const mapStateToProps = state => {
-  return {
-    districts: state.districts,
-    constituencies: state.constituencies,
-    mandals: state.mandals,
-    villages: state.villages
-  };
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    getConstituencies: () => {
-      dispatch(getConstituencies());
-    },
-    getDistricts: () => {
-      dispatch(getDistricts());
-    },
-    getMandals: (districtId) => {
-      dispatch(getMandals(districtId));
-    },
-    getVillages: (mandalId) => {
-      dispatch(getVillages(mandalId));
-    }
-  };
+  return {};
 };
 
 export default connect(

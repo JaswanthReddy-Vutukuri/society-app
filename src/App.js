@@ -14,10 +14,10 @@ import CreateRequest from './components/create-request.js';
 import TrackRequest from './components/track.js';
 import PrivateRoute from './components/private-route';
 import SignIn from './components/signin';
-import Error from './components/error.js';
+import PageNotFoundError from './components/404.js';
 import CreateUser from './components/create-user.js';
 import ShowUsers from './components/show-users.js';
-import { getCurrentUser, getDistricts } from './actions';
+import { getCurrentUser } from './actions';
 
 import { Layout } from "antd";
 import "antd/dist/antd.css";
@@ -51,7 +51,7 @@ class App extends React.Component {
                   <PrivateRoute path="/create-user" roles={['ADMIN']} component={CreateUser} />
                   <PrivateRoute path="/show-users" roles={['ADMIN']} component={ShowUsers} />
                   <Route path="/login" component={SignIn} />
-                  <Route component={Error} />
+                  <Route component={PageNotFoundError} />
                 </Switch>
             </Content>
           </Layout>
@@ -72,9 +72,6 @@ const mapDispatchToProps = dispatch => {
   return {
     getCurrentUser: () => {
       dispatch(getCurrentUser());
-    },
-    getDistricts: () => {
-      dispatch(getDistricts());
     }
   };
 };

@@ -1,5 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { handleResponse } from '../helpers';
+import apiUrl from '../config';
 
 const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 
@@ -11,7 +12,7 @@ export const authenticationService = {
 };
 
 function login(username, password) {
-    const apiUrl = 'http://api.magunta.in/api'
+    // const apiUrl = 'http://api.magunta.in/api'
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

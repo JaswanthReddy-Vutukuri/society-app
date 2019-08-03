@@ -1,11 +1,12 @@
 import { handleResponse } from '../helpers';
+import apiUrl from '../config';
 
 export const requestService = {
     createRequest,
     getRequestCounts
 };
 
-const apiUrl = 'http://api.magunta.in/api'
+// const apiUrl = 'http://api.magunta.in/api'
 
 function createRequest(reqData) {
     const requestOptions = {

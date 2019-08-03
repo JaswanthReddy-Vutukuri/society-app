@@ -29,7 +29,8 @@ class CreateRequest extends React.Component {
     districts: [],
     constituencies: [],
     mandals: [],
-    villages: []
+    villages: [],
+    spinning: false
   };
 
   componentWillMount() {
@@ -80,17 +81,18 @@ class CreateRequest extends React.Component {
       if (!err) {
         values.MobileNumber = '+' + values.prefix + values.MobileNumber;
         values.Status = 'New';
+        this.setState({spinning:true});
         requestService.createRequest(values)
           .then(
             ticketNumber => {
               this.setState({
-                ModalText: `Request raised successfully. Your Ticket Number: ${ticketNumber}`
+                ModalText: `Request raised successfully. Your Ticket Number: ${ticketNumber}`, spinning:false
               });
               this.showModal();
             },
             error => {
               this.setState({
-                ModalText: 'Sorry! Failed to raise the request. Try Again.'
+                ModalText: 'Sorry! Failed to raise the request. Try Again.', spinning:false
               });
               this.showModal();
             }
@@ -347,10 +349,10 @@ class CreateRequest extends React.Component {
             )}
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-            <Button type="secondary" onClick={e => { this.props.form.resetFields() }} style={{marginRight:'15px'}}>
+            <Button type="secondary" onClick={e => { this.props.form.resetFields() }} style={{marginRight:'15px'}} disabled={this.state.spinning}>
               CLEAR
             </Button>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={this.state.spinning} disabled={this.state.spinning}>
               SUBMIT
             </Button>
           </Form.Item>

@@ -14,20 +14,27 @@ class SignInForm extends React.Component {
     }
   }
 
+  state = {
+    spinning: false
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        this.setState({spinning:true})
         authenticationService.login(values.username, values.password)
           .then(
             user => {
               this.props.setCurrentUser(user);
+              this.setState({spinning:false})
               const { from } = this.props.location.state || { from: { pathname: "/" } };
               this.props.history.push(from);
             },
             error => {
               console.log("ERROR:",error)
+              this.setState({spinning:false})
             }
           );
       }
@@ -73,7 +80,7 @@ class SignInForm extends React.Component {
           <span className="login-form-forgot" >
             Forgot password
           </span>
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          <Button type="primary" htmlType="submit" className="login-form-button" loading={this.state.spinning} disabled={this.state.spinning}>
             Log in
           </Button>
         </Form.Item>

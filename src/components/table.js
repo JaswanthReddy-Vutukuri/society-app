@@ -4,7 +4,7 @@ import RequestInfoDetails from './request-info';
 import ReqApprove from './request-approve';
 import ReqDecline from './request-decline';
 import { connect } from 'react-redux';
-import { getRequests } from '../actions';
+import { requestService } from '../services';
 
 class DataTable extends React.Component {
 
@@ -14,12 +14,21 @@ class DataTable extends React.Component {
       showRequestInfo: false,
       showRequestApprove: false,
       showRequestDecline: false,
-      columns:[]
+      columns:[],
+      requests:[]
     }
   }
 
   componentWillMount() {
-    this.props.getRequests({reqStatus:this.props.reqStatus});
+    requestService.getRequests({reqStatus:this.props.reqStatus})
+    .then(
+      requests => {
+        this.setState({requests:requests});
+      },
+      error => {
+        console.log("Error while fetching requests:", error);
+      }
+    );
   }
 
   columns = [
@@ -121,7 +130,7 @@ class DataTable extends React.Component {
       <React.Fragment>
         <Table 
           columns={this.columns} 
-          dataSource={this.props.requests} 
+          dataSource={this.state.requests} 
           scroll={{ x: 1500, y: 300 }} 
           pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '15', '20', '30']}} 
         />
@@ -157,17 +166,11 @@ class DataTable extends React.Component {
 };
 
 const mapStateToProps = state => {
-  return {
-    requests: state.requests
-  };
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    getRequests: (reqParams) => {
-      dispatch(getRequests(reqParams));
-    }
-  };
+  return {};
 };
 
 export default connect(

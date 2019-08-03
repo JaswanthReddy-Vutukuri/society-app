@@ -3,10 +3,9 @@ import apiUrl from '../config';
 
 export const requestService = {
     createRequest,
-    getRequestCounts
+    getRequestCounts,
+    getRequests
 };
-
-// const apiUrl = 'http://api.magunta.in/api'
 
 function createRequest(reqData) {
     const requestOptions = {
@@ -31,5 +30,31 @@ function getRequestCounts(userID) {
         .then(handleResponse)
         .then(requestCounts => {
             return requestCounts;
+        });
+}
+
+function getRequests (reqParams) {
+    const reqData = {
+      "UserID": JSON.parse(localStorage.getItem('currentUser')).UserID,
+      "Status": reqParams.reqStatus ? (JSON.parse(localStorage.getItem('currentUser')).Role.substring(0,3) +'_'+reqParams.reqStatus) : null,
+      "Index": reqParams.index ? reqParams.index : null,
+      "Count": reqParams.count ? reqParams.count : null,
+      "SortType": reqParams.sortType ? reqParams.sortType : null,
+      "SortBy": reqParams.sortBy ? reqParams.sortBy : null,
+      "VillageID": reqParams.villageID ? reqParams.villageID : null,
+      "ConstituencyID": reqParams.ConstituencyID ? reqParams.ConstituencyID : null,
+      "MandalID": reqParams.MandalID ? reqParams.MandalID : null,
+      "DistrictID": reqParams.DistrictID ? reqParams.DistrictID : null
+    }
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reqData)
+    };
+
+    return fetch(`${apiUrl}/Requests/GetList`, requestOptions)
+        .then(handleResponse)
+        .then(requests => {
+            return requests;
         });
 }

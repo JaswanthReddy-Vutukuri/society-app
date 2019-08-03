@@ -12,7 +12,6 @@ export const authenticationService = {
 };
 
 function login(username, password) {
-    // const apiUrl = 'http://api.magunta.in/api'
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

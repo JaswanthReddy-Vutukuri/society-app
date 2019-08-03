@@ -6,7 +6,6 @@ export const roleService = {
 };
 
 function getRoles() {
-    // const apiUrl = 'http://api.magunta.in/api'
     const requestOptions = {
         method: 'GET'
     };

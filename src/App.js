@@ -8,6 +8,7 @@ import Menubar from './containers/menubar.js';
 import SideMenuBar from "./containers/side-menubar.js";
 import TotalReqs from './components/total.js';
 import ApprovedReqs from './components/approved.js';
+import ShowRequests from './components/show-requests';
 import PendingReqs from './components/pending.js';
 import DeclinedReqs from './components/declined.js';
 import CreateRequest from './components/create-request.js';
@@ -42,9 +43,9 @@ class App extends React.Component {
             <Content style={{background: "#fff", padding: 24, margin: "16px 0px 0px 0px", minHeight: 280}}>
                 <Switch>
                   <PrivateRoute exact path="/" roles={['USER','EMPLOYEE','INCHARGE','REPRESENTATIVE', 'ADMIN']} component={Dashboard} />
-                  <PrivateRoute path="/all" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={TotalReqs} />
+                  <PrivateRoute path="/total" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={TotalReqs} />
                   <PrivateRoute path="/declined" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={DeclinedReqs} />
-                  <PrivateRoute path="/approved" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={ApprovedReqs} />
+                  <PrivateRoute path="/approved" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={ShowRequests} />
                   <PrivateRoute path="/pending" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE']} component={PendingReqs} />
                   <PrivateRoute path="/new-request" roles={['USER']} component={CreateRequest} />
                   <PrivateRoute path="/track-request" roles={['USER']} component={TrackRequest} />

@@ -55,8 +55,8 @@ class SideMenuBar extends React.Component {
                             </span>
                         </NavLink>
                     </Menu.Item>
-                    <Menu.Item key="/all">
-                        <NavLink to="/all">
+                    <Menu.Item key="/total">
+                        <NavLink to="/total">
                             <span>
                                 <Icon type="unordered-list" />
                                 Total Requests

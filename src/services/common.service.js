@@ -1,6 +1,5 @@
 import { handleResponse } from '../helpers';
 import apiUrl from '../config';
-// const apiUrl = 'http://api.magunta.in/api'
 
 export const commonService = {
     getDistricts,

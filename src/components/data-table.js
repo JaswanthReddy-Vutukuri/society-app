@@ -4,6 +4,7 @@ import RequestInfoDetails from './request-info';
 import ReqApprove from './request-approve';
 import ReqDecline from './request-decline';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 class DataTable extends React.Component {
 
@@ -14,6 +15,30 @@ class DataTable extends React.Component {
       showRequestApprove: false,
       showRequestDecline: false,
       columns:[],
+      approveAction: false,
+      declineAction: false
+    }
+  }
+
+  componentWillMount() {
+    this.setActions();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      this.setActions();
+    }
+  }
+
+  setActions() {
+    let status = (this.props.location.pathname.slice(1)).toUpperCase();
+
+    switch(status) {
+      case 'TOTAL'    : {this.setState({approveAction: false, declineAction: false}); break;}
+      case 'APPROVED' : {this.setState({approveAction: false, declineAction: false}); break;}
+      case 'DECLINED' : {this.setState({approveAction: true, declineAction: false}); break;}
+      case 'PENDING'  : {this.setState({approveAction: true, declineAction: true}); break;}
+      default         : {this.setState({approveAction: false, declineAction: false}); break;}
     }
   }
 
@@ -61,8 +86,8 @@ class DataTable extends React.Component {
       render: () => (
         <span>
           <Button type="link" style={{ color: 'blue'}} onClick={()=>{ this.showReqInfoModal()}}> View </Button>
-          { this.props.approve ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'green'}} onClick={()=>{ this.showReqApproveModal()}}> Approve </Button> </React.Fragment>: null }
-          { this.props.decline ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'brown'}} onClick={()=>{ this.showReqDeclineModal()}}> Decline </Button> </React.Fragment>: null }
+          { this.state.approveAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'green'}} onClick={()=>{ this.showReqApproveModal()}}> Approve </Button> </React.Fragment>: null }
+          { this.state.declineAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'brown'}} onClick={()=>{ this.showReqDeclineModal()}}> Decline </Button> </React.Fragment>: null }
         </span>
       )
     }
@@ -154,4 +179,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DataTable);
+)(withRouter(DataTable));

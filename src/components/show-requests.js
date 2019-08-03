@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Input, Form } from 'antd';
-import DataTable from './table';
+import DataTable from './data-table';
 import ReqsSearchForm from './search';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -63,7 +63,7 @@ class ShowRequests extends React.Component {
                 </ButtonGroup> */}
           </Form>
         </div>
-        <DataTable approve={false} requests={this.props.requests} loading={this.state.loading} />
+        <DataTable requests={this.props.requests} loading={this.state.loading} />
       </React.Fragment>
     );
   }

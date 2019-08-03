@@ -13,13 +13,16 @@ const { Option } = Select;
 
 class SearchForm extends React.Component {
 
-    state = {
-        confirmDirty: false,
-        districts: [],
-        constituencies: [],
-        mandals: [],
-        villages: []
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            confirmDirty: false,
+            districts: [],
+            constituencies: [],
+            mandals: [],
+            villages: []
+        }
+    }
 
     componentWillMount() {
         commonService.getDistricts()
@@ -46,6 +49,12 @@ class SearchForm extends React.Component {
     componentDidMount() {
         // To disabled submit button at the beginning.
         this.props.form.validateFields();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.location !== prevProps.location) {
+            this.props.form.resetFields();
+        }
     }
 
     handleSubmit = e => {

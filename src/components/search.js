@@ -4,7 +4,7 @@ import { Collapse } from 'antd';
 import { connect } from 'react-redux';
 import { commonService } from '../services';
 import { requestService } from '../services';
-import { setRequests } from '../actions';
+import { setRequests, setRequestsCount } from '../actions';
 import { withRouter } from 'react-router-dom';
 
 const { Panel } = Collapse;
@@ -65,6 +65,7 @@ class SearchForm extends React.Component {
             .then(
                 response => {
                     this.props.setRequests(response.Results);
+                    this.props.setRequestsCount(response.RecordCount);
                     this.setState({ loading: false });
                 },
                 error => {
@@ -174,13 +175,18 @@ class SearchForm extends React.Component {
 const ReqsSearchForm = Form.create({ name: 'validate_other' })(SearchForm);
 
 const mapStateToProps = state => {
-    return {};
+    return {
+
+    };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         setRequests: requests => {
             dispatch(setRequests(requests));
+        },
+        setRequestsCount: requestsCount => {
+          dispatch(setRequestsCount(requestsCount));
         }
     };
 };

@@ -1,9 +1,7 @@
-import { GET_REQUESTS, SET_REQUESTS } from '../actions/types';
+import { SET_REQUESTS } from '../actions/types';
 
 export default function(state = [], action) {
   switch (action.type) {
-    case GET_REQUESTS:
-      return action.requests;
     case SET_REQUESTS:
       return action.requests;
     default:

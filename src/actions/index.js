@@ -1,4 +1,4 @@
-import { GET_CURRENT_USER, SET_CURRENT_USER, LOG_OUT, SET_REQUESTS, GET_REQUESTS } from './types';
+import { GET_CURRENT_USER, SET_CURRENT_USER, LOG_OUT, SET_REQUESTS, SET_REQUESTS_COUNT } from './types';
 import { authenticationService } from '../services';
 
 export const getCurrentUser = () => {
@@ -16,12 +16,12 @@ export const setCurrentUser = (currentUser) => {
   }
 }
 
-// export const getRequests = () => {
-//   return {
-//     type: GET_REQUESTS,
-//     requests
-//   }
-// }
+export const setRequestsCount = (requestsCount) => {
+  return {
+    type: SET_REQUESTS_COUNT,
+    requestsCount
+  }
+}
 
 export const setRequests = (requests) => {
   return {

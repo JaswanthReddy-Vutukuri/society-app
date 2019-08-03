@@ -5,16 +5,14 @@ import ReqsSearchForm from './search';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { requestService } from '../services';
-import { setRequests } from '../actions';
+import { setRequests, setRequestsCount } from '../actions';
 
 class ShowRequests extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      // requests:[],
-      loading: false,
-      count: 0
+      loading: false
     }
   }
 
@@ -35,7 +33,8 @@ class ShowRequests extends React.Component {
       .then(
         response => {
           this.props.setRequests(response.Results);
-          this.setState({ count: response.RecordCount, loading: false });
+          this.props.setRequestsCount(response.RecordCount);
+          this.setState({ loading: false });
         },
         error => {
           console.log("Error while fetching requests:", error);
@@ -52,7 +51,7 @@ class ShowRequests extends React.Component {
         <div style={{ textAlign: 'right', margin: '10px 0px' }}>
           <Form layout="inline">
             <Form.Item label="Count">
-              <span className="ant-form-text">{this.state.count}</span>
+              <span className="ant-form-text">{this.props.requestsCount}</span>
             </Form.Item>
             <Form.Item label="Search">
               {(<Input />)}
@@ -73,7 +72,8 @@ class ShowRequests extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    requests: state.requests
+    requests: state.requests,
+    requestsCount: state.requestsCount
   };
 };
 
@@ -81,6 +81,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setRequests: requests => {
       dispatch(setRequests(requests));
+    },
+    setRequestsCount: requestsCount => {
+      dispatch(setRequestsCount(requestsCount));
     }
   };
 };

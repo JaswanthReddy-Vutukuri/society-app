@@ -113,7 +113,7 @@ class SearchForm extends React.Component {
                         <Form layout="inline" onSubmit={this.handleSubmit}>
                             <Form.Item label="District">
                                 {getFieldDecorator('DistrictID')(
-                                    <Select placeholder="Select District" onChange={this.onDistrictChange} style={{ width: '190px' }}>
+                                    <Select placeholder="Select District" onChange={this.onDistrictChange} style={{ width: '180px' }}>
                                         {this.state.districts.map(district =>
                                             <Option key={district.DistrictID}
                                                 value={district.DistrictID}>
@@ -125,7 +125,7 @@ class SearchForm extends React.Component {
                             </Form.Item>
                             <Form.Item label="Constituency">
                                 {getFieldDecorator('ConstituencyID')(
-                                    <Select placeholder="Select Constituency" style={{ width: '190px' }}>
+                                    <Select placeholder="Select Constituency" style={{ width: '180px' }}>
                                         {this.state.constituencies.map(constituency =>
                                             <Option key={constituency.ConstituencyID} value={constituency.ConstituencyID}>{constituency.Name}</Option>
                                         )}
@@ -134,7 +134,7 @@ class SearchForm extends React.Component {
                             </Form.Item>
                             <Form.Item label="Mandal">
                                 {getFieldDecorator('MandalID')(
-                                    <Select placeholder="Select Mandal" onChange={this.onMandalChange} style={{ width: '190px' }}>
+                                    <Select placeholder="Select Mandal" onChange={this.onMandalChange} style={{ width: '180px' }}>
                                         {this.state.mandals.map(mandal =>
                                             <Option key={mandal.MandalID} value={mandal.MandalID}>{mandal.Name}</Option>
                                         )}
@@ -144,7 +144,7 @@ class SearchForm extends React.Component {
                             <Form.Item label="Village">
                                 {getFieldDecorator('VillageID')(
 
-                                    <Select placeholder="Select Village" style={{ width: '190px' }}>
+                                    <Select placeholder="Select Village" style={{ width: '180px' }}>
                                         {this.state.villages.map(village =>
                                             <Option key={village.VillageID} value={village.VillageID}>{village.Name}</Option>
                                         )}
@@ -160,6 +160,9 @@ class SearchForm extends React.Component {
                                 )}
                             </Form.Item> */}
                             <Form.Item>
+                                <Button type="secondary" onClick={e => { this.props.form.resetFields() }} style={{ marginRight: '15px' }} disabled={this.state.loading}>
+                                    Clear
+                                </Button>
                                 <Button type="primary" htmlType="submit" loading={this.state.loading} disabled={this.state.loading}>
                                     Search
                                 </Button>
@@ -186,7 +189,7 @@ const mapDispatchToProps = dispatch => {
             dispatch(setRequests(requests));
         },
         setRequestsCount: requestsCount => {
-          dispatch(setRequestsCount(requestsCount));
+            dispatch(setRequestsCount(requestsCount));
         }
     };
 };

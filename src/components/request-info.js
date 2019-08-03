@@ -30,40 +30,40 @@ class RequestInfo extends React.Component {
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
         <Form.Item label="District">
-          <span className="ant-form-text">Prakasam</span>
+          <span className="ant-form-text">{this.props.request.District}</span>
         </Form.Item>
         <Form.Item label="Constituency">
-          <span className="ant-form-text">Darsi</span>
+          <span className="ant-form-text">{this.props.request.District}</span>
         </Form.Item>
         <Form.Item label="Mandal">
-          <span className="ant-form-text">Mundlamuru</span>
+          <span className="ant-form-text">{this.props.request.Mandal}</span>
         </Form.Item>
         <Form.Item label="Village">
-          <span className="ant-form-text">Polavaram</span>
+          <span className="ant-form-text">{this.props.request.Village}</span>
         </Form.Item>
         <Form.Item label="Benefits">
-          <span className="ant-form-text">People</span>
+          <span className="ant-form-text">{this.props.request.IssueCategory}</span>
         </Form.Item>
         <Form.Item label="Estimated Budget">
-          <span className="ant-form-text">10000 Rupees</span>
+          <span className="ant-form-text">{this.props.request.Estimatedbudget} Rupees</span>
         </Form.Item>
         <Form.Item label="Request Description">
-          <span className="ant-form-text">Water Supply Improvement</span>
+          <span className="ant-form-text">{this.props.request.Description}</span>
         </Form.Item>
         <Form.Item label="Request By">
-          <span className="ant-form-text">Venu</span>
+          <span className="ant-form-text">{this.props.request.Createdby}</span>
         </Form.Item>
         <Form.Item label="Age">
-          <span className="ant-form-text">25</span>
+          <span className="ant-form-text">{this.props.request.Age}</span>
         </Form.Item>
         <Form.Item label="Email ID">
-          <span className="ant-form-text">venu@gmail.com</span>
+          <span className="ant-form-text">{this.props.request.EmailAddress}</span>
         </Form.Item>
         <Form.Item label="Mobile">
-          <span className="ant-form-text">9876655455</span>
+          <span className="ant-form-text">{this.props.request.MobileNumber}</span>
         </Form.Item>
         <Form.Item label="Address">
-          <span className="ant-form-text">Ongole</span>
+          <span className="ant-form-text">{this.props.request.Address}</span>
         </Form.Item>
         <Form.Item wrapperCol={{ span: 4, offset: 20 }}>
           <Button type="primary" htmlType="submit">

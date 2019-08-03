@@ -16,7 +16,8 @@ class DataTable extends React.Component {
       showRequestDecline: false,
       columns:[],
       approveAction: false,
-      declineAction: false
+      declineAction: false,
+      selectedRequest: {}
     }
   }
 
@@ -83,29 +84,32 @@ class DataTable extends React.Component {
     {
       title: 'Action',
       key: 'action',
-      render: () => (
+      render: (text,record) => (
         <span>
-          <Button type="link" style={{ color: 'blue'}} onClick={()=>{ this.showReqInfoModal()}}> View </Button>
-          { this.state.approveAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'green'}} onClick={()=>{ this.showReqApproveModal()}}> Approve </Button> </React.Fragment>: null }
-          { this.state.declineAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'brown'}} onClick={()=>{ this.showReqDeclineModal()}}> Decline </Button> </React.Fragment>: null }
+          <Button type="link" style={{ color: 'blue'}} onClick={()=>{ this.showReqInfoModal(record)}}> View </Button>
+          { this.state.approveAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'green'}} onClick={()=>{ this.showReqApproveModal(record)}}> Approve </Button> </React.Fragment>: null }
+          { this.state.declineAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'brown'}} onClick={()=>{ this.showReqDeclineModal(record)}}> Decline </Button> </React.Fragment>: null }
         </span>
       )
     }
   ];
   
-  showReqInfoModal = () => {
+  showReqInfoModal = (record) => {
     this.setState({
       showRequestInfo: true,
+      selectedRequest: record
     });
   };
-  showReqApproveModal = () => {
+  showReqApproveModal = (record) => {
     this.setState({
       showRequestApprove: true,
+      selectedRequest: record
     });
   };
-  showReqDeclineModal = () => {
+  showReqDeclineModal = (record) => {
     this.setState({
       showRequestDecline: true,
+      selectedRequest: record
     });
   };
 
@@ -136,30 +140,30 @@ class DataTable extends React.Component {
           />
         </Spin>
         <Modal
-          title="Request Ticket : REQ 009"
+          title={`${this.state.selectedRequest.TicketNumber}`}
           visible={this.state.showRequestInfo}
           footer={null}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <RequestInfoDetails />
+          <RequestInfoDetails request={this.state.selectedRequest} />
         </Modal>
         <Modal
-          title="Request Ticket : REQ 009"
+          title={`${this.state.selectedRequest.TicketNumber}`}
           visible={this.state.showRequestApprove}
           footer={null}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <ReqApprove />
+          <ReqApprove request={this.state.selectedRequest} />
         </Modal>
         <Modal
-          title="Request Ticket : REQ 009"
+          title={`${this.state.selectedRequest.TicketNumber}`}
           visible={this.state.showRequestDecline}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <ReqDecline />
+          <ReqDecline request={this.state.selectedRequest} />
         </Modal>
       </React.Fragment>
     );

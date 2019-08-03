@@ -6,7 +6,8 @@ export const commonService = {
     getMandals,
     getVillages,
     getConstituencies,
-    getRoles
+    getRoles,
+    getQuestions
 };
 
 function getDistricts() {
@@ -66,5 +67,18 @@ function getRoles() {
         .then(handleResponse)
         .then(roles => {
             return roles;
+        });
+}
+
+function getQuestions() {
+    const role = JSON.parse(localStorage.getItem('currentUser')).Role;
+    const requestOptions = {
+        method: 'GET'
+    };
+
+    return fetch(`${apiUrl}/MasterData/GetQuestions?RoleName=${role}`, requestOptions)
+        .then(handleResponse)
+        .then(questions => {
+            return questions;
         });
 }

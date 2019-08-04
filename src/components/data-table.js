@@ -143,27 +143,25 @@ class DataTable extends React.Component {
           title={`${this.state.selectedRequest.TicketNumber}`}
           visible={this.state.showRequestInfo}
           footer={null}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
+          closable={false}
         >
-          <RequestInfoDetails request={this.state.selectedRequest} />
+          <RequestInfoDetails request={this.state.selectedRequest} handleOk={this.handleOk}/>
         </Modal>
         <Modal
           title={`${this.state.selectedRequest.TicketNumber}`}
           visible={this.state.showRequestApprove}
           footer={null}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
+          closable={false}
         >
-          <ReqApprove request={this.state.selectedRequest} handleOk={this.handleOk}/>
+          <ReqApprove request={this.state.selectedRequest} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
         </Modal>
         <Modal
           title={`${this.state.selectedRequest.TicketNumber}`}
           visible={this.state.showRequestDecline}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
+          footer={null}
+          closable={false}
         >
-          <ReqDecline request={this.state.selectedRequest} />
+          <ReqDecline request={this.state.selectedRequest} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
         </Modal>
       </React.Fragment>
     );

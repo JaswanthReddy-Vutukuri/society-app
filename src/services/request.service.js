@@ -5,7 +5,7 @@ export const requestService = {
     createRequest,
     getRequestCounts,
     getRequests,
-    approveEmpRequest
+    SaveEmployeeFeedback
 };
 
 function createRequest(reqData) {
@@ -61,8 +61,7 @@ function getRequests (reqParams) {
         });
 }
 
-
-function approveEmpRequest (reqParams) {
+function SaveEmployeeFeedback (reqParams) {
     
     reqParams.CreatedbyUserID = JSON.parse(localStorage.getItem('currentUser')).UserID;
     reqParams.FeedbackStatus = reqParams.reqStatus ? (JSON.parse(localStorage.getItem('currentUser')).Role.substring(0,3) +'_'+reqParams.reqStatus) : null;
@@ -79,4 +78,3 @@ function approveEmpRequest (reqParams) {
             return status;
         });
 }
-

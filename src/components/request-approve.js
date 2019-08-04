@@ -63,7 +63,7 @@ class ReqApprove extends React.Component {
 
         console.log("reqObj:",reqObj)
 
-        requestService.approveEmpRequest(reqObj)
+        requestService.SaveEmployeeFeedback(reqObj)
           .then(
             response => {
               console.log(response)
@@ -95,11 +95,10 @@ class ReqApprove extends React.Component {
 
     if (this.state.questions) {
       for (let i = 0; i < this.state.questions.length; i++) {
-        console.log(this.state.questions[i].QuestionName)
         questionsArray.push(
           <Form.Item label={this.state.questions[i].QuestionName}>
             {getFieldDecorator(JSON.stringify(this.state.questions[i].QuestionID), {
-              initialValue: 0,
+              rules: [{ required: true, message: `Please provide Rating!` }]
             })(<Rate />)}
           </Form.Item>
         );
@@ -108,11 +107,6 @@ class ReqApprove extends React.Component {
 
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        {/* <Form.Item label="Rating 1">
-          {getFieldDecorator(, {
-            initialValue: 3.5,
-          })(<Rate />)}
-        </Form.Item> */}
         {questionsArray}
         <Divider />
         <Form.Item label="Assign Representative" hasFeedback>
@@ -130,9 +124,12 @@ class ReqApprove extends React.Component {
           )}
         </Form.Item>
         <Divider />
-        <Form.Item wrapperCol={{ span: 8, offset: 16 }}>
+        <Form.Item wrapperCol={{ span: 12, offset: 12 }}>
+          <Button type="secondary" style={{marginRight:'15px'}} onClick={e => { this.props.form.resetFields(); this.props.handleCancel(); }}>
+            CANCEL
+          </Button>
           <Button type="primary" htmlType="submit">
-            SUBMIT
+            APPROVE
           </Button>
         </Form.Item>
       </Form>

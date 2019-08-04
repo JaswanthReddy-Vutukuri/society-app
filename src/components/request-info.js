@@ -66,7 +66,7 @@ class RequestInfo extends React.Component {
           <span className="ant-form-text">{this.props.request.Address}</span>
         </Form.Item>
         <Form.Item wrapperCol={{ span: 4, offset: 20 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit"onClick={e => { this.props.handleOk(); }}>
             OK
           </Button>
         </Form.Item>

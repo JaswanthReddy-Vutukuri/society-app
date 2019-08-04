@@ -5,15 +5,74 @@ import {
   Divider, Rate, Button
 
 } from 'antd';
+import { commonService } from '../services';
+import { requestService } from '../services';
+import { userService } from '../services';
 
 const { Option } = Select;
 
 class ReqApprove extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      questions: [],
+      representatives: []
+    }
+  }
+
+  componentWillMount() {
+    commonService.getQuestions()
+      .then(
+        response => {
+          console.log("questions:", response)
+          this.setState({ questions: response });
+        },
+        error => {
+          console.log("Error while fetching questions:", error);
+        }
+      );
+    userService.getUsersByRole('REPRESENTATIVE')
+      .then(
+        response => {
+          console.log("representatives:", response)
+          this.setState({ representatives: response });
+        },
+        error => {
+          console.log("Error while fetching representatives:", error);
+        }
+      );
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        let reqObj = {};
+        let Ratings = [];
+        this.state.questions.forEach(question => {
+          let Obj = {};
+          Obj.QuestionID = question.QuestionID;
+          Obj.RatingValue = values[question.QuestionID]
+          Ratings.push(Obj);
+        })
+        reqObj.Ratings = Ratings;
+        reqObj.AssingedToRepID = values.AssingedToRepID;
+        reqObj.reqStatus = 'APPROVED'
+
+        console.log("reqObj:",reqObj)
+
+        requestService.approveEmpRequest(reqObj)
+          .then(
+            response => {
+              console.log(response)
+              this.props.handleOk();
+            },
+            error => {
+              console.log("Error while fetching requests:", error);
+            }
+          );
       }
     });
   };
@@ -32,41 +91,41 @@ class ReqApprove extends React.Component {
       labelCol: { span: 8 },
       wrapperCol: { span: 14 },
     };
+    let questionsArray = [];
+
+    if (this.state.questions) {
+      for (let i = 0; i < this.state.questions.length; i++) {
+        console.log(this.state.questions[i].QuestionName)
+        questionsArray.push(
+          <Form.Item label={this.state.questions[i].QuestionName}>
+            {getFieldDecorator(JSON.stringify(this.state.questions[i].QuestionID), {
+              initialValue: 0,
+            })(<Rate />)}
+          </Form.Item>
+        );
+      }
+    }
+
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label="Rating 1">
-          {getFieldDecorator('rate1', {
+        {/* <Form.Item label="Rating 1">
+          {getFieldDecorator(, {
             initialValue: 3.5,
           })(<Rate />)}
-        </Form.Item>
-        <Form.Item label="Rating 2">
-          {getFieldDecorator('rate2', {
-            initialValue: 3.5,
-          })(<Rate />)}
-        </Form.Item>
-        <Form.Item label="Rating 3">
-          {getFieldDecorator('rate3', {
-            initialValue: 3.5,
-          })(<Rate />)}
-        </Form.Item>
-        <Form.Item label="Rating 4">
-          {getFieldDecorator('rate4', {
-            initialValue: 3.5,
-          })(<Rate />)}
-        </Form.Item>
-        <Form.Item label="Rating 5">
-          {getFieldDecorator('rate5', {
-            initialValue: 3.5,
-          })(<Rate />)}
-        </Form.Item>
+        </Form.Item> */}
+        {questionsArray}
         <Divider />
-        <Form.Item label="Assign Incharge" hasFeedback>
-          {getFieldDecorator('select', {
-            rules: [{ required: true, message: 'Please select your Incharge!' }],
+        <Form.Item label="Assign Representative" hasFeedback>
+          {getFieldDecorator('AssingedToRepID', {
+            rules: [{ required: true, message: 'Please select Representative!' }],
           })(
-            <Select placeholder="Please select a Incharge">
-              <Option value="china">Incharge1</Option>
-              <Option value="usa">Incharge2</Option>
+            <Select placeholder="Please select a representative">
+              {this.state.representatives.map(representative =>
+                <Option key={representative.UserId}
+                  value={representative.UserId}>
+                  {representative.FirstName + ' ' + representative.LastName}
+                </Option>
+              )}
             </Select>,
           )}
         </Form.Item>

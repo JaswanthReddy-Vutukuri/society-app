@@ -3,7 +3,8 @@ import apiUrl from '../config';
 
 export const userService = {
     createUser,
-    getUsers
+    getUsers,
+    getUsersByRole
 };
 
 function createUser(userData) {
@@ -27,6 +28,19 @@ function getUsers() {
     };
 
     return fetch(`${apiUrl}/User/GetAll`, requestOptions)
+        .then(handleResponse)
+        .then(users => {
+            return users;
+        });
+}
+
+
+function getUsersByRole(role) {
+    const requestOptions = {
+        method: 'GET'
+    };
+
+    return fetch(`${apiUrl}/User/GetUsersBasedOnRole?Role=${role}`, requestOptions)
         .then(handleResponse)
         .then(users => {
             return users;

@@ -4,7 +4,8 @@ import apiUrl from '../config';
 export const requestService = {
     createRequest,
     getRequestCounts,
-    getRequests
+    getRequests,
+    approveEmpRequest
 };
 
 function createRequest(reqData) {
@@ -37,6 +38,7 @@ function getRequests (reqParams) {
     const reqData = {
       "UserID": JSON.parse(localStorage.getItem('currentUser')).UserID,
       "Status": reqParams.reqStatus ? (JSON.parse(localStorage.getItem('currentUser')).Role.substring(0,3) +'_'+reqParams.reqStatus) : null,
+      "Role": JSON.parse(localStorage.getItem('currentUser')).Role,
       "Index": reqParams.index ? reqParams.index : null,
       "Count": reqParams.count ? reqParams.count : null,
       "SortType": reqParams.sortType ? reqParams.sortType : null,
@@ -58,3 +60,23 @@ function getRequests (reqParams) {
             return requests;
         });
 }
+
+
+function approveEmpRequest (reqParams) {
+    
+    reqParams.CreatedbyUserID = JSON.parse(localStorage.getItem('currentUser')).UserID;
+    reqParams.FeedbackStatus = reqParams.reqStatus ? (JSON.parse(localStorage.getItem('currentUser')).Role.substring(0,3) +'_'+reqParams.reqStatus) : null;
+    
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reqParams)
+    };
+
+    return fetch(`${apiUrl}/Requests/SaveEmployeeFeedback`, requestOptions)
+        .then(handleResponse)
+        .then(status => {
+            return status;
+        });
+}
+

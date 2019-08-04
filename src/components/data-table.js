@@ -155,7 +155,7 @@ class DataTable extends React.Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <ReqApprove request={this.state.selectedRequest} />
+          <ReqApprove request={this.state.selectedRequest} handleOk={this.handleOk}/>
         </Modal>
         <Modal
           title={`${this.state.selectedRequest.TicketNumber}`}

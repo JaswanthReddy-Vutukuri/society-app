@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Input, Form } from 'antd';
 import DataTable from './data-table';
-import ReqsSearchForm from './search';
+import ReqsSearchForm from './filter-requests';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { requestService } from '../services';

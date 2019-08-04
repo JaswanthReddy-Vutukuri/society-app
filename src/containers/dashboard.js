@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import 'antd/dist/antd.css';
 
-import RequestCounts from '../components/cards';
+import RequestCounts from '../components/request-counts';
 import Clock from '../components/charts';
 import About from '../components/about';
 

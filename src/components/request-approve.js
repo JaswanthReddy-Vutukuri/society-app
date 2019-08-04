@@ -62,6 +62,7 @@ class ReqApprove extends React.Component {
         reqObj.Ratings = Ratings;
         reqObj.AssingedToRepID = values.AssingedToRepID;
         reqObj.reqStatus = 'APPROVED'
+        reqObj.RequestID = this.props.request.RequestID;
 
         console.log("reqObj:",reqObj)
 

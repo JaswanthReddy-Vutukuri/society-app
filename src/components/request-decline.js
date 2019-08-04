@@ -50,6 +50,7 @@ class ReqDeclineForm extends React.Component {
         reqObj.Ratings = Ratings;
         reqObj.Description = values.Description;
         reqObj.reqStatus = 'DECLINED'
+        reqObj.RequestID = this.props.request.RequestID;
 
         console.log("reqObj:",reqObj)
 

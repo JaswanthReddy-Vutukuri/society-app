@@ -4,7 +4,7 @@ import {
   Input,
   Rate,
   Divider,
-  Button
+  Button, message
 } from 'antd';
 import { commonService } from '../services';
 import { requestService } from '../services';
@@ -16,6 +16,7 @@ class ReqDeclineForm extends React.Component {
     super(props);
     this.state = {
       questions: [],
+      spinning: false
     }
   }
 
@@ -36,6 +37,7 @@ class ReqDeclineForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        this.setState({spinning:true})
         console.log('Received values of form: ', values);
         let reqObj = {};
         let Ratings = [];
@@ -55,10 +57,15 @@ class ReqDeclineForm extends React.Component {
           .then(
             response => {
               console.log(response)
+              this.setState({spinning:true})
               this.props.handleOk();
+              message.info('Request has been Declined by you!');
             },
             error => {
-              console.log("Error while fetching requests:", error);
+              this.setState({spinning:true})
+              this.props.handleOk();
+              message.error('Sorry not able to Decline. Please try again!');
+              console.log("Error while saving feedback:", error);
             }
           );
       }
@@ -108,10 +115,10 @@ class ReqDeclineForm extends React.Component {
         </Form.Item>
         <Divider />
         <Form.Item wrapperCol={{ span: 12, offset: 12 }}>
-          <Button type="secondary" style={{marginRight:'15px'}} onClick={e => { this.props.form.resetFields(); this.props.handleCancel(); }}>
+        <Button type="secondary" style={{marginRight:'15px'}}  disabled={this.state.spinning} onClick={e => { this.props.form.resetFields(); this.props.handleCancel(); }}>
             CANCEL
           </Button>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={this.state.spinning} disabled={this.state.spinning}>
             DECLINE
           </Button>
         </Form.Item>

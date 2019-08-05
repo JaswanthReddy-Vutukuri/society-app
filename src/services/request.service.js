@@ -5,7 +5,8 @@ export const requestService = {
     createRequest,
     getRequestCounts,
     getRequests,
-    SaveEmployeeFeedback
+    SaveEmployeeFeedback,
+    SaveRepresentativeFeedback
 };
 
 function createRequest(reqData) {
@@ -64,7 +65,6 @@ function getRequests (reqParams) {
 function SaveEmployeeFeedback (reqParams) {
     
     reqParams.CreatedbyUserID = JSON.parse(localStorage.getItem('currentUser')).UserID;
-    reqParams.FeedbackStatus = reqParams.reqStatus ? (JSON.parse(localStorage.getItem('currentUser')).Role.substring(0,3) +'_'+reqParams.reqStatus) : null;
     
     const requestOptions = {
         method: 'POST',
@@ -73,6 +73,23 @@ function SaveEmployeeFeedback (reqParams) {
     };
 
     return fetch(`${apiUrl}/Requests/SaveEmployeeFeedback`, requestOptions)
+        .then(handleResponse)
+        .then(status => {
+            return status;
+        });
+}
+
+function SaveRepresentativeFeedback (reqParams) {
+    
+    reqParams.CreatedUserID = JSON.parse(localStorage.getItem('currentUser')).UserID;
+    
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reqParams)
+    };
+
+    return fetch(`${apiUrl}/Requests/SaveRepresentativeFeedback`, requestOptions)
         .then(handleResponse)
         .then(status => {
             return status;

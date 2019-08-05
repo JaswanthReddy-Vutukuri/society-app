@@ -1,10 +1,10 @@
 import React from 'react';
 import { Table, Modal, Divider, Button, Spin } from 'antd';
-import RequestInfoDetails from './request-info';
-import ReqApprove from './request-approve';
-import ReqDecline from './request-decline';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import RequestInfoDetails from './request-info';
+import EmpActionsDetails from './employee-actions';
+import RepActionsDetails from './rep-actions';
 
 class DataTable extends React.Component {
 
@@ -12,12 +12,12 @@ class DataTable extends React.Component {
     super(props);
     this.state = {
       showRequestInfo: false,
-      showRequestApprove: false,
-      showRequestDecline: false,
+      actionsView: false,
       columns:[],
       approveAction: false,
       declineAction: false,
-      selectedRequest: {}
+      selectedRequest: {},
+      action: ''
     }
   }
 
@@ -87,8 +87,8 @@ class DataTable extends React.Component {
       render: (text,record) => (
         <span>
           <Button type="link" style={{ color: 'blue'}} onClick={()=>{ this.showReqInfoModal(record)}}> View </Button>
-          { this.state.approveAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'green'}} onClick={()=>{ this.showReqApproveModal(record)}}> Approve </Button> </React.Fragment>: null }
-          { this.state.declineAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'brown'}} onClick={()=>{ this.showReqDeclineModal(record)}}> Decline </Button> </React.Fragment>: null }
+          { this.state.approveAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'green'}} onClick={()=>{ this.showActionsModal(record, 'approve')}}> Approve </Button> </React.Fragment>: null }
+          { this.state.declineAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'brown'}} onClick={()=>{ this.showActionsModal(record, 'decline')}}> Decline </Button> </React.Fragment>: null }
         </span>
       )
     }
@@ -100,32 +100,26 @@ class DataTable extends React.Component {
       selectedRequest: record
     });
   };
-  showReqApproveModal = (record) => {
+
+  showActionsModal = (selectedRequest, action) => {
     this.setState({
-      showRequestApprove: true,
-      selectedRequest: record
-    });
-  };
-  showReqDeclineModal = (record) => {
-    this.setState({
-      showRequestDecline: true,
-      selectedRequest: record
+      selectedRequest,
+      action,
+      actionsView: true
     });
   };
 
   handleOk = e => {
     this.setState({
       showRequestInfo: false,
-      showRequestApprove: false,
-      showRequestDecline: false,
+      actionsView: false
     });
   };
 
   handleCancel = e => {
     this.setState({
       showRequestInfo: false,
-      showRequestApprove: false,
-      showRequestDecline: false,
+      actionsView: false
     });
   };
 
@@ -149,19 +143,14 @@ class DataTable extends React.Component {
         </Modal>
         <Modal
           title={`${this.state.selectedRequest.TicketNumber}`}
-          visible={this.state.showRequestApprove}
+          visible={this.state.actionsView}
           footer={null}
           closable={false}
         >
-          <ReqApprove request={this.state.selectedRequest} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
-        </Modal>
-        <Modal
-          title={`${this.state.selectedRequest.TicketNumber}`}
-          visible={this.state.showRequestDecline}
-          footer={null}
-          closable={false}
-        >
-          <ReqDecline request={this.state.selectedRequest} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
+          {this.props.currentUser.Role == 'EMPLOYEE' ? 
+            <EmpActionsDetails action={this.state.action} request={this.state.selectedRequest} handleOk={this.handleOk} handleCancel={this.handleCancel}/> :
+            <RepActionsDetails action={this.state.action} request={this.state.selectedRequest} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
+          }
         </Modal>
       </React.Fragment>
     );
@@ -170,7 +159,8 @@ class DataTable extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    requests: state.requests
+    requests: state.requests,
+    currentUser: state.currentUser
   };
 };
 

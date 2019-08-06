@@ -27,6 +27,11 @@ class RequestInfo extends React.Component {
       labelCol: { span: 8 },
       wrapperCol: { span: 14 },
     };
+
+    const documentList = this.props.request.Documents.map((document) =>
+      <li style={{color:'#1890ff',cursor:'pointer'}} key={document.name}>{document.name}</li>
+    );
+
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
         <Form.Item label="District">
@@ -65,8 +70,15 @@ class RequestInfo extends React.Component {
         <Form.Item label="Address">
           <span className="ant-form-text">{this.props.request.Address}</span>
         </Form.Item>
+        <Form.Item label="Documents">
+          <span className="ant-form-text">
+            <ul style={{listStyleType:'none'}}>
+              {this.props.request.Documents ? documentList : null}
+            </ul>
+          </span>
+        </Form.Item>
         <Form.Item wrapperCol={{ span: 4, offset: 20 }}>
-          <Button type="primary" htmlType="submit"onClick={e => { this.props.handleOk(); }}>
+          <Button type="primary" htmlType="submit" onClick={e => { this.props.handleOk(); }}>
             OK
           </Button>
         </Form.Item>

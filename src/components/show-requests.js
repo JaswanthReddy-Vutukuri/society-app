@@ -7,7 +7,6 @@ import { requestService } from '../services';
 import { setRequests, setRequestsCount } from '../actions';
 import DataTable from './data-table';
 import ReqsSearchForm from './filter-requests';
-import inchargeActions from './incharge-actions';
 
 const { Search } = Input;
 
@@ -75,7 +74,7 @@ class ShowRequests extends React.Component {
             <Form.Item label="Search">
               <Search
                 placeholder="Search Request"
-                onSearch={value => this.fetchRequests(value, null)}
+                onSearch={TicketNumber => this.fetchRequests(TicketNumber, null)}
                 style={{ width: 200 }}
               />
             </Form.Item>

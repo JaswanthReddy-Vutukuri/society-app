@@ -35,7 +35,7 @@ class SignInForm extends React.Component {
             error => {
               console.log("ERROR:",error)
               this.setState({spinning:false})
-              if (error == 'Bad Request') {
+              if (error === 'Bad Request') {
                 message.error('Invalid Username or Password');
               } else {
                 message.error('Sorry not able to login. Please try again!');

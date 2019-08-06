@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Button, DatePicker, Select } from 'antd';
+import { Form, Button, Select } from 'antd';
+// import { DatePicker } from 'antd';
 import { Collapse } from 'antd';
 import { connect } from 'react-redux';
 import { commonService } from '../services';
@@ -8,7 +9,7 @@ import { setRequests, setRequestsCount } from '../actions';
 import { withRouter } from 'react-router-dom';
 
 const { Panel } = Collapse;
-const { RangePicker } = DatePicker;
+// const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 class SearchForm extends React.Component {

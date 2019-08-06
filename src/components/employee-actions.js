@@ -5,6 +5,7 @@ import {
     Divider, Rate, Button, message, Input
 } from 'antd';
 import { connect } from 'react-redux';
+import _ from 'underscore';
 import { commonService, requestService, userService } from '../services';
 
 const { Option } = Select;
@@ -46,23 +47,34 @@ class EmpActions extends React.Component {
 
     SaveEmployeeFeedback = e => {
         e.preventDefault();
+
+        // let noValidateField;
+
+        // if (this.props.action == 'approve') {
+        //     noValidateField = 'AssingedToRepID';
+        // }else {
+        //     noValidateField = 'Description';
+        // }
+
+        // let fields = ['1','2','3','4','5','AssingedToRepID','Description'].filter(noValidateField);
+        // console.log("fields:",fields)
+
         this.props.form.validateFields((err, values) => {
-            console.log("error:",err)
-            if (!err) {
+            if (!err || (err && _.keys(err).length <= 1)) {
                 this.setState({ spinning: true });
                 console.log('Received values of form: ', values);
                 let reqObj = {}, Ratings = [];
                 this.state.questions.forEach(question => {
                     let Obj = {};
-                    Obj.QuestionID  = question.QuestionID;
+                    Obj.QuestionID = question.QuestionID;
                     Obj.RatingValue = values[question.QuestionID]
                     Ratings.push(Obj);
                 })
-                reqObj.Ratings         = Ratings;
+                reqObj.Ratings = Ratings;
                 reqObj.AssingedToRepID = values.AssingedToRepID ? values.AssingedToRepID : null;
-                reqObj.Description     = values.Description ? values.Description : null;
-                reqObj.FeedbackStatus  = 'EMP_'+this.props.action.toUpperCase()+'D';
-                reqObj.RequestID       = this.props.request.RequestID;
+                reqObj.Description = values.Description ? values.Description : null;
+                reqObj.FeedbackStatus = 'EMP_' + this.props.action.toUpperCase() + 'D';
+                reqObj.RequestID = this.props.request.RequestID;
 
                 console.log("reqObj:", reqObj)
 
@@ -72,6 +84,7 @@ class EmpActions extends React.Component {
                             console.log(response)
                             this.setState({ spinning: false })
                             this.props.handleOk();
+                            this.props.form.resetFields();
                             message.info(`Request has been ${this.props.action}d by you!`);
                         },
                         error => {
@@ -79,6 +92,7 @@ class EmpActions extends React.Component {
                             message.error('Sorry not able to Approve. Please try again!');
                             console.log("Error while saving feedback:", error);
                             this.props.handleOk();
+                            this.props.form.resetFields();
                         }
                     );
             }
@@ -142,7 +156,7 @@ class EmpActions extends React.Component {
             <Form {...formItemLayout} className="employee-form" onSubmit={this.SaveEmployeeFeedback}>
                 {questionsArray}
                 <Divider />
-                {this.props.action == 'approve' ? assignRepField : addRemarksField}
+                {this.props.action === 'approve' ? assignRepField : addRemarksField}
                 <Divider />
                 <Form.Item wrapperCol={{ span: 12, offset: 12 }}>
                     <Button type="secondary" style={{ marginRight: '15px' }} disabled={this.state.spinning} onClick={e => { this.props.form.resetFields(); this.props.handleCancel(); }}>

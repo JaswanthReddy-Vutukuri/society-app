@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import RequestInfoDetails from './request-info';
 import EmpActionsDetails from './employee-actions';
 import RepActionsDetails from './rep-actions';
+import InchargeActionsDetails from './incharge-actions';
 
 class DataTable extends React.Component {
 
@@ -147,9 +148,11 @@ class DataTable extends React.Component {
           footer={null}
           closable={false}
         >
-          {this.props.currentUser.Role == 'EMPLOYEE' ? 
+          {this.props.currentUser.Role === 'EMPLOYEE' ? 
             <EmpActionsDetails action={this.state.action} request={this.state.selectedRequest} handleOk={this.handleOk} handleCancel={this.handleCancel}/> :
-            <RepActionsDetails action={this.state.action} request={this.state.selectedRequest} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
+            this.props.currentUser.Role === 'REPRESENTATIVE' ?
+            <RepActionsDetails action={this.state.action} request={this.state.selectedRequest} handleOk={this.handleOk} handleCancel={this.handleCancel}/> :
+            <InchargeActionsDetails action={this.state.action} request={this.state.selectedRequest} handleOk={this.handleOk} handleCancel={this.handleCancel}/>
           }
         </Modal>
       </React.Fragment>

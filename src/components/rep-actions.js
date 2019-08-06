@@ -110,7 +110,7 @@ class RepActions extends React.Component {
             rules: [{ required: true, message: 'Please input your Remarks!', whitespace: true }],
           })(<TextArea rows={4} />)}
         </Form.Item>
-        {this.props.action == 'approve' ? assignInchargeForm : null}
+        {this.props.action === 'approve' ? assignInchargeForm : null}
         <Divider />
         <Form.Item wrapperCol={{ span: 12, offset: 12 }}>
           <Button type="secondary" style={{marginRight:'15px'}}  disabled={this.state.spinning} onClick={e => { this.props.form.resetFields(); this.props.handleCancel(); }}>

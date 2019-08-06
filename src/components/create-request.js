@@ -147,7 +147,7 @@ class CreateRequest extends React.Component {
   };
 
   render() {
-    const { visible, confirmLoading, ModalText } = this.state;
+    const { visible, ModalText } = this.state;
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {

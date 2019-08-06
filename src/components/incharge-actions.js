@@ -71,7 +71,6 @@ class InchargeActions extends React.Component {
       labelCol: { span: 8 },
       wrapperCol: { span: 14 },
     };
-console.log("request:",this.props.request)
     return (
       <Form {...formItemLayout} className="rep-form" onSubmit={this.SaveInchargeFeedback}>
         <Form.Item label="Requested By">

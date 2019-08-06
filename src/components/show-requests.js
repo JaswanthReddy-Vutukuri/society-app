@@ -21,19 +21,19 @@ class ShowRequests extends React.Component {
   }
 
   componentWillMount() {
-    this.fetchRequests();
+    this.fetchRequests(null);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
-      this.fetchRequests();
+      this.fetchRequests(null);
     }
   }
 
-  fetchRequests() {
+  fetchRequests(TicketNumber) {
     let status = (this.props.location.pathname.slice(1)).toUpperCase();
     this.setState({ loading: true })
-    requestService.getRequests({ reqStatus: status })
+    requestService.getRequests({ reqStatus: status, TicketNumber})
       .then(
         response => {
           this.props.setRequests(response.Results);
@@ -56,7 +56,7 @@ class ShowRequests extends React.Component {
     return (
       <React.Fragment>
         <h2 style={{ textTransform: 'capitalize' }}>{(this.props.location.pathname.slice(1))} Requests 
-        <Button type="primary" shape="circle" icon="reload" style={{marginLeft:'15px'}} onClick={e => { this.fetchRequests();}}/>
+        <Button type="primary" shape="circle" icon="reload" style={{marginLeft:'15px'}} onClick={e => { this.fetchRequests(null);}}/>
         </h2>
         <ReqsSearchForm />
         <div style={{ textAlign: 'right', margin: '10px 0px' }}>
@@ -70,7 +70,7 @@ class ShowRequests extends React.Component {
             <Form.Item label="Search">
               <Search
                 placeholder="Search Request"
-                onSearch={value => console.log(value)}
+                onSearch={value => this.fetchRequests(value)}
                 style={{ width: 200 }}
               />
             </Form.Item>

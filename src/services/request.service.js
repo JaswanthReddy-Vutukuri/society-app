@@ -48,7 +48,8 @@ function getRequests (reqParams) {
       "VillageID": reqParams.villageID ? reqParams.villageID : null,
       "ConstituencyID": reqParams.ConstituencyID ? reqParams.ConstituencyID : null,
       "MandalID": reqParams.MandalID ? reqParams.MandalID : null,
-      "DistrictID": reqParams.DistrictID ? reqParams.DistrictID : null
+      "DistrictID": reqParams.DistrictID ? reqParams.DistrictID : null,
+      "TicketNumber": reqParams.TicketNumber ? reqParams.TicketNumber : null
     }
     const requestOptions = {
         method: 'POST',

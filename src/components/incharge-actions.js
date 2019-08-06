@@ -29,7 +29,7 @@ class InchargeActions extends React.Component {
         this.setState({spinning:true})
         console.log('Received values of form: ', values);
         let reqObj = {};
-        reqObj.AssignedToRepresentativeID = values.AssignedToRepresentativeID ? values.AssignedToRepresentativeID : 4 ;
+        reqObj.AssignedToRepresentativeID = this.props.request.RepresentativeFeedbacks[0].CreatedUserID;
         reqObj.FeedbackStatus       = 'INC_'+this.props.action.toUpperCase()+'D';;
         reqObj.RequestID            = this.props.request.RequestID;
         reqObj.Remarks              = values.Remarks;
@@ -71,11 +71,11 @@ class InchargeActions extends React.Component {
       labelCol: { span: 8 },
       wrapperCol: { span: 14 },
     };
-
+console.log("request:",this.props.request)
     return (
       <Form {...formItemLayout} className="rep-form" onSubmit={this.SaveInchargeFeedback}>
         <Form.Item label="Requested By">
-          <span className="ant-form-text">Jaswanth</span>
+          <span className="ant-form-text">{this.props.request.RepresentativeFeedbacks[0].CreatedUser}</span>
         </Form.Item>
         <Form.Item
           label={

@@ -191,7 +191,10 @@ class CreateRequest extends React.Component {
             {getFieldDecorator('DistrictID', {
               rules: [{ required: true, message: 'Please select district!' }],
             })(
-              <Select placeholder="Please select a district" onChange={this.onDistrictChange}>
+              <Select placeholder="Please select a district" showSearch onChange={this.onDistrictChange} optionFilterProp="children" 
+              filterOption={(input, option) =>
+                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }>
                 {this.state.districts.map(district =>
                   <Option key={district.DistrictID}
                     value={district.DistrictID}>
@@ -205,7 +208,9 @@ class CreateRequest extends React.Component {
             {getFieldDecorator('ConstituencyID', {
               rules: [{ required: true, message: 'Please select constituency!' }],
             })(
-              <Select placeholder="Please select a constituency">
+              <Select placeholder="Please select a constituency" showSearch optionFilterProp="children" filterOption={(input, option) =>
+                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }>
                 {this.state.constituencies.map(constituency =>
                   <Option key={constituency.ConstituencyID} value={constituency.ConstituencyID}>{constituency.Name}</Option>
                 )}
@@ -216,7 +221,9 @@ class CreateRequest extends React.Component {
             {getFieldDecorator('MandalID', {
               rules: [{ required: true, message: 'Please select mandal!' }],
             })(
-              <Select placeholder="Please select a mandal" onChange={this.onMandalChange}>
+              <Select placeholder="Please select a mandal" onChange={this.onMandalChange} showSearch optionFilterProp="children" filterOption={(input, option) =>
+                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }>
                 {this.state.mandals.map(mandal =>
                   <Option key={mandal.MandalID} value={mandal.MandalID}>{mandal.Name}</Option>
                 )}
@@ -227,7 +234,9 @@ class CreateRequest extends React.Component {
             {getFieldDecorator('VillageID', {
               rules: [{ required: true, message: 'Please select village!' }],
             })(
-              <Select placeholder="Please select a village">
+              <Select placeholder="Please select a village" showSearch optionFilterProp="children" filterOption={(input, option) =>
+                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }>
                 {this.state.villages.map(village =>
                   <Option key={village.VillageID} value={village.VillageID}>{village.Name}</Option>
                 )}

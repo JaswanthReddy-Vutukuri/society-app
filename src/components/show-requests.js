@@ -76,7 +76,8 @@ class ShowRequests extends React.Component {
 const mapStateToProps = state => {
   return {
     requests: state.requests,
-    requestsCount: state.requestsCount
+    requestsCount: state.requestsCount,
+    currentUser: state.currentUser
   };
 };
 

@@ -62,7 +62,7 @@ class ShowRequests extends React.Component {
         <div style={{ textAlign: 'right', margin: '10px 0px' }}>
           <Form layout="inline">
             <Form.Item>
-              <Checkbox>Incharge Approved</Checkbox>
+              {this.props.location.pathname.slice(1) == 'approved' && this.props.currentUser.Role == 'REPRESENTATIVE' ?<Checkbox>Incharge Approved</Checkbox> : null}
             </Form.Item>
             <Form.Item label="Count">
               <span className="ant-form-text">{this.props.requestsCount}</span>

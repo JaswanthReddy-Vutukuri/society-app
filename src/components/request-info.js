@@ -3,6 +3,7 @@ import {
   Form,
   Button
 } from 'antd';
+import apiUrl from '../config';
 
 class RequestInfo extends React.Component {
   handleSubmit = e => {
@@ -22,6 +23,11 @@ class RequestInfo extends React.Component {
     return e && e.fileList;
   };
 
+  fetchFile = (docId,uid) => {
+    console.log("documentID:",docId,uid);
+    window.open(`${apiUrl}/Requests/GetFile?DocumentID=${docId}&uid=${uid}`, '_blank');
+  }
+
   render() {
     const formItemLayout = {
       labelCol: { span: 8 },
@@ -29,8 +35,9 @@ class RequestInfo extends React.Component {
     };
 
     const documentList = this.props.request.Documents.map((document) =>
-      <li style={{color:'#1890ff',cursor:'pointer'}} key={document.name}>{document.name}</li>
+      <li style={{color:'#1890ff',cursor:'pointer'}} key={document.name} onClick={e => this.fetchFile(document.DocumentID, document.uid)}>{document.name}</li>
     );
+    console.log("request:",this.props.request)
 
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>

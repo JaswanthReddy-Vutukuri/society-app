@@ -48,7 +48,7 @@ class ShowRequests extends React.Component {
     return (
       <React.Fragment>
         <h2 style={{ textTransform: 'capitalize' }}>{(this.props.location.pathname.slice(1))} Requests 
-        <Button type="secondary" shape="circle" icon="reload" style={{marginLeft:'15px'}} onClick={e => { this.fetchRequests();}}/>
+        <Button type="primary" shape="circle" icon="reload" style={{marginLeft:'15px'}} onClick={e => { this.fetchRequests();}}/>
         </h2>
         <ReqsSearchForm />
         <div style={{ textAlign: 'right', margin: '10px 0px' }}>

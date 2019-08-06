@@ -138,7 +138,7 @@ class DataTable extends React.Component {
           title={`${this.state.selectedRequest.TicketNumber}`}
           visible={this.state.showRequestInfo}
           footer={null}
-          closable={false}
+          onCancel={this.handleCancel}
         >
           <RequestInfoDetails request={this.state.selectedRequest} handleOk={this.handleOk}/>
         </Modal>
@@ -146,7 +146,7 @@ class DataTable extends React.Component {
           title={`${this.state.selectedRequest.TicketNumber}`}
           visible={this.state.actionsView}
           footer={null}
-          closable={false}
+          onCancel={this.handleCancel}
         >
           {this.props.currentUser.Role === 'EMPLOYEE' ? 
             <EmpActionsDetails action={this.state.action} request={this.state.selectedRequest} handleOk={this.handleOk} handleCancel={this.handleCancel}/> :

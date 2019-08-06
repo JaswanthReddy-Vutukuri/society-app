@@ -5,6 +5,7 @@ import {
   Divider, Button, message, Input
 } from 'antd';
 import { connect } from 'react-redux';
+import _ from 'underscore';
 import { requestService, userService } from '../services';
 
 const { Option } = Select;
@@ -36,7 +37,7 @@ class RepActions extends React.Component {
   SaveRepFeedback = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      if (!err) {
+      if (!err || (err && _.keys(err).length <= 1)) {
         this.setState({spinning:true})
         console.log('Received values of form: ', values);
         let reqObj = {};
@@ -53,7 +54,7 @@ class RepActions extends React.Component {
               console.log(response)
               this.setState({spinning:false})
               this.props.handleOk();
-              message.info('Request has been Approved by you!');
+              message.info(`Request has been ${this.props.action}d by you!`);
             },
             error => {
               this.setState({spinning:false})

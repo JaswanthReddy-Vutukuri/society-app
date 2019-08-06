@@ -47,18 +47,6 @@ class EmpActions extends React.Component {
 
     SaveEmployeeFeedback = e => {
         e.preventDefault();
-
-        // let noValidateField;
-
-        // if (this.props.action == 'approve') {
-        //     noValidateField = 'AssingedToRepID';
-        // }else {
-        //     noValidateField = 'Description';
-        // }
-
-        // let fields = ['1','2','3','4','5','AssingedToRepID','Description'].filter(noValidateField);
-        // console.log("fields:",fields)
-
         this.props.form.validateFields((err, values) => {
             if (!err || (err && _.keys(err).length <= 1)) {
                 this.setState({ spinning: true });
@@ -83,16 +71,16 @@ class EmpActions extends React.Component {
                         response => {
                             console.log(response)
                             this.setState({ spinning: false })
-                            this.props.handleOk();
                             this.props.form.resetFields();
+                            this.props.handleOk();
                             message.info(`Request has been ${this.props.action}d by you!`);
                         },
                         error => {
                             this.setState({ spinning: false })
                             message.error('Sorry not able to Approve. Please try again!');
                             console.log("Error while saving feedback:", error);
-                            this.props.handleOk();
                             this.props.form.resetFields();
+                            this.props.handleOk();
                         }
                     );
             }

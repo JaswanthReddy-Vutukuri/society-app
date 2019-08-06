@@ -1,19 +1,22 @@
 import React from 'react';
 import { Button} from 'antd';
-import { Input, Form } from 'antd';
-import DataTable from './data-table';
-import ReqsSearchForm from './filter-requests';
+import { Input, Form, Checkbox } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { requestService } from '../services';
 import { setRequests, setRequestsCount } from '../actions';
+import DataTable from './data-table';
+import ReqsSearchForm from './filter-requests';
+
+const { Search } = Input;
 
 class ShowRequests extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      loading: false
+      loading: false,
+      showIncApproved: false
     }
   }
 
@@ -44,6 +47,11 @@ class ShowRequests extends React.Component {
       );
   }
 
+  onCheckChange() {
+    this.setState({showIncApproved:!this.state.showIncApproved})
+    console.log(this.state.showIncApproved)
+  }  
+
   render() {
     return (
       <React.Fragment>
@@ -53,11 +61,18 @@ class ShowRequests extends React.Component {
         <ReqsSearchForm />
         <div style={{ textAlign: 'right', margin: '10px 0px' }}>
           <Form layout="inline">
+            <Form.Item>
+              <Checkbox>Incharge Approved</Checkbox>
+            </Form.Item>
             <Form.Item label="Count">
               <span className="ant-form-text">{this.props.requestsCount}</span>
             </Form.Item>
             <Form.Item label="Search">
-              {(<Input />)}
+              <Search
+                placeholder="Search Request"
+                onSearch={value => console.log(value)}
+                style={{ width: 200 }}
+              />
             </Form.Item>
             {/* <ButtonGroup>
                 <Button>PDF</Button>

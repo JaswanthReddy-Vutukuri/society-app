@@ -39,7 +39,6 @@ function getRequestCounts(userID) {
 function getRequests (reqParams) {
     const reqData = {
       "UserID": JSON.parse(localStorage.getItem('currentUser')).UserID,
-      "Status": reqParams.reqStatus ? (JSON.parse(localStorage.getItem('currentUser')).Role.substring(0,3) +'_'+reqParams.reqStatus) : null,
       "Role": JSON.parse(localStorage.getItem('currentUser')).Role,
       "Index": reqParams.index ? reqParams.index : null,
       "Count": reqParams.count ? reqParams.count : null,
@@ -51,6 +50,8 @@ function getRequests (reqParams) {
       "DistrictID": reqParams.DistrictID ? reqParams.DistrictID : null,
       "TicketNumber": reqParams.TicketNumber ? reqParams.TicketNumber : null
     }
+    reqData.Status = (reqParams.reqStatus && !reqParams.Status) ? (JSON.parse(localStorage.getItem('currentUser')).Role.substring(0,3) +'_'+reqParams.reqStatus) : reqParams.Status;
+
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

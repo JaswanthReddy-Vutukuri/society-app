@@ -20,19 +20,19 @@ class ShowRequests extends React.Component {
   }
 
   componentWillMount() {
-    this.fetchRequests(null, null);
+    this.fetchRequests(null, null, null);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
-      this.fetchRequests(null, null);
+      this.fetchRequests(null, null, null);
     }
   }
 
-  fetchRequests(TicketNumber, Status) {
+  fetchRequests(TicketNumber, Status, Role) {
     let innerStatus = (this.props.location.pathname.slice(1)).toUpperCase();
     this.setState({ loading: true })
-    requestService.getRequests({ reqStatus: innerStatus, TicketNumber, Status})
+    requestService.getRequests({ reqStatus: innerStatus, TicketNumber, Status, Role})
       .then(
         response => {
           this.props.setRequests(response.Results);
@@ -49,9 +49,9 @@ class ShowRequests extends React.Component {
   onCheckChange = (e) => {
     console.log(e.target.checked)
     if (e.target.checked) {
-      this.fetchRequests(null,'INC_APPROVED');
+      this.fetchRequests(null,'INC_APPROVED', 'INCHARGE');
     } else {
-      this.fetchRequests(null, null);
+      this.fetchRequests(null, null, null);
     }
   }  
 
@@ -59,7 +59,7 @@ class ShowRequests extends React.Component {
     return (
       <React.Fragment>
         <h2 style={{ textTransform: 'capitalize' }}>{(this.props.location.pathname.slice(1))} Requests 
-        <Button type="primary" shape="circle" icon="reload" style={{marginLeft:'15px'}} onClick={e => { this.fetchRequests(null, null);}}/>
+        <Button type="primary" shape="circle" icon="reload" style={{marginLeft:'15px'}} onClick={e => { this.fetchRequests(null, null, null);}}/>
         </h2>
         <ReqsSearchForm />
         <div style={{ textAlign: 'right', margin: '10px 0px' }}>
@@ -74,7 +74,7 @@ class ShowRequests extends React.Component {
             <Form.Item label="Search">
               <Search
                 placeholder="Search Request"
-                onSearch={TicketNumber => this.fetchRequests(TicketNumber, null)}
+                onSearch={TicketNumber => this.fetchRequests(TicketNumber, null, null)}
                 style={{ width: 200 }}
               />
             </Form.Item>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Col, Row, Icon } from 'antd';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { requestService } from '../services';
 
 class RequestCounts extends React.Component {
@@ -32,24 +33,32 @@ class RequestCounts extends React.Component {
       <div>
         <Row gutter={16}>
           <Col span={6}>
-            <Card title="TOTAL REQUESTS" className="req-card" style={{ background: '#0000ff5c' }}>
-              <span className="req-value">{this.state.total}<Icon type="swap" className="req-icon" /></span>
-            </Card>
+            <NavLink to="/total">
+              <Card title="TOTAL REQUESTS" className="req-card" style={{ background: '#0000ff5c', cursor: 'pointer' }}>
+                <span className="req-value">{this.state.total}<Icon type="swap" className="req-icon" /></span>
+              </Card>
+            </NavLink>
           </Col>
           <Col span={6}>
-            <Card title="APPROVED REQUESTS" className="req-card" style={{ background: '#318a315e' }}>
-              <span className="req-value">{this.state.approved}<Icon type="check" className="req-icon" /></span>
-            </Card>
+            <NavLink to="/approved">
+              <Card title="APPROVED REQUESTS" className="req-card" style={{ background: '#318a315e', cursor: 'pointer' }}>
+                <span className="req-value">{this.state.approved}<Icon type="check" className="req-icon" /></span>
+              </Card>
+            </NavLink>
           </Col>
           <Col span={6}>
-            <Card title="PENDING REQUESTS" className="req-card" style={{ background: '#f3ab249e' }}>
-              <span className="req-value">{this.state.pending}<Icon type="warning" className="req-icon" /></span>
-            </Card>
+            <NavLink to="/pending">
+              <Card title="PENDING REQUESTS" className="req-card" style={{ background: '#f3ab249e', cursor: 'pointer' }}>
+                <span className="req-value">{this.state.pending}<Icon type="warning" className="req-icon" /></span>
+              </Card>
+            </NavLink>
           </Col>
           <Col span={6}>
-            <Card title="DECLINED REQUESTS" className="req-card" style={{ background: '#ff9999' }}>
-              <span className="req-value">{this.state.declined}<Icon type="dislike" className="req-icon" /></span>
-            </Card>
+            <NavLink to="/declined">
+              <Card title="DECLINED REQUESTS" className="req-card" style={{ background: '#ff9999', cursor: 'pointer' }}>
+                <span className="req-value">{this.state.declined}<Icon type="dislike" className="req-icon" /></span>
+              </Card>
+            </NavLink>
           </Col>
         </Row>
       </div>
@@ -59,7 +68,7 @@ class RequestCounts extends React.Component {
 
 const mapStateToProps = state => {
   return {
-      currentUser: state.currentUser
+    currentUser: state.currentUser
   };
 };
 

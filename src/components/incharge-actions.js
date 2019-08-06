@@ -11,7 +11,7 @@ import { requestService, userService } from '../services';
 const { Option } = Select;
 const { TextArea } = Input;
 
-class RepActions extends React.Component {
+class InchargeActions extends React.Component {
 
   constructor(props) {
     super(props);
@@ -102,7 +102,7 @@ class RepActions extends React.Component {
   }
 }
 
-const RepActionsDetails = Form.create({ name: 'validate_other' })(RepActions);
+const InchargeActionsDetails = Form.create({ name: 'validate_other' })(InchargeActions);
 
 const mapStateToProps = state => {
   return {
@@ -117,4 +117,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RepActionsDetails);
+)(InchargeActionsDetails);

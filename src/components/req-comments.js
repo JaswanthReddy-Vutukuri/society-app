@@ -1,6 +1,5 @@
 import React from "react";
-import { Table, Divider, Button, Spin } from 'antd';
-import { Tabs } from 'antd';
+import { Table, Tabs } from 'antd';
 
 const { TabPane } = Tabs;
 
@@ -14,7 +13,6 @@ class ReqComments extends React.Component {
     }
 
     render() {
-        console.log("request:", this.props.request)
         const empRatingCols = [
             {
                 title: 'Question',

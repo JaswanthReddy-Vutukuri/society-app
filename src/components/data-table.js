@@ -7,6 +7,7 @@ import EmpActionsDetails from './employee-actions';
 import RepActionsDetails from './rep-actions';
 import InchargeActionsDetails from './incharge-actions';
 import ReqComments from './req-comments';
+import RepTodosDetails from './rep-todos';
 
 class DataTable extends React.Component {
 
@@ -15,6 +16,7 @@ class DataTable extends React.Component {
     this.state = {
       showRequestInfo: false,
       showRequestComments: false,
+      showRepTodos: false,
       actionsView: false,
       columns:[],
       approveAction: false,
@@ -93,7 +95,7 @@ class DataTable extends React.Component {
           <React.Fragment><Divider type="vertical" /> <Button type="link" icon="message" style={{fontSize:'20px'}} onClick={()=>{ this.showReqCommentsModal(record)}}></Button></React.Fragment>
           { this.state.approveAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="like" onClick={()=>{ this.showActionsModal(record, 'approve')}}></Button> </React.Fragment>: null }
           { this.state.declineAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="dislike" onClick={()=>{ this.showActionsModal(record, 'decline')}}></Button> </React.Fragment>: null }
-          { this.props.currentUser.Role === 'REPRESENTATIVE' ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="plus-square" onClick={()=>{ this.showActionsModal(record, 'decline')}}></Button> </React.Fragment>: null }
+          { this.props.currentUser.Role === 'REPRESENTATIVE' ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="plus-square" onClick={()=>{ this.showExclusiveRepModal(record, 'decline')}}></Button> </React.Fragment>: null }
         </span>
       )
     }
@@ -113,6 +115,13 @@ class DataTable extends React.Component {
     });
   };
 
+  showExclusiveRepModal = (record) => {
+    this.setState({
+      showRepTodos: true,
+      selectedRequest: record
+    });
+  };
+
   showActionsModal = (selectedRequest, action) => {
     this.setState({
       selectedRequest,
@@ -125,6 +134,7 @@ class DataTable extends React.Component {
     this.setState({
       showRequestInfo: false,
       showRequestComments: false,
+      showRepTodos: false,
       actionsView: false
     });
   };
@@ -133,6 +143,7 @@ class DataTable extends React.Component {
     this.setState({
       showRequestInfo: false,
       showRequestComments: false,
+      showRepTodos: false,
       actionsView: false
     });
   };
@@ -163,6 +174,15 @@ class DataTable extends React.Component {
           onCancel={this.handleCancel}
         >
           <ReqComments request={this.state.selectedRequest} handleOk={this.handleOk}/>
+        </Modal>
+        <Modal
+          title={`${this.state.selectedRequest.TicketNumber}`}
+          visible={this.state.showRepTodos}
+          footer={null}
+          width={800}
+          onCancel={this.handleCancel}
+        >
+          <RepTodosDetails request={this.state.selectedRequest} handleOk={this.handleOk}/>
         </Modal>
         <Modal
           title={`${this.state.selectedRequest.TicketNumber}`}

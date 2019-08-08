@@ -76,7 +76,7 @@ class RepTodos extends React.Component {
                         )}
                     </Form.Item>
                     <Form.Item wrapperCol={{ span: 6, offset: 18 }}>
-                        <Button type="secondary" style={{ marginRight: '15px' }} onClick={e => { this.props.form.resetFields(); this.props.handleCancel(); }}>
+                        <Button type="secondary" style={{ marginRight: '15px' }} onClick={e => { this.props.form.resetFields(); this.props.handleOk(); }}>
                             CANCEL
                         </Button>
                         <Button type="primary" htmlType="submit">

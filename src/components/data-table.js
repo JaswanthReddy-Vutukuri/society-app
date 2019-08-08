@@ -6,6 +6,7 @@ import RequestInfoDetails from './request-info';
 import EmpActionsDetails from './employee-actions';
 import RepActionsDetails from './rep-actions';
 import InchargeActionsDetails from './incharge-actions';
+import ReqComments from './req-comments';
 
 class DataTable extends React.Component {
 
@@ -13,6 +14,7 @@ class DataTable extends React.Component {
     super(props);
     this.state = {
       showRequestInfo: false,
+      showRequestComments: false,
       actionsView: false,
       columns:[],
       approveAction: false,
@@ -83,13 +85,15 @@ class DataTable extends React.Component {
         <span>{(new Date(CreatedOn)).toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ")}</span> )
     },
     {
-      title: 'Action',
+      title: 'Actions',
       key: 'action',
       render: (text,record) => (
         <span>
-          <Button type="link" style={{ color: 'blue'}} onClick={()=>{ this.showReqInfoModal(record)}}> View </Button>
-          { this.state.approveAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'green'}} onClick={()=>{ this.showActionsModal(record, 'approve')}}> Approve </Button> </React.Fragment>: null }
-          { this.state.declineAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{ color: 'brown'}} onClick={()=>{ this.showActionsModal(record, 'decline')}}> Decline </Button> </React.Fragment>: null }
+          <Button type="link" icon="eye" style={{fontSize:'20px'}} onClick={()=>{ this.showReqInfoModal(record)}}></Button>
+          <React.Fragment><Divider type="vertical" /> <Button type="link" icon="message" style={{fontSize:'20px'}} onClick={()=>{ this.showReqCommentsModal(record)}}></Button></React.Fragment>
+          { this.state.approveAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="like" onClick={()=>{ this.showActionsModal(record, 'approve')}}></Button> </React.Fragment>: null }
+          { this.state.declineAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="dislike" onClick={()=>{ this.showActionsModal(record, 'decline')}}></Button> </React.Fragment>: null }
+          { this.props.currentUser.Role === 'REPRESENTATIVE' ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="plus-square" onClick={()=>{ this.showActionsModal(record, 'decline')}}></Button> </React.Fragment>: null }
         </span>
       )
     }
@@ -98,6 +102,13 @@ class DataTable extends React.Component {
   showReqInfoModal = (record) => {
     this.setState({
       showRequestInfo: true,
+      selectedRequest: record
+    });
+  };
+
+  showReqCommentsModal = (record) => {
+    this.setState({
+      showRequestComments: true,
       selectedRequest: record
     });
   };
@@ -113,6 +124,7 @@ class DataTable extends React.Component {
   handleOk = e => {
     this.setState({
       showRequestInfo: false,
+      showRequestComments: false,
       actionsView: false
     });
   };
@@ -120,6 +132,7 @@ class DataTable extends React.Component {
   handleCancel = e => {
     this.setState({
       showRequestInfo: false,
+      showRequestComments: false,
       actionsView: false
     });
   };
@@ -141,6 +154,15 @@ class DataTable extends React.Component {
           onCancel={this.handleCancel}
         >
           <RequestInfoDetails request={this.state.selectedRequest} handleOk={this.handleOk}/>
+        </Modal>
+        <Modal
+          title={`${this.state.selectedRequest.TicketNumber}`}
+          visible={this.state.showRequestComments}
+          footer={null}
+          width={800}
+          onCancel={this.handleCancel}
+        >
+          <ReqComments request={this.state.selectedRequest} handleOk={this.handleOk}/>
         </Modal>
         <Modal
           title={`${this.state.selectedRequest.TicketNumber}`}

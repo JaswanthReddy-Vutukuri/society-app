@@ -47,12 +47,7 @@ class RepTodos extends React.Component {
         return (
             <React.Fragment>
                 <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-                    <Form.Item label="Action">
-                        {getFieldDecorator('Action', {
-                            rules: [{ required: false, message: 'Please input your Remarks!', whitespace: true }],
-                        })(<TextArea rows={2} />)}
-                    </Form.Item>
-                    <Form.Item label="Status" hasFeedback>
+                    <Form.Item label="Request Status" hasFeedback>
                         {getFieldDecorator('Status', {
                             rules: [{ required: false, message: 'Please select status!' }],
                         })(
@@ -62,6 +57,11 @@ class RepTodos extends React.Component {
                                 <Option key="Done" value="Done"> Done </Option>
                             </Select>,
                         )}
+                    </Form.Item>
+                    <Form.Item label="Remarks">
+                        {getFieldDecorator('Remarks', {
+                            rules: [{ required: false, message: 'Please input your Remarks!', whitespace: true }],
+                        })(<TextArea rows={2} />)}
                     </Form.Item>
                     <Form.Item label="Documents">
                         {getFieldDecorator('upload', {

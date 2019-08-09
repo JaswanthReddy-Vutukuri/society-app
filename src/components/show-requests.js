@@ -15,7 +15,8 @@ class ShowRequests extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false
+      loading: false,
+      viewIncApproved: false
     }
   }
 
@@ -25,13 +26,14 @@ class ShowRequests extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
+      this.setState({viewIncApproved:false});
       this.fetchRequests(null, null, null);
     }
   }
 
   fetchRequests(TicketNumber, Status, Role) {
     let innerStatus = (this.props.location.pathname.slice(1)).toUpperCase();
-    this.setState({ loading: true })
+    this.setState({ loading: true });
     requestService.getRequests({ reqStatus: innerStatus, TicketNumber, Status, Role})
       .then(
         response => {
@@ -49,8 +51,10 @@ class ShowRequests extends React.Component {
   onCheckChange = (e) => {
     console.log(e.target.checked)
     if (e.target.checked) {
+      this.setState({viewIncApproved:true});
       this.fetchRequests(null,'INC_APPROVED', 'INCHARGE');
     } else {
+      this.setState({viewIncApproved:false});
       this.fetchRequests(null, null, null);
     }
   }  
@@ -85,7 +89,7 @@ class ShowRequests extends React.Component {
                 </ButtonGroup> */}
           </Form>
         </div>
-        <DataTable requests={this.props.requests} loading={this.state.loading} />
+        <DataTable requests={this.props.requests} loading={this.state.loading} viewIncApproved={this.state.viewIncApproved} />
       </React.Fragment>
     );
   }

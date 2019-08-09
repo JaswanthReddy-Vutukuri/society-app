@@ -93,8 +93,8 @@ class DataTable extends React.Component {
         <span>
           <Button type="link" icon="eye" style={{fontSize:'20px'}} onClick={()=>{ this.showReqInfoModal(record)}}></Button>
           <React.Fragment><Divider type="vertical" /> <Button type="link" icon="message" style={{fontSize:'20px'}} onClick={()=>{ this.showReqCommentsModal(record)}}></Button></React.Fragment>
-          { this.state.approveAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="like" onClick={()=>{ this.showActionsModal(record, 'approve')}}></Button> </React.Fragment>: null }
-          { this.state.declineAction ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="dislike" onClick={()=>{ this.showActionsModal(record, 'decline')}}></Button> </React.Fragment>: null }
+          { (this.state.approveAction && this.currentUser && this.currentUser.Role !== 'ADMIN') ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="like" onClick={()=>{ this.showActionsModal(record, 'approve')}}></Button> </React.Fragment>: null }
+          { (this.state.declineAction && this.currentUser && this.currentUser.Role !== 'ADMIN') ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="dislike" onClick={()=>{ this.showActionsModal(record, 'decline')}}></Button> </React.Fragment>: null }
           { this.props.currentUser.Role === 'REPRESENTATIVE' ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="plus-square" onClick={()=>{ this.showExclusiveRepModal(record, 'decline')}}></Button> </React.Fragment>: null }
         </span>
       )

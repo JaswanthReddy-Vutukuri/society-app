@@ -98,15 +98,47 @@ class SideMenuBar extends React.Component {
                         <NavLink to="/">
                             <span>
                                 <Icon type="dashboard" />
-                                    Dashboard
+                                Dashboard
                                 </span>
+                        </NavLink>
+                    </Menu.Item>
+                    <Menu.Item key="/total">
+                        <NavLink to="/total">
+                            <span>
+                                <Icon type="unordered-list" />
+                                Total Requests
+                            </span>
+                        </NavLink>
+                    </Menu.Item>
+                    <Menu.Item key="/approved">
+                        <NavLink to="/approved">
+                            <span>
+                                <Icon type="check-circle" />
+                                Approved Requests
+                            </span>
+                        </NavLink>
+                    </Menu.Item>
+                    <Menu.Item key="/declined">
+                        <NavLink to="/declined">
+                            <span>
+                                <Icon type="dislike" />
+                                Declined Requests
+                            </span>
+                        </NavLink>
+                    </Menu.Item>
+                    <Menu.Item key="/pending">
+                        <NavLink to="/pending">
+                            <span>
+                                <Icon type="exclamation-circle" />
+                                Pending Requests
+                            </span>
                         </NavLink>
                     </Menu.Item>
                     <Menu.Item key="/create-user">
                         <NavLink to="/create-user">
                             <span>
                                 <Icon type="edit" />
-                                    Create User
+                                Create User
                                 </span>
                         </NavLink>
                     </Menu.Item>
@@ -114,8 +146,16 @@ class SideMenuBar extends React.Component {
                         <NavLink to="/show-users">
                             <span>
                                 <Icon type="unordered-list" />
-                                    Users List
+                                Users List
                                 </span>
+                        </NavLink>
+                    </Menu.Item>
+                    <Menu.Item key="/track-request">
+                        <NavLink to="/track-request">
+                            <span>
+                                <Icon type="form" />
+                                Track Request
+                            </span>
                         </NavLink>
                     </Menu.Item>
                 </Menu>
@@ -123,12 +163,12 @@ class SideMenuBar extends React.Component {
         )
 
         switch (this.props.currentUser.Role) {
-            case 'USER': return (<React.Fragment>{ siderOne }</React.Fragment>);
-            case 'EMPLOYEE': return (<React.Fragment>{ siderTwo }</React.Fragment>);
-            case 'INCHARGE': return (<React.Fragment>{ siderTwo }</React.Fragment>);
-            case 'REPRESENTATIVE': return (<React.Fragment>{ siderTwo }</React.Fragment>);
-            case 'ADMIN': return (<React.Fragment>{ siderThree }</React.Fragment>);
-            default : return (<h1>I will be no where!</h1>);
+            case 'USER': return (<React.Fragment>{siderOne}</React.Fragment>);
+            case 'EMPLOYEE': return (<React.Fragment>{siderTwo}</React.Fragment>);
+            case 'INCHARGE': return (<React.Fragment>{siderTwo}</React.Fragment>);
+            case 'REPRESENTATIVE': return (<React.Fragment>{siderTwo}</React.Fragment>);
+            case 'ADMIN': return (<React.Fragment>{siderThree}</React.Fragment>);
+            default: return (<h1>I will be no where!</h1>);
         }
     }
 }

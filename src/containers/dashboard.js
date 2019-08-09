@@ -31,7 +31,10 @@ const Dashboard = ({ currentUser }) => {
             </div>
         );
         case 'ADMIN': return (
-            <h2> Admin </h2>
+            <div>
+                <RequestCounts />
+                <Clock />
+            </div>
         );
         default: return (
             <h2> Default </h2>

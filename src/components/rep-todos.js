@@ -33,6 +33,7 @@ class RepTodos extends React.Component {
             if (!err) {
                 this.setState({ spinning: true })
                 console.log('Received values of form: ', values);
+                values.RequestID = this.props.request.RequestID;
                 requestService.SaveRepresentativeComments(values)
                     .then(
                         response => {

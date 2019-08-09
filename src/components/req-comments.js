@@ -12,6 +12,18 @@ class ReqComments extends React.Component {
         }
     }
 
+    formatDate(inputDate) {
+        let d = new Date(inputDate);
+        return (
+            ("00" + d.getDate()).slice(-2) + "/" +
+            ("00" + (d.getMonth() + 1)).slice(-2) + "/" +
+            d.getFullYear() + " " +
+            ("00" + d.getHours()).slice(-2) + ":" +
+            ("00" + d.getMinutes()).slice(-2) + ":" +
+            ("00" + d.getSeconds()).slice(-2)
+        );
+    }
+
     render() {
         const empRatingCols = [
             {
@@ -32,9 +44,17 @@ class ReqComments extends React.Component {
                 key: 'CreatedbyUserID',
             },
             {
+                title: 'Comments',
+                dataIndex: 'Description',
+                key: 'Description',
+            },
+            {
                 title: 'Commented On',
                 dataIndex: 'CreatedDate',
                 key: 'CreatedDate',
+                render: (text,record) => (
+                    <span>{this.formatDate(record.CreatedDate)}</span>
+                )
             },
             {
                 title: 'Feedback Status',
@@ -43,11 +63,8 @@ class ReqComments extends React.Component {
             },
             {
                 title: 'Assigned To',
-                dataIndex: 'AssingedToRepID',
-                key: 'AssingedToRepID',
-                render: (text,record) => (
-                    <span>{`${record.AssingedToRepID} (REPRESENTATIVE)`}</span>
-                )
+                dataIndex: 'Representative',
+                key: 'Representative'
             }
         ]
 
@@ -58,9 +75,17 @@ class ReqComments extends React.Component {
                 key: 'CreatedUserID',
             },
             {
+                title: 'Comments',
+                dataIndex: 'Remarks',
+                key: 'Remarks',
+            },
+            {
                 title: 'Commented On',
                 dataIndex: 'CreatedOn',
                 key: 'CreatedOn',
+                render: (text,record) => (
+                    <span>{this.formatDate(record.CreatedOn)}</span>
+                )
             },
             {
                 title: 'Feedback Status',
@@ -69,11 +94,8 @@ class ReqComments extends React.Component {
             },
             {
                 title: 'Assigned To',
-                dataIndex: 'AssignedToRepresentativeID',
-                key: 'AssignedToRepresentativeID',
-                render: (text,record) => (
-                    <span>{`${record.AssignedToRepresentativeID} (REPRESENTATIVE)`}</span>
-                )
+                dataIndex: 'AssignedToRepresentative',
+                key: 'AssignedToRepresentative'
             }
         ]
 
@@ -84,9 +106,17 @@ class ReqComments extends React.Component {
                 key: 'CreatedUserID',
             },
             {
+                title: 'Comments',
+                dataIndex: 'Remarks',
+                key: 'Remarks',
+            },
+            {
                 title: 'Commented On',
                 dataIndex: 'CreatedOn',
                 key: 'CreatedOn',
+                render: (text,record) => (
+                    <span>{this.formatDate(record.CreatedOn)}</span>
+                )
             },
             {
                 title: 'Feedback Status',
@@ -95,37 +125,34 @@ class ReqComments extends React.Component {
             },
             {
                 title: 'Assigned To',
-                dataIndex: 'AssignedToInchargeID',
-                key: 'AssignedToInchargeID',
-                render: (text,record) => (
-                    <span>{`${record.AssignedToInchargeID} (INCHARGE)`}</span>
-                )
+                dataIndex: 'AssignedToIncharge',
+                key: 'AssignedToIncharge'
             }
         ]
 
         const empComments = (
             <React.Fragment>
-                <Table pagination={false} dataSource={this.props.request.EmployeeFeedbacks} columns={empCommentCols}></Table><br/>
+                <Table pagination={false} dataSource={this.props.request.EmployeeFeedbacks} columns={empCommentCols}></Table><br />
                 <Table pagination={false} dataSource={this.props.request.EmployeeFeedbacks[0].Ratings} columns={empRatingCols}></Table>
             </React.Fragment>
         )
         const incComments = (
-                <Table pagination={false} dataSource={this.props.request.InchargeFeedbacks} columns={incCommentCols}></Table>
+            <Table pagination={false} dataSource={this.props.request.InchargeFeedbacks} columns={incCommentCols}></Table>
         )
         const repComments = (
-                <Table pagination={false} dataSource={this.props.request.RepresentativeFeedbacks} columns={repCommentCols}></Table>
+            <Table pagination={false} dataSource={this.props.request.RepresentativeFeedbacks} columns={repCommentCols}></Table>
         )
 
         return (
             <Tabs defaultActiveKey="1">
                 <TabPane tab="Employee Comments" key="1">
-                    {this.props.request.EmployeeFeedbacks.length ? empComments : <h4 style={{textAlign:'center'}}>{'No Comments Available'}</h4>}
+                    {this.props.request.EmployeeFeedbacks.length ? empComments : <h4 style={{ textAlign: 'center' }}>{'No Comments Available'}</h4>}
                 </TabPane>
                 <TabPane tab="Incharge Comments" key="2">
-                    {this.props.request.InchargeFeedbacks.length ? incComments : <h4 style={{textAlign:'center'}}>{'No Comments Available'}</h4>}
+                    {this.props.request.InchargeFeedbacks.length ? incComments : <h4 style={{ textAlign: 'center' }}>{'No Comments Available'}</h4>}
                 </TabPane>
                 <TabPane tab="Representative Comments" key="3">
-                    {this.props.request.RepresentativeFeedbacks.length ? repComments : <h4 style={{textAlign:'center'}}>{'No Comments Available'}</h4>}
+                    {this.props.request.RepresentativeFeedbacks.length ? repComments : <h4 style={{ textAlign: 'center' }}>{'No Comments Available'}</h4>}
                 </TabPane>
             </Tabs>
         )

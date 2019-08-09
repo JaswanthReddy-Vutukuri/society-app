@@ -73,7 +73,7 @@ class ShowRequests extends React.Component {
             </Form.Item>
             <Form.Item label="Search">
               <Search
-                placeholder="Search Request"
+                placeholder="Search Ticket"
                 onSearch={TicketNumber => this.fetchRequests(TicketNumber, null, null)}
                 style={{ width: 200 }}
               />

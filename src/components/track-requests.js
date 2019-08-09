@@ -72,7 +72,7 @@ class TrackRequestDetails extends React.Component {
                         {getFieldDecorator('TicketNumber', {
                             rules: [{ required: true, message: 'Please input Ticket Number!' }],
                         })(
-                            <Input placeholder="Input Ticket Number" />
+                            <Input placeholder="Input Ticket Number" autocomplete="off" />
                         )}
                     </Form.Item>
                     <Form.Item wrapperCol={{ span: 8, offset: 16 }}>

@@ -7,7 +7,8 @@ export const requestService = {
     getRequests,
     SaveEmployeeFeedback,
     SaveRepresentativeFeedback,
-    SaveInchargeFeedback
+    SaveInchargeFeedback,
+    SaveRepresentativeComments
 };
 
 function createRequest(reqData) {
@@ -110,6 +111,23 @@ function SaveInchargeFeedback (reqParams) {
     };
 
     return fetch(`${apiUrl}/Requests/SaveInchargeFeedback`, requestOptions)
+        .then(handleResponse)
+        .then(status => {
+            return status;
+        });
+}
+
+function SaveRepresentativeComments (reqParams) {
+    
+    reqParams.CreatedUserID = JSON.parse(localStorage.getItem('currentUser')).UserID;
+    
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reqParams)
+    };
+
+    return fetch(`${apiUrl}/Requests/SaveRepresentativeComment`, requestOptions)
         .then(handleResponse)
         .then(status => {
             return status;

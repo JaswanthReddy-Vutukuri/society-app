@@ -123,7 +123,10 @@ class SearchForm extends React.Component {
                         <Form layout="inline" onSubmit={this.handleSubmit}>
                             <Form.Item label="District">
                                 {getFieldDecorator('DistrictID')(
-                                    <Select placeholder="Select District" onChange={this.onDistrictChange} style={{ width: '180px' }}>
+                                    <Select placeholder="Select District" onChange={this.onDistrictChange} style={{ width: '180px' }} showSearch onChange={this.onDistrictChange} optionFilterProp="children"
+                                        filterOption={(input, option) =>
+                                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                        }>
                                         {this.state.districts.map(district =>
                                             <Option key={district.DistrictID}
                                                 value={district.DistrictID}>
@@ -135,7 +138,9 @@ class SearchForm extends React.Component {
                             </Form.Item>
                             <Form.Item label="Constituency">
                                 {getFieldDecorator('ConstituencyID')(
-                                    <Select placeholder="Select Constituency" style={{ width: '180px' }}>
+                                    <Select placeholder="Select Constituency" style={{ width: '180px' }} showSearch optionFilterProp="children" filterOption={(input, option) =>
+                                        option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                    }>
                                         {this.state.constituencies.map(constituency =>
                                             <Option key={constituency.ConstituencyID} value={constituency.ConstituencyID}>{constituency.Name}</Option>
                                         )}
@@ -144,7 +149,9 @@ class SearchForm extends React.Component {
                             </Form.Item>
                             <Form.Item label="Mandal">
                                 {getFieldDecorator('MandalID')(
-                                    <Select placeholder="Select Mandal" onChange={this.onMandalChange} style={{ width: '180px' }}>
+                                    <Select placeholder="Select Mandal" onChange={this.onMandalChange} style={{ width: '180px' }} showSearch optionFilterProp="children" filterOption={(input, option) =>
+                                        option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                    }>
                                         {this.state.mandals.map(mandal =>
                                             <Option key={mandal.MandalID} value={mandal.MandalID}>{mandal.Name}</Option>
                                         )}
@@ -154,7 +161,9 @@ class SearchForm extends React.Component {
                             <Form.Item label="Village">
                                 {getFieldDecorator('VillageID')(
 
-                                    <Select placeholder="Select Village" style={{ width: '180px' }}>
+                                    <Select placeholder="Select Village" style={{ width: '180px' }} showSearch optionFilterProp="children" filterOption={(input, option) =>
+                                        option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                    }>
                                         {this.state.villages.map(village =>
                                             <Option key={village.VillageID} value={village.VillageID}>{village.Name}</Option>
                                         )}

@@ -15,7 +15,7 @@ class RepTodos extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            spinning: false
         }
     }
 
@@ -39,7 +39,7 @@ class RepTodos extends React.Component {
                         response => {
                             console.log(response)
                             this.setState({ spinning: false })
-                            this.props.resetFields();
+                            this.props.form.resetFields();
                             this.props.handleOk();
                             message.info(`Added Status!`);
                         },
@@ -47,7 +47,7 @@ class RepTodos extends React.Component {
                             this.setState({ spinning: false })
                             message.error('Sorry not able to Act. Please try again!');
                             console.log("Error while saving comments:", error);
-                            this.props.resetFields();
+                            this.props.form.resetFields();
                             this.props.handleOk();
                         }
                     );
@@ -68,9 +68,10 @@ class RepTodos extends React.Component {
     }
 
     formatDocList(documents) {
-        return documents.map((document) =>
+        let docList = documents.map((document) =>
             <li style={{color:'#1890ff',cursor:'pointer'}} key={document.name} onClick={e => this.fetchFile(document.DocumentID, document.uid)}>{document.name}</li>
         );
+        return docList;
     }
 
     render() {

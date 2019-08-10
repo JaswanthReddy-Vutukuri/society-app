@@ -2,7 +2,7 @@ import React from "react";
 import {
     Form,
     Select,
-    Divider, Button, Input, Upload, Icon, message
+    Divider, Button, Input, Upload, Icon, message, Table
 } from 'antd';
 import apiUrl from '../config';
 import { requestService } from '../services';
@@ -39,6 +39,7 @@ class RepTodos extends React.Component {
                         response => {
                             console.log(response)
                             this.setState({ spinning: false })
+                            this.props.resetFields();
                             this.props.handleOk();
                             message.info(`Added Status!`);
                         },
@@ -46,11 +47,30 @@ class RepTodos extends React.Component {
                             this.setState({ spinning: false })
                             message.error('Sorry not able to Act. Please try again!');
                             console.log("Error while saving comments:", error);
+                            this.props.resetFields();
                             this.props.handleOk();
                         }
                     );
             }
         })
+    }
+
+    formatDate(inputDate) {
+        let d = new Date(inputDate);
+        return (
+            ("00" + d.getDate()).slice(-2) + "/" +
+            ("00" + (d.getMonth() + 1)).slice(-2) + "/" +
+            d.getFullYear() + " " +
+            ("00" + d.getHours()).slice(-2) + ":" +
+            ("00" + d.getMinutes()).slice(-2) + ":" +
+            ("00" + d.getSeconds()).slice(-2)
+        );
+    }
+
+    formatDocList(documents) {
+        return documents.map((document) =>
+            <li style={{color:'#1890ff',cursor:'pointer'}} key={document.name} onClick={e => this.fetchFile(document.DocumentID, document.uid)}>{document.name}</li>
+        );
     }
 
     render() {
@@ -59,6 +79,37 @@ class RepTodos extends React.Component {
             labelCol: { span: 8 },
             wrapperCol: { span: 14 },
         };
+
+        const repActionCols = [
+            {
+                title: 'Request Status',
+                dataIndex: 'RequestStatus',
+                key: 'RequestStatus',
+            },
+            {
+                title: 'Comments',
+                dataIndex: 'Comment',
+                key: 'Comment',
+            },
+            {
+                title: 'Documents',
+                dataIndex: 'Documents',
+                key: 'Documents',
+                render: (text, record) => (
+                    <ul style={{ listStyleType: 'none' }}>
+                        {record.Documents.length ? this.formatDocList(record.Documents) : null}
+                    </ul>
+                )
+            },
+            {
+                title: 'Commented On',
+                dataIndex: 'CreatedOn',
+                key: 'CreatedOn',
+                render: (text, record) => (
+                    <span>{this.formatDate(record.CreatedOn)}</span>
+                )
+            }
+        ]
 
         return (
             <React.Fragment>
@@ -101,7 +152,8 @@ class RepTodos extends React.Component {
                     </Form.Item>
                 </Form>
                 <Divider />
-                <h3 style={{ textAlign: 'center' }}>----  No Prior Actions Available  ----</h3>
+                {!this.props.request.RepresentativeComments.length ? <h3 style={{ textAlign: 'center' }}>----  No Prior Actions Available  ----</h3> : null}
+                {this.props.request.RepresentativeComments.length ? <Table pagination={false} dataSource={this.props.request.RepresentativeComments} columns={repActionCols}></Table> : null}
             </React.Fragment>
         )
     }

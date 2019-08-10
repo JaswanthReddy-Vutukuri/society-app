@@ -84,7 +84,7 @@ class TrackRequestDetails extends React.Component {
                     </Form.Item>
                     <Divider />
                     {(this.state.ticket && this.props.currentUser.Role=== 'USER') ? <Slider marks={marks} defaultValue={66} style={{ width: '70%', margin: '15%' }} /> : null}
-                    {(this.state.selectedRequest && this.props.currentUser.Role == 'ADMIN') ? <ReqComments request={this.state.selectedRequest} handleOk={this.handleOk} /> : null}
+                    {(this.state.ticket && this.state.selectedRequest && this.props.currentUser.Role == 'ADMIN') ? <ReqComments request={this.state.selectedRequest} handleOk={this.handleOk} /> : null}
                     {(this.state.ticket && this.props.currentUser.Role=== 'USER') ? 
                     <Form.Item label="Estimated Completion">
                         <span className="ant-form-text">16.08.2019 Friday 12:00 PM</span>

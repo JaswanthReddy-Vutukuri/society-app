@@ -95,7 +95,10 @@ class ReqComments extends React.Component {
             {
                 title: 'Assigned To',
                 dataIndex: 'AssignedToRepresentative',
-                key: 'AssignedToRepresentative'
+                key: 'AssignedToRepresentative',
+                render: (text,record) => (
+                    <span>{record.AssignedToRepresentative ? record.AssignedToRepresentative : null}</span>
+                )
             }
         ]
 

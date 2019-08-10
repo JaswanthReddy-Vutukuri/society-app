@@ -137,6 +137,7 @@ class DataTable extends React.Component {
       showRepTodos: false,
       actionsView: false
     });
+    setTimeout(() => {window.location.reload();}, 3000);
   };
 
   handleCancel = e => {

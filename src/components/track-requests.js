@@ -66,36 +66,6 @@ class TrackRequestDetails extends React.Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         
-        const repActionCols = [
-            {
-                title: 'Request Status',
-                dataIndex: 'RequestStatus',
-                key: 'RequestStatus',
-            },
-            {
-                title: 'Comments',
-                dataIndex: 'Comment',
-                key: 'Comment',
-            },
-            {
-                title: 'Documents',
-                dataIndex: 'Documents',
-                key: 'Documents',
-                render: (text, record) => (
-                    <ul style={{ listStyleType: 'none' }}>
-                        {record.Documents.length ? this.formatDocList(record.Documents) : null}
-                    </ul>
-                )
-            },
-            {
-                title: 'Commented On',
-                dataIndex: 'CreatedOn',
-                key: 'CreatedOn',
-                render: (text, record) => (
-                    <span>{this.formatDate(record.CreatedOn)}</span>
-                )
-            }
-        ]
         return (
             <React.Fragment>
                 <h2>Track Request</h2>
@@ -115,7 +85,6 @@ class TrackRequestDetails extends React.Component {
                     <Divider />
                     {(this.state.ticket && this.props.currentUser.Role=== 'USER') ? <Slider marks={marks} defaultValue={66} style={{ width: '70%', margin: '15%' }} /> : null}
                     {(this.state.selectedRequest && this.props.currentUser.Role == 'ADMIN') ? <ReqComments request={this.state.selectedRequest} handleOk={this.handleOk} /> : null}
-                    {(this.state.selectedRequest && this.props.currentUser.Role == 'ADMIN' && this.props.request.RepresentativeComments.length) ? <Table pagination={false} dataSource={this.props.request.RepresentativeComments} columns={repActionCols}></Table> : null}
                     {(this.state.ticket && this.props.currentUser.Role=== 'USER') ? 
                     <Form.Item label="Estimated Completion">
                         <span className="ant-form-text">16.08.2019 Friday 12:00 PM</span>

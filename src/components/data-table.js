@@ -171,7 +171,7 @@ class DataTable extends React.Component {
           title={`${this.state.selectedRequest.TicketNumber}`}
           visible={this.state.showRequestComments}
           footer={null}
-          width={800}
+          width={900}
           onCancel={this.handleCancel}
         >
           <ReqComments request={this.state.selectedRequest} handleOk={this.handleOk}/>

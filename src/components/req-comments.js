@@ -40,8 +40,8 @@ class ReqComments extends React.Component {
         const empCommentCols = [
             {
                 title: 'Comments By',
-                dataIndex: 'CreatedbyUserID',
-                key: 'CreatedbyUserID',
+                dataIndex: 'CreatedUser',
+                key: 'CreatedUser',
             },
             {
                 title: 'Comments',
@@ -71,8 +71,8 @@ class ReqComments extends React.Component {
         const incCommentCols = [
             {
                 title: 'Comments By',
-                dataIndex: 'CreatedUserID',
-                key: 'CreatedUserID',
+                dataIndex: 'CreatedUser',
+                key: 'CreatedUser',
             },
             {
                 title: 'Comments',
@@ -105,8 +105,8 @@ class ReqComments extends React.Component {
         const repCommentCols = [
             {
                 title: 'Comments By',
-                dataIndex: 'CreatedUserID',
-                key: 'CreatedUserID',
+                dataIndex: 'CreatedUser',
+                key: 'CreatedUser',
             },
             {
                 title: 'Comments',
@@ -132,11 +132,42 @@ class ReqComments extends React.Component {
                 key: 'AssignedToIncharge'
             }
         ]
+        
+        const repActionCols = [
+            {
+                title: 'Request Status',
+                dataIndex: 'RequestStatus',
+                key: 'RequestStatus',
+            },
+            {
+                title: 'Comments',
+                dataIndex: 'Comment',
+                key: 'Comment',
+            },
+            {
+                title: 'Documents',
+                dataIndex: 'Documents',
+                key: 'Documents',
+                render: (text, record) => (
+                    <ul style={{ listStyleType: 'none' }}>
+                        {record.Documents.length ? this.formatDocList(record.Documents) : null}
+                    </ul>
+                )
+            },
+            {
+                title: 'Commented On',
+                dataIndex: 'CreatedOn',
+                key: 'CreatedOn',
+                render: (text, record) => (
+                    <span>{this.formatDate(record.CreatedOn)}</span>
+                )
+            }
+        ]
 
         const empComments = (
             <React.Fragment>
                 <Table pagination={false} dataSource={this.props.request.EmployeeFeedbacks} columns={empCommentCols}></Table><br />
-                <Table pagination={false} dataSource={this.props.request.EmployeeFeedbacks.length ? this.props.request.EmployeeFeedbacks[0].Ratings: []} columns={empRatingCols}></Table>
+                <Table pagination={false} dataSource={this.props.request.EmployeeFeedbacks && this.props.request.EmployeeFeedbacks[0].Ratings} columns={empRatingCols}></Table>
             </React.Fragment>
         )
         const incComments = (
@@ -146,16 +177,23 @@ class ReqComments extends React.Component {
             <Table pagination={false} dataSource={this.props.request.RepresentativeFeedbacks} columns={repCommentCols}></Table>
         )
 
+        const repActions = (
+            <Table pagination={false} dataSource={this.props.request.RepresentativeComments} columns={repActionCols}></Table>
+        )
+
         return (
             <Tabs defaultActiveKey="1">
                 <TabPane tab="Employee Comments" key="1">
-                    {this.props.request.EmployeeFeedbacks.length ? empComments : <h4 style={{ textAlign: 'center' }}>{'No Comments Available'}</h4>}
+                    {this.props.request.EmployeeFeedbacks && this.props.request.EmployeeFeedbacks.length ? empComments : <h4 style={{ textAlign: 'center' }}>{'No Comments Available'}</h4>}
                 </TabPane>
                 <TabPane tab="Incharge Comments" key="2">
-                    {this.props.request.InchargeFeedbacks.length ? incComments : <h4 style={{ textAlign: 'center' }}>{'No Comments Available'}</h4>}
+                    {this.props.request.InchargeFeedbacks && this.props.request.InchargeFeedbacks.length ? incComments : <h4 style={{ textAlign: 'center' }}>{'No Comments Available'}</h4>}
                 </TabPane>
                 <TabPane tab="Representative Comments" key="3">
-                    {this.props.request.RepresentativeFeedbacks.length ? repComments : <h4 style={{ textAlign: 'center' }}>{'No Comments Available'}</h4>}
+                    {this.props.request.RepresentativeFeedbacks && this.props.request.RepresentativeFeedbacks.length ? repComments : <h4 style={{ textAlign: 'center' }}>{'No Comments Available'}</h4>}
+                </TabPane>
+                <TabPane tab="Representative Actions" key="4">
+                    {this.props.request.RepresentativeComments && this.props.request.RepresentativeComments.length ? repActions : <h4 style={{ textAlign: 'center' }}>{'No Actions Available'}</h4>}
                 </TabPane>
             </Tabs>
         )

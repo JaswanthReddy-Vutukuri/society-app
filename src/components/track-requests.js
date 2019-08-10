@@ -6,16 +6,16 @@ import {
     Divider,
     Slider
 } from 'antd';
+import { connect } from 'react-redux';
+
 import { requestService } from '../services';
 import ReqComments from './req-comments';
 
 const marks = {
     0: "Open",
-    20: "Verified",
-    40: "Issued",
-    60: "Proposed",
-    80: "Locked",
-    100: "Completed"
+    33: "Verified",
+    66: "In Progress",
+    100: "Done"
 };
 
 class TrackRequestDetails extends React.Component {
@@ -33,11 +33,12 @@ class TrackRequestDetails extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                this.setState({ticket: values.TicketNumber});
                 requestService.getRequests(values)
                     .then(
                         response => {
                             console.log("response:",response,values.TicketNumber)
-                            this.setState({ selectedRequest: response.Results[0], ticket: values.TicketNumber });
+                            this.setState({ selectedRequest: response.Results[0] });
                         },
                         error => {
                             console.log("Error while fetching request:", error);
@@ -81,11 +82,12 @@ class TrackRequestDetails extends React.Component {
                         </Button>
                     </Form.Item>
                     <Divider />
-                    {/* <Slider marks={marks} defaultValue={40} style={{ width: '70%', margin: '15%' }} /> */}
-                    {this.state.ticket ? <ReqComments request={this.state.selectedRequest} handleOk={this.handleOk} /> : null}
+                    {(this.state.ticket && this.props.currentUser.Role=== 'USER') ? <Slider marks={marks} defaultValue={66} style={{ width: '70%', margin: '15%' }} /> : null}
+                    {(this.state.selectedRequest && this.props.currentUser.Role == 'ADMIN') ? <ReqComments request={this.state.selectedRequest} handleOk={this.handleOk} /> : null}
+                    {(this.state.ticket && this.props.currentUser.Role=== 'USER') ? 
                     <Form.Item label="Estimated Completion">
-                        <span className="ant-form-text">16.07.2019 Tuesday 12:00 PM</span>
-                    </Form.Item>
+                        <span className="ant-form-text">16.08.2019 Friday 12:00 PM</span>
+                    </Form.Item> : null }
                 </Form>
             </React.Fragment>
         );
@@ -94,4 +96,19 @@ class TrackRequestDetails extends React.Component {
 
 const TrackRequest = Form.create({ name: 'validate_other' })(TrackRequestDetails);
 
-export default TrackRequest;
+const mapStateToProps = state => {
+    return {
+      currentUser: state.currentUser
+    };
+  };
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+
+    };
+  };
+  
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(TrackRequest);

@@ -265,14 +265,14 @@ class CreateRequest extends React.Component {
               rules: [{ required: true, message: 'Please input your lastname!', whitespace: true }],
             })(<Input />)}
           </Form.Item>
-          <Form.Item label="Gender">
+          {/* <Form.Item label="Gender">
             {getFieldDecorator('Gender')(
               <Radio.Group>
                 <Radio value="Male">Male</Radio>
                 <Radio value="Female">Female</Radio>
               </Radio.Group>,
             )}
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item label="Age">
             {getFieldDecorator('Age', { rules: [{ required: true, message: 'Please provide Age!' }] })(<InputNumber />)}
             <span className="ant-form-text"> Years </span>
@@ -290,7 +290,7 @@ class CreateRequest extends React.Component {
                   message: 'The input is not valid E-mail!',
                 },
                 {
-                  required: true,
+                  required: false,
                   message: 'Please input your E-mail!',
                 },
               ],
@@ -304,7 +304,7 @@ class CreateRequest extends React.Component {
             }
           >
             {getFieldDecorator('Address', {
-              rules: [{ required: true, message: 'Please input your address!', whitespace: true }],
+              rules: [{ required: false, message: 'Please input your address!', whitespace: true }],
             })(<TextArea rows={4} />)}
           </Form.Item>
           <Form.Item label="Benefits">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Modal, Divider, Button, Spin } from 'antd';
+import { Table, Modal, Divider, Button, Spin, Tooltip } from 'antd';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import RequestInfoDetails from './request-info';
@@ -8,6 +8,8 @@ import RepActionsDetails from './rep-actions';
 import InchargeActionsDetails from './incharge-actions';
 import ReqComments from './req-comments';
 import RepTodosDetails from './rep-todos';
+import { requestService } from '../services';
+import { setRequests, setRequestsCount } from '../actions';
 
 class DataTable extends React.Component {
 
@@ -22,7 +24,8 @@ class DataTable extends React.Component {
       approveAction: false,
       declineAction: false,
       selectedRequest: {},
-      action: ''
+      action: '',
+      loading: false
     }
   }
 
@@ -62,7 +65,11 @@ class DataTable extends React.Component {
     {
       title: 'Description',
       dataIndex: 'Description',
-      key: 'Description'
+      key: 'Description',
+      width: 150,
+      render: Description => (<Tooltip title={Description}>
+                      <span>{Description}</span>
+                    </Tooltip>)
     },
     {
       title: 'Budget',
@@ -149,14 +156,46 @@ class DataTable extends React.Component {
     });
   };
 
+  handlePageChange = (pageIndex,pageSize) => {
+    console.log("handlePageChange:",pageIndex,pageSize)
+    this.fetchRequests(pageIndex,pageSize)
+  }
+
+  handlePageSizeChange = (pageIndex,pageSize) => {
+    console.log("handlePageSizeChange:",pageIndex,pageSize)
+    this.fetchRequests(pageIndex,pageSize)
+  }
+
+  fetchRequests(pageIndex,pageSize) {
+    let innerStatus = (this.props.location.pathname.slice(1)).toUpperCase();
+    this.setState({ loading: true });
+    requestService.getRequests({ reqStatus: innerStatus, index: pageIndex, count: pageSize})
+      .then(
+        response => {
+          this.props.setRequests(response.Results);
+          this.props.setRequestsCount(response.RecordCount);
+          this.setState({ loading: false });
+        },
+        error => {
+          console.log("Error while fetching requests:", error);
+          this.setState({ loading: false })
+        }
+      );
+  }
+
   render() {
     return (
       <React.Fragment>
-        <Spin size="large" spinning={this.props.loading}>
+        <Spin size="large" spinning={this.props.loading || this.state.loading}>
           <Table 
             columns={this.columns} 
             dataSource={this.props.requests} 
-            pagination={{ defaultPageSize: 5, showSizeChanger: true, pageSizeOptions: ['5', '10', '15', '20', '30']}} 
+            pagination={{ defaultPageSize: 5,
+              onShowSizeChange: this.handlePageSizeChange,
+              showSizeChanger: true,
+              onChange:this.handlePageChange,
+              total:this.props.requestsCount,
+              pageSizeOptions: ['5', '10', '15', '20', '30']}} 
           />
         </Spin>
         <Modal
@@ -206,12 +245,20 @@ class DataTable extends React.Component {
 const mapStateToProps = state => {
   return {
     requests: state.requests,
+    requestsCount: state.requestsCount,
     currentUser: state.currentUser
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    setRequests: requests => {
+      dispatch(setRequests(requests));
+    },
+    setRequestsCount: requestsCount => {
+      dispatch(setRequestsCount(requestsCount));
+    }
+  };
 };
 
 export default connect(

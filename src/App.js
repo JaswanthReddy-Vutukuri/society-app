@@ -43,6 +43,7 @@ class App extends React.Component {
                   <PrivateRoute path="/declined" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE', 'ADMIN']} component={ShowRequests} />
                   <PrivateRoute path="/approved" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE', 'ADMIN']} component={ShowRequests} />
                   <PrivateRoute path="/pending" roles={['EMPLOYEE','INCHARGE','REPRESENTATIVE', 'ADMIN']} component={ShowRequests} />
+                  <PrivateRoute path="/inactive" roles={['ADMIN']} component={ShowRequests} />
                   <PrivateRoute path="/new-request" roles={['USER']} component={CreateRequest} />
                   <PrivateRoute path="/track-request" roles={['USER', 'ADMIN']} component={TrackRequest} />
                   <PrivateRoute path="/create-user" roles={['ADMIN']} component={CreateUser} />

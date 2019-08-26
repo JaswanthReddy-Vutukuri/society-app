@@ -134,6 +134,14 @@ class SideMenuBar extends React.Component {
                             </span>
                         </NavLink>
                     </Menu.Item>
+                    <Menu.Item key="/inactive">
+                        <NavLink to="/inactive">
+                            <span>
+                                <Icon type="lock" />
+                                In-Active Requests
+                            </span>
+                        </NavLink>
+                    </Menu.Item>
                     <Menu.Item key="/create-user">
                         <NavLink to="/create-user">
                             <span>

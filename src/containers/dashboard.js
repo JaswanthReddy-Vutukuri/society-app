@@ -30,6 +30,12 @@ const Dashboard = ({ currentUser }) => {
                 <Clock />
             </div>
         );
+        case 'SPONSOR': return (
+            <div>
+                <RequestCounts />
+                <Clock />
+            </div>
+        );
         case 'ADMIN': return (
             <div>
                 <RequestCounts />

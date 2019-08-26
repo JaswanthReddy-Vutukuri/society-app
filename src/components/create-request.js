@@ -30,7 +30,8 @@ class CreateRequest extends React.Component {
     constituencies: [],
     mandals: [],
     villages: [],
-    spinning: false
+    spinning: false,
+    benefits: ''
   };
 
   componentWillMount() {
@@ -75,6 +76,13 @@ class CreateRequest extends React.Component {
     });
   };
 
+  onBenefitChange = (event) => {
+    console.log("benefits:",event.target.value)
+    this.setState({
+      benefits : event.target.value
+    })
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -102,6 +110,7 @@ class CreateRequest extends React.Component {
   };
 
   onDistrictChange = (districtId) => {
+    console.log("distict:",districtId)
     commonService.getMandals(districtId)
     .then(
       mandals => {
@@ -189,6 +198,7 @@ class CreateRequest extends React.Component {
           <Divider />
           <Form.Item label="District" hasFeedback>
             {getFieldDecorator('DistrictID', {
+              initialValue: 9,
               rules: [{ required: true, message: 'Please select district!' }],
             })(
               <Select placeholder="Please select a district" showSearch onChange={this.onDistrictChange} optionFilterProp="children" 
@@ -246,15 +256,15 @@ class CreateRequest extends React.Component {
           <Form.Item
             label={
               <span>
-                First Name
+                Name
             </span>
             }
           >
-            {getFieldDecorator('FirstName', {
-              rules: [{ required: true, message: 'Please input your firstname!', whitespace: true }],
+            {getFieldDecorator('Name', {
+              rules: [{ required: true, message: 'Please input your name!', whitespace: true }],
             })(<Input />)}
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             label={
               <span>
                 Last Name
@@ -264,7 +274,7 @@ class CreateRequest extends React.Component {
             {getFieldDecorator('LastName', {
               rules: [{ required: true, message: 'Please input your lastname!', whitespace: true }],
             })(<Input />)}
-          </Form.Item>
+          </Form.Item> */}
           {/* <Form.Item label="Gender">
             {getFieldDecorator('Gender')(
               <Radio.Group>
@@ -311,14 +321,17 @@ class CreateRequest extends React.Component {
             {getFieldDecorator('IssueCategory', {
               rules: [{ required: true, message: 'Please input beneficiaries!' }],
             })(
-              <Radio.Group>
+              <Radio.Group onChange={this.onBenefitChange} >
                 <Radio value="Person">Person</Radio>
                 <Radio value="People">People</Radio>
               </Radio.Group>,
             )}
           </Form.Item>
+          {this.state.benefits=='People'?<Form.Item label="No. of Beneficiaries">
+            {getFieldDecorator('BeneficiaryCount', { rules: [{ required: false, message: 'Please provide No. of Beneficiaries!' }] })(<InputNumber />)}
+          </Form.Item>:null}
           <Form.Item label="Estimated Budget">
-            {getFieldDecorator('Estimatedbudget', { rules: [{ required: true, message: 'Please provide Budget!' }] })(<InputNumber />)}
+            {getFieldDecorator('Estimatedbudget', { rules: [{ required: false, message: 'Please provide Budget!' }] })(<InputNumber />)}
             <span className="ant-form-text"> Rupees </span>
           </Form.Item>
           <Form.Item

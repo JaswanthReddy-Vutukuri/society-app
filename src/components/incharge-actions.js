@@ -74,7 +74,7 @@ class InchargeActions extends React.Component {
     return (
       <Form {...formItemLayout} className="rep-form" onSubmit={this.SaveInchargeFeedback}>
         <Form.Item label="Requested By">
-          <span className="ant-form-text">{this.props.request.RepresentativeFeedbacks[0].CreatedUser}</span>
+          <span className="ant-form-text">{this.props.request && this.props.request.RepresentativeFeedbacks.length?this.props.request.RepresentativeFeedbacks[0].CreatedUser:''}</span>
         </Form.Item>
         <Form.Item
           label={

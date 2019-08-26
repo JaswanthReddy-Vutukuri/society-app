@@ -167,7 +167,7 @@ class ReqComments extends React.Component {
         const empComments = (
             <React.Fragment>
                 <Table pagination={false} dataSource={this.props.request.EmployeeFeedbacks} columns={empCommentCols}></Table><br />
-                <Table pagination={false} dataSource={this.props.request.EmployeeFeedbacks && this.props.request.EmployeeFeedbacks[0].Ratings} columns={empRatingCols}></Table>
+                <Table pagination={false} dataSource={this.props.request.EmployeeFeedbacks.length && this.props.request.EmployeeFeedbacks[0].Ratings} columns={empRatingCols}></Table>
             </React.Fragment>
         )
         const incComments = (

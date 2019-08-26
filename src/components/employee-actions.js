@@ -18,7 +18,9 @@ class EmpActions extends React.Component {
         this.state = {
             questions: [],
             representatives: [],
-            spinning: false
+            spinning: false,
+            cantApprove: false,
+            cantDecline: false
         }
     }
 
@@ -45,17 +47,21 @@ class EmpActions extends React.Component {
             );
     }
 
-    SaveEmployeeFeedback = e => {
+    validateEmployeeFeedback = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err || (err && _.keys(err).length <= 1)) {
-                this.setState({ spinning: true });
                 console.log('Received values of form: ', values);
-                let reqObj = {}, Ratings = [];
+                this.setState({
+                    cantApprove: false,
+                    cantDecline: false
+                })
+                let reqObj = {}, Ratings = [], ratingValues = [];
                 this.state.questions.forEach(question => {
                     let Obj = {};
                     Obj.QuestionID = question.QuestionID;
                     Obj.RatingValue = values[question.QuestionID]
+                    ratingValues.push(values[question.QuestionID])
                     Ratings.push(Obj);
                 })
                 reqObj.Ratings = Ratings;
@@ -66,26 +72,58 @@ class EmpActions extends React.Component {
 
                 console.log("reqObj:", reqObj)
 
-                requestService.SaveEmployeeFeedback(reqObj)
-                    .then(
-                        response => {
-                            console.log(response)
-                            this.setState({ spinning: false })
-                            this.props.form.resetFields();
-                            this.props.handleOk();
-                            message.info(`Request has been ${this.props.action}d by you!`);
-                        },
-                        error => {
-                            this.setState({ spinning: false })
-                            message.error('Sorry not able to Approve. Please try again!');
-                            console.log("Error while saving feedback:", error);
-                            this.props.form.resetFields();
-                            this.props.handleOk();
-                        }
-                    );
+                if (this.props.action.toUpperCase() === 'APPROVE') {
+                    let ratingSum = ratingValues.reduce((a, b) => a + b, 0);
+                    let ratingsLength = ratingValues.length;
+                    let ratingAverage = (ratingsLength * 5)/2;
+                    console.log("ratingSum,ratingsLength,ratingAverage:",ratingSum,ratingsLength,ratingAverage)
+                    if (ratingSum < ratingAverage ) {
+                        console.log("Less than Average Rating - Can't Approve")
+                        this.setState({
+                            cantApprove: true
+                        })
+                    } else {
+                        this.SaveEmployeeFeedback(reqObj);
+                    }
+                } else {
+                    let ratingSum = ratingValues.reduce((a, b) => a + b, 0);
+                    let ratingsLength = ratingValues.length;
+                    let ratingAverage = (ratingsLength * 5)/2;
+                    console.log("ratingSum,ratingsLength,ratingAverage:",ratingSum,ratingsLength,ratingAverage)
+                    if (ratingSum > ratingAverage ) {
+                        console.log("Greater than Average Rating - Can't Decline")
+                        this.setState({
+                            cantDecline: true
+                        })
+                    } else {
+                        this.SaveEmployeeFeedback(reqObj);
+                    }
+                }
             }
         });
     };
+
+    SaveEmployeeFeedback = (reqObj) => {
+        this.setState({ spinning: true });
+
+        requestService.SaveEmployeeFeedback(reqObj)
+        .then(
+            response => {
+                console.log(response)
+                this.setState({ spinning: false })
+                this.props.form.resetFields();
+                this.props.handleOk();
+                message.info(`Request has been ${this.props.action}d by you!`);
+            },
+            error => {
+                this.setState({ spinning: false })
+                message.error('Sorry not able to Approve. Please try again!');
+                console.log("Error while saving feedback:", error);
+                this.props.form.resetFields();
+                this.props.handleOk();
+            }
+        );
+    }
 
     normFile = e => {
         console.log('Upload event:', e);
@@ -141,11 +179,13 @@ class EmpActions extends React.Component {
         )
 
         return (
-            <Form {...formItemLayout} className="employee-form" onSubmit={this.SaveEmployeeFeedback}>
+            <Form {...formItemLayout} className="employee-form" onSubmit={this.validateEmployeeFeedback}>
                 {questionsArray}
                 <Divider />
                 {this.props.action === 'approve' ? assignRepField : addRemarksField}
                 <Divider />
+                {this.state.cantApprove ? <h3 style={{color:'brown',textAlign:"center"}}>{"Less than Average Rating - Can't Approve!"}</h3>: null}
+                {this.state.cantDecline ? <h3 style={{color:'brown',textAlign:"center?"}}>{"Greater than Average Rating - Can't Decline!"}</h3>: null}
                 <Form.Item wrapperCol={{ span: 12, offset: 12 }}>
                     <Button type="secondary" style={{ marginRight: '15px' }} disabled={this.state.spinning} onClick={e => { this.props.form.resetFields(); this.props.handleCancel(); }}>
                         CANCEL

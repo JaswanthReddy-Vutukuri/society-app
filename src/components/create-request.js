@@ -54,6 +54,8 @@ class CreateRequest extends React.Component {
           console.log("Error while fetching Constituencies:", error);
         }
       );
+
+    this.onDistrictChange(9);
   }
 
   showModal = () => {

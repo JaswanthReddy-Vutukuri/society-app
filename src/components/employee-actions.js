@@ -19,8 +19,7 @@ class EmpActions extends React.Component {
             questions: [],
             representatives: [],
             spinning: false,
-            cantApprove: false,
-            cantDecline: false
+            cantApprove: false
         }
     }
 
@@ -53,8 +52,7 @@ class EmpActions extends React.Component {
             if (!err || (err && _.keys(err).length <= 1)) {
                 console.log('Received values of form: ', values);
                 this.setState({
-                    cantApprove: false,
-                    cantDecline: false
+                    cantApprove: false
                 })
                 let reqObj = {}, Ratings = [], ratingValues = [];
                 this.state.questions.forEach(question => {
@@ -65,38 +63,26 @@ class EmpActions extends React.Component {
                     Ratings.push(Obj);
                 })
                 reqObj.Ratings = Ratings;
-                reqObj.AssingedToRepID = values.AssingedToRepID ? values.AssingedToRepID : null;
                 reqObj.Description = values.Description ? values.Description : null;
-                reqObj.FeedbackStatus = 'EMP_' + this.props.action.toUpperCase() + 'D';
                 reqObj.RequestID = this.props.request.RequestID;
 
                 console.log("reqObj:", reqObj)
 
-                if (this.props.action.toUpperCase() === 'APPROVE') {
-                    let ratingSum = ratingValues.reduce((a, b) => a + b, 0);
-                    let ratingsLength = ratingValues.length;
-                    let ratingAverage = (ratingsLength * 5)/2;
-                    console.log("ratingSum,ratingsLength,ratingAverage:",ratingSum,ratingsLength,ratingAverage)
-                    if (ratingSum < ratingAverage ) {
-                        console.log("Less than Average Rating - Can't Approve")
-                        this.setState({
-                            cantApprove: true
-                        })
-                    } else {
-                        this.SaveEmployeeFeedback(reqObj);
-                    }
+                let ratingSum = ratingValues.reduce((a, b) => a + b, 0);
+                let ratingsLength = ratingValues.length;
+                let ratingAverage = (ratingsLength * 5) / 2;
+                console.log("ratingSum,ratingsLength,ratingAverage:", ratingSum, ratingsLength, ratingAverage)
+                if (ratingSum < ratingAverage) {
+                    reqObj.FeedbackStatus = 'EMP_DECLINED';
+                    reqObj.AssingedToRepID = null;
+                    this.SaveEmployeeFeedback(reqObj);
                 } else {
-                    let ratingSum = ratingValues.reduce((a, b) => a + b, 0);
-                    let ratingsLength = ratingValues.length;
-                    let ratingAverage = (ratingsLength * 5)/2;
-                    console.log("ratingSum,ratingsLength,ratingAverage:",ratingSum,ratingsLength,ratingAverage)
-                    if (ratingSum > ratingAverage ) {
-                        console.log("Greater than Average Rating - Can't Decline")
-                        this.setState({
-                            cantDecline: true
-                        })
-                    } else {
+                    reqObj.FeedbackStatus = 'EMP_APPROVED';
+                    if (values.AssingedToRepID) {
+                        reqObj.AssingedToRepID = values.AssingedToRepID;
                         this.SaveEmployeeFeedback(reqObj);
+                    } else {
+                        this.setState({ cantApprove: true });
                     }
                 }
             }
@@ -113,11 +99,11 @@ class EmpActions extends React.Component {
                 this.setState({ spinning: false })
                 this.props.form.resetFields();
                 this.props.handleOk();
-                message.info(`Request has been ${this.props.action}d by you!`);
+                message.info(`Comments saved successfully!`);
             },
             error => {
                 this.setState({ spinning: false })
-                message.error('Sorry not able to Approve. Please try again!');
+                message.error('Sorry. Please try again!');
                 console.log("Error while saving feedback:", error);
                 this.props.form.resetFields();
                 this.props.handleOk();
@@ -156,7 +142,7 @@ class EmpActions extends React.Component {
         const assignRepField = (
             <Form.Item label="Assign Representative" hasFeedback>
                 {getFieldDecorator('AssingedToRepID', {
-                    rules: [{ required: true, message: 'Please select Representative!' }],
+                    rules: [{ required: false, message: 'Please select Representative!' }],
                 })(
                     <Select placeholder="Please select a representative">
                         {this.state.representatives.map(representative =>
@@ -182,16 +168,17 @@ class EmpActions extends React.Component {
             <Form {...formItemLayout} className="employee-form" onSubmit={this.validateEmployeeFeedback}>
                 {questionsArray}
                 <Divider />
-                {this.props.action === 'approve' ? assignRepField : addRemarksField}
+                {addRemarksField}
                 <Divider />
-                {this.state.cantApprove ? <h3 style={{color:'brown',textAlign:"center"}}>{"Less than Average Rating - Can't Approve!"}</h3>: null}
-                {this.state.cantDecline ? <h3 style={{color:'brown',textAlign:"center?"}}>{"Greater than Average Rating - Can't Decline!"}</h3>: null}
+                {assignRepField}
+                <Divider />
+                {this.state.cantApprove ? <h3 style={{color:'brown',textAlign:"center"}}>{"Please assign a representative!"}</h3>: null}
                 <Form.Item wrapperCol={{ span: 12, offset: 12 }}>
                     <Button type="secondary" style={{ marginRight: '15px' }} disabled={this.state.spinning} onClick={e => { this.props.form.resetFields(); this.props.handleCancel(); }}>
                         CANCEL
                     </Button>
                     <Button type="primary" htmlType="submit" loading={this.state.spinning} disabled={this.state.spinning}>
-                        {this.props.action.toUpperCase()}
+                        SUBMIT
                     </Button>
                 </Form.Item>
             </Form>

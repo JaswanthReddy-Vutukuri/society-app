@@ -48,7 +48,8 @@ function getRequests (reqParams) {
       "ConstituencyID": reqParams.ConstituencyID ? reqParams.ConstituencyID : null,
       "MandalID": reqParams.MandalID ? reqParams.MandalID : null,
       "DistrictID": reqParams.DistrictID ? reqParams.DistrictID : null,
-      "TicketNumber": reqParams.TicketNumber ? reqParams.TicketNumber : null
+      "TicketNumber": reqParams.TicketNumber ? reqParams.TicketNumber : null,
+      "InActive": reqParams.InActive ? reqParams.InActive : false
     }
     reqData.Status = (reqParams.reqStatus && !reqParams.Status) ? (JSON.parse(localStorage.getItem('currentUser')).Role.substring(0,3) +'_'+reqParams.reqStatus) : reqParams.Status;
     reqData.Role = reqParams.Role ? reqParams.reqStatus : JSON.parse(localStorage.getItem('currentUser')).Role;

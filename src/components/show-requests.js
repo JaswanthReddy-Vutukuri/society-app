@@ -16,25 +16,26 @@ class ShowRequests extends React.Component {
     super(props);
     this.state = {
       loading: false,
-      viewIncApproved: false
+      viewIncApproved: false,
+      viewInactive: false
     }
   }
 
   componentWillMount() {
-    this.fetchRequests(null, null, null);
+    this.fetchRequests(null, null, null, false);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
       this.setState({viewIncApproved:false});
-      this.fetchRequests(null, null, null);
+      this.fetchRequests(null, null, null, false);
     }
   }
 
-  fetchRequests(TicketNumber, Status, Role) {
+  fetchRequests(TicketNumber, Status, Role, Inactive) {
     let innerStatus = (this.props.location.pathname.slice(1)).toUpperCase();
     this.setState({ loading: true });
-    requestService.getRequests({ reqStatus: innerStatus, TicketNumber, Status, Role})
+    requestService.getRequests({ reqStatus: innerStatus, TicketNumber, Status, Role, InActive: Inactive})
       .then(
         response => {
           this.props.setRequests(response.Results);
@@ -48,16 +49,27 @@ class ShowRequests extends React.Component {
       );
   }
 
-  onCheckChange = (e) => {
+  onIncApproved = (e) => {
     console.log(e.target.checked)
     if (e.target.checked) {
       this.setState({viewIncApproved:true});
-      this.fetchRequests(null,'INC_APPROVED', 'INCHARGE');
+      this.fetchRequests(null,'INC_APPROVED', 'INCHARGE', this.state.viewInactive);
     } else {
       this.setState({viewIncApproved:false});
-      this.fetchRequests(null, null, null);
+      this.fetchRequests(null, null, null, this.state.viewInactive);
     }
-  }  
+  }
+  
+  onShowInactive = (e) => {
+    console.log(e.target.checked)
+    if (e.target.checked) {
+      this.setState({viewInactive:true});
+      this.fetchRequests(null, this.state.viewIncApproved?'INC_APPROVED':null, this.state.viewIncApproved?'INCHARGE':null, true);
+    } else {
+      this.setState({viewInactive:false});
+      this.fetchRequests(null, this.state.viewIncApproved?'INC_APPROVED':null, this.state.viewIncApproved?'INCHARGE':null, false);
+    }
+  }
 
   render() {
     return (
@@ -69,8 +81,11 @@ class ShowRequests extends React.Component {
         <div style={{ textAlign: 'right', margin: '10px 0px' }}>
           <Form layout="inline">
             <Form.Item>
+              <Checkbox onChange={this.onShowInactive}>Show Inactive</Checkbox>
+            </Form.Item>
+            <Form.Item>
               {this.props.location.pathname.slice(1) == 'approved' && this.props.currentUser.Role == 'REPRESENTATIVE' ?
-              <Checkbox onChange={this.onCheckChange}>Incharge Approved</Checkbox> : null}
+              <Checkbox onChange={this.onIncApproved}>Incharge Approved</Checkbox> : null}
             </Form.Item>
             <Form.Item label="Count">
               <span className="ant-form-text">{this.props.requestsCount}</span>

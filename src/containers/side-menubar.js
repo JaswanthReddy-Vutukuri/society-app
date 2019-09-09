@@ -167,7 +167,7 @@ class SideMenuBar extends React.Component {
             case 'EMPLOYEE': return (<React.Fragment>{siderTwo}</React.Fragment>);
             case 'INCHARGE': return (<React.Fragment>{siderTwo}</React.Fragment>);
             case 'REPRESENTATIVE': return (<React.Fragment>{siderTwo}</React.Fragment>);
-            case 'SPONSOR': return (<React.Fragment>{siderTwo}</React.Fragment>);
+            case 'SPONSORSHIP': return (<React.Fragment>{siderTwo}</React.Fragment>);
             case 'ADMIN': return (<React.Fragment>{siderThree}</React.Fragment>);
             default: return (<h1>I will be no where!</h1>);
         }

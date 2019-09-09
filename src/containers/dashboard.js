@@ -30,7 +30,7 @@ const Dashboard = ({ currentUser }) => {
                 <Clock />
             </div>
         );
-        case 'SPONSOR': return (
+        case 'SPONSORSHIP': return (
             <div>
                 <RequestCounts />
                 <Clock />

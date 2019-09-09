@@ -23,6 +23,7 @@ class DataTable extends React.Component {
       columns:[],
       approveAction: false,
       declineAction: false,
+      submitAction: false,
       selectedRequest: {},
       action: '',
       loading: false
@@ -43,11 +44,11 @@ class DataTable extends React.Component {
     let status = (this.props.location.pathname.slice(1)).toUpperCase();
 
     switch(status) {
-      case 'TOTAL'    : {this.setState({approveAction: false, declineAction: false}); break;}
-      case 'APPROVED' : {this.setState({approveAction: false, declineAction: false}); break;}
-      case 'DECLINED' : {this.setState({approveAction: true, declineAction: false}); break;}
-      case 'PENDING'  : {this.setState({approveAction: true, declineAction: true}); break;}
-      default         : {this.setState({approveAction: false, declineAction: false}); break;}
+      case 'TOTAL'    : {this.setState({approveAction: false, declineAction: false, submitAction: false}); break;}
+      case 'APPROVED' : {this.setState({approveAction: false, declineAction: false, submitAction: false}); break;}
+      case 'DECLINED' : {this.setState({approveAction: true, declineAction: false, submitAction: true}); break;}
+      case 'PENDING'  : {this.setState({approveAction: true, declineAction: true, submitAction: true}); break;}
+      default         : {this.setState({approveAction: false, declineAction: false, submitAction: false}); break;}
     }
   }
 
@@ -102,7 +103,7 @@ class DataTable extends React.Component {
           <React.Fragment><Divider type="vertical" /> <Button type="link" icon="message" style={{fontSize:'20px'}} onClick={()=>{ this.showReqCommentsModal(record)}}></Button></React.Fragment>
           { (this.state.approveAction && this.props.currentUser.Role !== 'EMPLOYEE') ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="like" onClick={()=>{ this.showActionsModal(record, 'approve')}}></Button> </React.Fragment>: null }
           { (this.state.declineAction && this.props.currentUser.Role !== 'EMPLOYEE') ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="dislike" onClick={()=>{ this.showActionsModal(record, 'decline')}}></Button> </React.Fragment>: null }
-          { (this.props.currentUser.Role === 'EMPLOYEE') ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="form" onClick={()=>{ this.showActionsModal(record, null)}}></Button> </React.Fragment>: null }
+          { (this.state.submitAction && this.props.currentUser.Role === 'EMPLOYEE') ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="form" onClick={()=>{ this.showActionsModal(record, null)}}></Button> </React.Fragment>: null }
           { (this.props.currentUser.Role === 'REPRESENTATIVE' && this.props.viewIncApproved) ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="plus-square" onClick={()=>{ this.showExclusiveRepModal(record, 'decline')}}></Button> </React.Fragment>: null }
         </span>
       )

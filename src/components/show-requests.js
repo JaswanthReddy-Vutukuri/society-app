@@ -50,7 +50,6 @@ class ShowRequests extends React.Component {
   }
 
   onIncApproved = (e) => {
-    console.log(e.target.checked)
     if (e.target.checked) {
       this.setState({viewIncApproved:true});
       this.fetchRequests(null,'INC_APPROVED', 'INCHARGE', this.state.viewInactive);
@@ -61,7 +60,6 @@ class ShowRequests extends React.Component {
   }
   
   onShowInactive = (e) => {
-    console.log(e.target.checked)
     if (e.target.checked) {
       this.setState({viewInactive:true});
       this.fetchRequests(null, this.state.viewIncApproved?'INC_APPROVED':null, this.state.viewIncApproved?'INCHARGE':null, true);

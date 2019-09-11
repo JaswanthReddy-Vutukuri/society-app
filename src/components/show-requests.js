@@ -89,7 +89,7 @@ class ShowRequests extends React.Component {
           <Form layout="inline">
             <Form.Item>
               <Radio.Group value={this.state.showReqByStatus} buttonStyle="solid" onChange={this.toggleShow}>
-                <Radio.Button value="active">Active</Radio.Button>
+                <Radio.Button value="active">All</Radio.Button>
                 <Radio.Button value="inactive">InActive</Radio.Button>
               </Radio.Group>
             </Form.Item>

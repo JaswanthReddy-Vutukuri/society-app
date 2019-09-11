@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button} from 'antd';
-import { Input, Form, Checkbox } from 'antd';
+import { Input, Form, Checkbox, Radio } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { requestService } from '../services';
@@ -17,7 +17,7 @@ class ShowRequests extends React.Component {
     this.state = {
       loading: false,
       viewIncApproved: false,
-      viewInactive: false
+      showReqByStatus: 'active'
     }
   }
 
@@ -27,7 +27,7 @@ class ShowRequests extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
-      this.setState({viewIncApproved:false, viewInactive: false});
+      this.setState({viewIncApproved:false, showReqByStatus: 'active'});
       this.fetchRequests(null, null, null, false);
     }
   }
@@ -52,20 +52,29 @@ class ShowRequests extends React.Component {
   onIncApproved = (e) => {
     if (e.target.checked) {
       this.setState({viewIncApproved:true});
-      this.fetchRequests(null,'INC_APPROVED', 'INCHARGE', this.state.viewInactive);
+      this.fetchRequests(null,'INC_APPROVED', 'INCHARGE', this.state.showReqByStatus === 'active'? false : true);
     } else {
       this.setState({viewIncApproved:false});
-      this.fetchRequests(null, null, null, this.state.viewInactive);
+      this.fetchRequests(null, null, null, this.state.showReqByStatus === 'active'? false : true);
     }
   }
   
-  onShowInactive = (e) => {
-    if (e.target.checked) {
-      this.setState({viewInactive:true});
-      this.fetchRequests(null, this.state.viewIncApproved?'INC_APPROVED':null, this.state.viewIncApproved?'INCHARGE':null, true);
-    } else {
-      this.setState({viewInactive:false});
+  // onShowInactive = (e) => {
+  //   if (e.target.checked) {
+  //     this.setState({viewInactive:true});
+  //     this.fetchRequests(null, this.state.viewIncApproved?'INC_APPROVED':null, this.state.viewIncApproved?'INCHARGE':null, true);
+  //   } else {
+  //     this.setState({viewInactive:false});
+  //     this.fetchRequests(null, this.state.viewIncApproved?'INC_APPROVED':null, this.state.viewIncApproved?'INCHARGE':null, false);
+  //   }
+  // }
+
+  toggleShow = (e) => {
+    this.setState({showReqByStatus: e.target.value});
+    if(e.target.value == 'active') {
       this.fetchRequests(null, this.state.viewIncApproved?'INC_APPROVED':null, this.state.viewIncApproved?'INCHARGE':null, false);
+    } else {
+      this.fetchRequests(null, this.state.viewIncApproved?'INC_APPROVED':null, this.state.viewIncApproved?'INCHARGE':null, true);
     }
   }
 
@@ -79,7 +88,10 @@ class ShowRequests extends React.Component {
         <div style={{ textAlign: 'right', margin: '10px 0px' }}>
           <Form layout="inline">
             <Form.Item>
-              <Checkbox onChange={this.onShowInactive}>Show Inactive</Checkbox>
+              <Radio.Group value={this.state.showReqByStatus} buttonStyle="solid" onChange={this.toggleShow}>
+                <Radio.Button value="active">Active</Radio.Button>
+                <Radio.Button value="inactive">InActive</Radio.Button>
+              </Radio.Group>
             </Form.Item>
             <Form.Item>
               {this.props.location.pathname.slice(1) == 'approved' && this.props.currentUser.Role == 'REPRESENTATIVE' ?

@@ -8,6 +8,7 @@ export const requestService = {
     SaveEmployeeFeedback,
     SaveRepresentativeFeedback,
     SaveInchargeFeedback,
+    SaveAdminFeedback,
     SaveRepresentativeComments
 };
 
@@ -129,6 +130,24 @@ function SaveRepresentativeComments (reqParams) {
     };
 
     return fetch(`${apiUrl}/Requests/SaveRepresentativeComment`, requestOptions)
+        .then(handleResponse)
+        .then(status => {
+            return status;
+        });
+}
+
+
+function SaveAdminFeedback (reqParams) {
+    
+    reqParams.AssignedUserID = JSON.parse(localStorage.getItem('currentUser')).UserID;
+    
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reqParams)
+    };
+
+    return fetch(`${apiUrl}/Requests/AssignRequestToSponser`, requestOptions)
         .then(handleResponse)
         .then(status => {
             return status;

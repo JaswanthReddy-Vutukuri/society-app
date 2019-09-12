@@ -6,6 +6,7 @@ import RequestInfoDetails from './request-info';
 import EmpActionsDetails from './employee-actions';
 import RepActionsDetails from './rep-actions';
 import InchargeActionsDetails from './incharge-actions';
+import AdminActionsDetails from './admin-actions';
 import ReqComments from './req-comments';
 import RepTodosDetails from './rep-todos';
 import { requestService } from '../services';
@@ -101,9 +102,9 @@ class DataTable extends React.Component {
         <span>
           <Button type="link" icon="eye" style={{fontSize:'20px'}} onClick={()=>{ this.showReqInfoModal(record)}}></Button>
           <React.Fragment><Divider type="vertical" /> <Button type="link" icon="message" style={{fontSize:'20px'}} onClick={()=>{ this.showReqCommentsModal(record)}}></Button></React.Fragment>
-          { (this.state.approveAction && this.props.currentUser.Role !== 'EMPLOYEE' && this.props.currentUser.Role !== 'SPONSORSHIP') ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="like" onClick={()=>{ this.showActionsModal(record, 'approve')}}></Button> </React.Fragment>: null }
-          { (this.state.declineAction && this.props.currentUser.Role !== 'EMPLOYEE' && this.props.currentUser.Role !== 'SPONSORSHIP') ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="dislike" onClick={()=>{ this.showActionsModal(record, 'decline')}}></Button> </React.Fragment>: null }
-          { (this.state.submitAction && this.props.currentUser.Role === 'EMPLOYEE') ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="form" onClick={()=>{ this.showActionsModal(record, null)}}></Button> </React.Fragment>: null }
+          { (this.state.approveAction && this.props.currentUser.Role === 'REPRESENTATIVE' && this.props.currentUser.Role === 'INCHARGE') ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="like" onClick={()=>{ this.showActionsModal(record, 'approve')}}></Button> </React.Fragment>: null }
+          { (this.state.declineAction && this.props.currentUser.Role === 'REPRESENTATIVE' && this.props.currentUser.Role === 'INCHARGE') ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="dislike" onClick={()=>{ this.showActionsModal(record, 'decline')}}></Button> </React.Fragment>: null }
+          { (this.state.submitAction && (this.props.currentUser.Role === 'EMPLOYEE' || this.props.currentUser.Role === 'ADMIN')) ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="form" onClick={()=>{ this.showActionsModal(record, null)}}></Button> </React.Fragment>: null }
           { (this.props.currentUser.Role === 'REPRESENTATIVE' && this.props.viewIncApproved) ? <React.Fragment><Divider type="vertical" /> <Button type="link" style={{fontSize:'20px'}} icon="plus-square" onClick={()=>{ this.showExclusiveRepModal(record, 'decline')}}></Button> </React.Fragment>: null }
         </span>
       )
@@ -238,7 +239,7 @@ class DataTable extends React.Component {
             <RepActionsDetails action={this.state.action} request={this.state.selectedRequest} handleOk={this.handleOk} handleCancel={this.handleCancel}/> :
             this.props.currentUser.Role === 'INCHARGE' ?
             <InchargeActionsDetails action={this.state.action} request={this.state.selectedRequest} handleOk={this.handleOk} handleCancel={this.handleCancel} /> :
-            <InchargeActionsDetails action={this.state.action} request={this.state.selectedRequest} handleOk={this.handleOk} handleCancel={this.handleCancel} />
+            <AdminActionsDetails action={this.state.action} request={this.state.selectedRequest} handleOk={this.handleOk} handleCancel={this.handleCancel} />
           }
         </Modal>
       </React.Fragment>

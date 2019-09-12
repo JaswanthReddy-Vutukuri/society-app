@@ -53,6 +53,7 @@ class RepActions extends React.Component {
             response => {
               console.log(response)
               this.setState({spinning:false})
+              this.props.form.resetFields();
               this.props.handleOk();
               message.info(`Request has been ${this.props.action}d by you!`);
             },
@@ -60,6 +61,7 @@ class RepActions extends React.Component {
               this.setState({spinning:false})
               message.error('Sorry not able to Approve. Please try again!');
               console.log("Error while saving feedback:", error);
+              this.props.form.resetFields();
               this.props.handleOk();
             }
           );

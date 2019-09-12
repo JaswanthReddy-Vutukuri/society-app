@@ -148,7 +148,7 @@ function SaveAdminFeedback (reqParams) {
     };
     
 
-    return fetch(`${apiUrl}/Requests/AssignRequestToSponser`, requestOptions)
+    return fetch(`${apiUrl}/Requests/AssignRequestToSponsor`, requestOptions)
         .then(handleResponse)
         .then(status => {
             return status;

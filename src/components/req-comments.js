@@ -164,6 +164,24 @@ class ReqComments extends React.Component {
             }
         ]
 
+        const sponsorMapCols = [
+            {
+                title: 'Assigned to',
+                dataIndex: 'SponsorUser',
+                key: 'SponsorUser',
+            },
+            {
+                title: 'Assigned by',
+                dataIndex: 'AssignedUser',
+                key: 'AssignedUser',
+            },
+            {
+                title: 'Assigned On',
+                dataIndex: 'AssignedOn',
+                key: 'AssignedOn',
+            }
+        ]
+
         const empComments = (
             <React.Fragment>
                 <Table pagination={false} dataSource={this.props.request.EmployeeFeedbacks} columns={empCommentCols}></Table><br />
@@ -181,6 +199,10 @@ class ReqComments extends React.Component {
             <Table pagination={false} dataSource={this.props.request.RepresentativeComments} columns={repActionCols}></Table>
         )
 
+        const sponsorMappings = (
+            <Table pagination={false} dataSource={this.props.request.SponsorMappings} columns={sponsorMapCols}></Table>
+        )
+
         return (
             <Tabs defaultActiveKey="1">
                 <TabPane tab="Employee Comments" key="1">
@@ -194,6 +216,9 @@ class ReqComments extends React.Component {
                 </TabPane>
                 <TabPane tab="Representative Actions" key="4">
                     {this.props.request.RepresentativeComments && this.props.request.RepresentativeComments.length ? repActions : <h4 style={{ textAlign: 'center' }}>{'No Actions Available'}</h4>}
+                </TabPane>
+                <TabPane tab="Sponsor Mappings" key="5">
+                    {this.props.request.SponsorMappings && this.props.request.SponsorMappings.length ? sponsorMappings : <h4 style={{ textAlign: 'center' }}>{'No Mappings Available'}</h4>}
                 </TabPane>
             </Tabs>
         )

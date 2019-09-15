@@ -7,8 +7,9 @@ const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('
 export const authenticationService = {
     login,
     logout,
+    loginAsUser,
     currentUser: currentUserSubject.asObservable(),
-    get currentUserValue () { return currentUserSubject.value }
+    get currentUserValue() { return currentUserSubject.value }
 };
 
 function login(username, password) {
@@ -23,10 +24,18 @@ function login(username, password) {
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user));
-            
+
             currentUserSubject.next(user);
             return user;
         });
+}
+
+
+function loginAsUser(user) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+
+    currentUserSubject.next(user);
+    return user;
 }
 
 function logout() {

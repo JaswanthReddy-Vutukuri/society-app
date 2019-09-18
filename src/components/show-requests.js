@@ -27,7 +27,8 @@ class ShowRequests extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
-      this.setState({viewIncApproved:false, showReqByStatus: 'active'});
+      this.setState({viewIncApproved:false});
+      this.setState({showReqByStatus: 'active'});
       this.fetchRequests(null, null, null, false);
     }
   }

@@ -23,6 +23,13 @@ class ReqComments extends React.Component {
             ("00" + d.getSeconds()).slice(-2)
         );
     }
+    
+    formatDocList(documents) {
+        let docList = documents.map((document) =>
+            <li style={{color:'#1890ff',cursor:'pointer'}} key={document.name} onClick={e => this.fetchFile(document.DocumentID, document.uid)}>{document.name}</li>
+        );
+        return docList;
+    }
 
     render() {
         const empRatingCols = [

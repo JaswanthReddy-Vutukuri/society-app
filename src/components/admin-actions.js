@@ -40,7 +40,7 @@ class AdminActions extends React.Component {
             if (!err) {
                 console.log('Received values of form: ', values);
                 let reqObj = {};
-                reqObj.SponserUserID = values.SponserUserID;
+                reqObj.SponsorUserID = values.SponsorUserID;
                 reqObj.RequestID = this.props.request.RequestID;
                 this.SaveAdminFeedback(reqObj);
             }
@@ -78,7 +78,7 @@ class AdminActions extends React.Component {
 
         const assignSponsorsField = (
             <Form.Item label="Assign Sponsor" hasFeedback>
-                {getFieldDecorator('SponserUserID', {
+                {getFieldDecorator('SponsorUserID', {
                     rules: [{ required: true, message: 'Please select Sponsor!' }],
                 })(
                     <Select placeholder="Please select a Sponsor">

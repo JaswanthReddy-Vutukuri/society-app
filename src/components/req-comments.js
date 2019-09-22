@@ -63,8 +63,8 @@ class ReqComments extends React.Component {
             },
             {
                 title: 'Assigned To',
-                dataIndex: 'Representative',
-                key: 'Representative'
+                dataIndex: 'Incharge',
+                key: 'Incharge'
             }
         ]
 

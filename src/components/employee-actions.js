@@ -17,7 +17,7 @@ class EmpActions extends React.Component {
         super(props);
         this.state = {
             questions: [],
-            representatives: [],
+            incharges: [],
             spinning: false,
             cantApprove: false
         }
@@ -34,14 +34,14 @@ class EmpActions extends React.Component {
                     console.log("Error while fetching questions:", error);
                 }
             );
-        userService.getUsersByRole('REPRESENTATIVE')
+        userService.getUsersByRole('INCHARGE')
             .then(
                 response => {
-                    console.log("representatives:", response)
-                    this.setState({ representatives: response });
+                    console.log("incharges:", response)
+                    this.setState({ incharges: response });
                 },
                 error => {
-                    console.log("Error while fetching representatives:", error);
+                    console.log("Error while fetching incharges:", error);
                 }
             );
     }
@@ -74,12 +74,12 @@ class EmpActions extends React.Component {
                 console.log("ratingSum,ratingsLength,ratingAverage:", ratingSum, ratingsLength, ratingAverage)
                 if (ratingSum < ratingAverage) {
                     reqObj.FeedbackStatus = 'EMP_DECLINED';
-                    reqObj.AssingedToRepID = null;
+                    reqObj.AssingedToInchargeID = null;
                     this.SaveEmployeeFeedback(reqObj);
                 } else {
                     reqObj.FeedbackStatus = 'EMP_APPROVED';
-                    if (values.AssingedToRepID) {
-                        reqObj.AssingedToRepID = values.AssingedToRepID;
+                    if (values.AssingedToInchargeID) {
+                        reqObj.AssingedToInchargeID = values.AssingedToInchargeID;
                         this.SaveEmployeeFeedback(reqObj);
                     } else {
                         this.setState({ cantApprove: true });
@@ -140,15 +140,15 @@ class EmpActions extends React.Component {
         }
 
         const assignRepField = (
-            <Form.Item label="Assign Representative" hasFeedback>
-                {getFieldDecorator('AssingedToRepID', {
-                    rules: [{ required: false, message: 'Please select Representative!' }],
+            <Form.Item label="Assign Incharge" hasFeedback>
+                {getFieldDecorator('AssingedToInchargeID', {
+                    rules: [{ required: false, message: 'Please select Incharge!' }],
                 })(
-                    <Select placeholder="Please select a representative">
-                        {this.state.representatives.map(representative =>
-                            <Option key={representative.UserId}
-                                value={representative.UserId}>
-                                {representative.FirstName + ' ' + representative.LastName}
+                    <Select placeholder="Please select a Incharge">
+                        {this.state.incharges.map(incharge =>
+                            <Option key={incharge.UserId}
+                                value={incharge.UserId}>
+                                {incharge.FirstName + ' ' + incharge.LastName}
                             </Option>
                         )}
                     </Select>,
@@ -172,7 +172,7 @@ class EmpActions extends React.Component {
                 <Divider />
                 {assignRepField}
                 <Divider />
-                {this.state.cantApprove ? <h3 style={{color:'brown',textAlign:"center"}}>{"Please assign a representative!"}</h3>: null}
+                {this.state.cantApprove ? <h3 style={{color:'brown',textAlign:"center"}}>{"Please assign a incharge!"}</h3>: null}
                 <Form.Item wrapperCol={{ span: 12, offset: 12 }}>
                     <Button type="secondary" style={{ marginRight: '15px' }} disabled={this.state.spinning} onClick={e => { this.props.form.resetFields(); this.props.handleCancel(); }}>
                         CANCEL

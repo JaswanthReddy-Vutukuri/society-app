@@ -16,20 +16,33 @@ class InchargeActions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      spinning: false
+      spinning: false,
+      reps: []
     }
   }
 
-  componentWillMount() {}
+  componentWillMount() {
+    userService.getUsersByRole('REPRESENTATIVE')
+            .then(
+                response => {
+                    console.log("reps:", response)
+                    this.setState({ reps: response });
+                },
+                error => {
+                    console.log("Error while fetching reps:", error);
+                }
+            );
+  }
 
   SaveInchargeFeedback = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      if (!err) {
+      if (!err || (err && _.keys(err).length <= 1)) {
         this.setState({spinning:true})
         console.log('Received values of form: ', values);
         let reqObj = {};
-        reqObj.AssignedToRepresentativeID = this.props.request.RepresentativeFeedbacks[0].CreatedUserID;
+        reqObj.AssignedToRepresentativeID = values.AssignedToRepresentativeID ? values.AssignedToRepresentativeID : null;
+        // reqObj.AssignedToRepresentativeID = this.props.request.RepresentativeFeedbacks[0].CreatedUserID;
         reqObj.FeedbackStatus       = 'INC_'+this.props.action.toUpperCase()+'D';;
         reqObj.RequestID            = this.props.request.RequestID;
         reqObj.Remarks              = values.Remarks;
@@ -71,11 +84,27 @@ class InchargeActions extends React.Component {
       labelCol: { span: 8 },
       wrapperCol: { span: 14 },
     };
+    const assignRepForm = (
+      <Form.Item label="Assign Rep" hasFeedback>
+        {getFieldDecorator('AssignedToRepresentativeID', {
+          rules: [{ required: true, message: 'Please select Rep!' }],
+        })(
+          <Select placeholder="Please select a Rep">
+            {this.state.reps.map(rep =>
+              <Option key={rep.UserId}
+                value={rep.UserId}>
+                {rep.FirstName + ' ' + rep.LastName}
+              </Option>
+            )}
+          </Select>,
+        )}
+      </Form.Item>
+    )
     return (
       <Form {...formItemLayout} className="rep-form" onSubmit={this.SaveInchargeFeedback}>
-        <Form.Item label="Requested By">
+        {/* <Form.Item label="Requested By">
           <span className="ant-form-text">{this.props.request && this.props.request.RepresentativeFeedbacks.length?this.props.request.RepresentativeFeedbacks[0].CreatedUser:''}</span>
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item
           label={
             <span>
@@ -87,6 +116,7 @@ class InchargeActions extends React.Component {
             rules: [{ required: true, message: 'Please input your Remarks!', whitespace: true }],
           })(<TextArea rows={4} />)}
         </Form.Item>
+        {this.props.action === 'approve' ? assignRepForm : null}
         <Divider />
         <Form.Item wrapperCol={{ span: 12, offset: 12 }}>
           <Button type="secondary" style={{marginRight:'15px'}}  disabled={this.state.spinning} onClick={e => { this.props.form.resetFields(); this.props.handleCancel(); }}>

@@ -163,7 +163,7 @@ class SideMenuBar extends React.Component {
         )
 
         switch (this.props.currentUser.Role) {
-            case 'USER': return (<React.Fragment>{siderOne}</React.Fragment>);
+            case 'USER': return (<React.Fragment></React.Fragment>);
             case 'EMPLOYEE': return (<React.Fragment>{siderTwo}</React.Fragment>);
             case 'INCHARGE': return (<React.Fragment>{siderTwo}</React.Fragment>);
             case 'REPRESENTATIVE': return (<React.Fragment>{siderTwo}</React.Fragment>);

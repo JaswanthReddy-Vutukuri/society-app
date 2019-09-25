@@ -63,7 +63,7 @@ class RequestInfo extends React.Component {
           <span className="ant-form-text">{this.props.request.Description}</span>
         </Form.Item>
         <Form.Item label="Request By">
-          <span className="ant-form-text">{this.props.request.Createdby}</span>
+          <span className="ant-form-text">{this.props.request.Name}</span>
         </Form.Item>
         <Form.Item label="Age">
           <span className="ant-form-text">{this.props.request.Age}</span>

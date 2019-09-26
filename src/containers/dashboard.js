@@ -5,12 +5,13 @@ import 'antd/dist/antd.css';
 import RequestCounts from '../components/request-counts';
 import Clock from '../components/charts';
 import About from '../components/about';
+import CreateRequest from '../components/create-request';
 
 const Dashboard = ({ currentUser }) => {
 
     switch (currentUser.Role) {
         case 'USER': return (
-            <About />
+            <CreateRequest />
         );
         case 'EMPLOYEE': return (
             <div>

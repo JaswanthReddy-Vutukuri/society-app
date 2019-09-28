@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 
 import RequestCounts from '../components/request-counts';
 import Clock from '../components/charts';
-import About from '../components/about';
+//import About from '../components/about';
 import CreateRequest from '../components/create-request';
 
 const Dashboard = ({ currentUser }) => {

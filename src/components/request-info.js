@@ -59,6 +59,13 @@ class RequestInfo extends React.Component {
         <Form.Item label="Estimated Budget">
           <span className="ant-form-text">{this.props.request.Estimatedbudget} Rupees</span>
         </Form.Item>
+      {
+        this.props.request.EstimatedPeopleBenfit==null?null:
+        <Form.Item label="Est. People Benfit" >
+          <span className="ant-form-text">{this.props.request.EstimatedPeopleBenfit} Rupees</span>
+        </Form.Item>
+      }
+        
         <Form.Item label="Request Description">
           <span className="ant-form-text">{this.props.request.Description}</span>
         </Form.Item>

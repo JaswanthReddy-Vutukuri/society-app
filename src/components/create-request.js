@@ -330,7 +330,7 @@ class CreateRequest extends React.Component {
             )}
           </Form.Item>
           {this.state.benefits=='People'?<Form.Item label="No. of Beneficiaries">
-            {getFieldDecorator('BeneficiaryCount', { rules: [{ required: false, message: 'Please provide No. of Beneficiaries!' }] })(<InputNumber />)}
+            {getFieldDecorator('EstimatedPeopleBenfit', { rules: [{ required: false, message: 'Please provide No. of Beneficiaries!' }] })(<InputNumber />)}
           </Form.Item>:null}
           <Form.Item label="Estimated Budget">
             {getFieldDecorator('Estimatedbudget', { rules: [{ required: false, message: 'Please provide Budget!' }] })(<InputNumber />)}

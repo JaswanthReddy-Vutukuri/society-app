@@ -122,15 +122,15 @@ class EmpActions extends React.Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
-            labelCol: { span: 8 },
-            wrapperCol: { span: 14 },
+            labelCol: { span: 12 },
+            wrapperCol: { span: 10 },
         };
         let questionsArray = [];
 
         if (this.state.questions) {
             for (let i = 0; i < this.state.questions.length; i++) {
                 questionsArray.push(
-                    <Form.Item label={this.state.questions[i].QuestionName}>
+                    <Form.Item label={this.state.questions[i].QuestionName} style={{whiteSpace:'pre-wrap'}}>
                         {getFieldDecorator(JSON.stringify(this.state.questions[i].QuestionID), {
                             rules: [{ required: true, message: `Please provide Rating!` }]
                         })(<Rate />)}

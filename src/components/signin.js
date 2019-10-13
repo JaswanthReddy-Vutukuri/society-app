@@ -68,7 +68,7 @@ class SignInForm extends React.Component {
     return (
       <React.Fragment>
         <div style={{ textAlign: "center" }}>
-          <img src={require('../../src/logo.svg')} alt="logo" style={{ width: '30%' }} />
+          <img src={require('../../src/logo.svg')} alt="logo" style={{ width: '20%' }} />
         </div>
         <div style={{ textAlign: "center" }}>
           <Form onSubmit={this.handleSubmit} className="login-form" style={{ display: 'inline-block' }}>
@@ -109,8 +109,11 @@ class SignInForm extends React.Component {
           </Form>
         </div>
         <div style={{ textAlign: "center" }}>
+        Or
+        <br></br>
+              
           <Button type="link" className="login-form-button" onClick={() => { this.loginAsUser() }}>
-            Proceed as a USER
+            Continue without Login
           </Button>
         </div>
       </React.Fragment>

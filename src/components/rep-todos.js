@@ -120,8 +120,10 @@ class RepTodos extends React.Component {
                             rules: [{ required: false, message: 'Please select status!' }],
                         })(
                             <Select placeholder="Please select a status">
-                                <Option key="To Do" value="To Do"> To Do </Option>
-                                <Option key="In Progress" value="In Progress"> In Progress </Option>
+                                <Option key="Request Approved" value="Request Approved"> Request Approved </Option>
+                                <Option key="Funds Allocated" value="Funds Allocated"> Funds Allocated </Option>
+                                <Option key="Work Started" value="Work Started"> Work Started </Option>
+                                <Option key="50% of work done" value="50% of work done"> 50% of work done </Option>
                                 <Option key="Done" value="Done"> Done </Option>
                             </Select>,
                         )}
